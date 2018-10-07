@@ -35,56 +35,58 @@ A programnak képesnek kell lennie bármely szakterület projectmenedzselési fe
 
 Admin:
  * Mindenhez (is) hozzáfér
+
 Group Leader :
  * Project létrehozás
  * Memberek csoportba vétele
  * Skillek felvétele
  * Feladatok memberekhez rendelése
  * Folyamatok ellenőrzése
+
 Group Member :
  * Saját skillek megadása
  * Feladat elvégzése (log : idő, kész vagy sem)
  * Folyamat megtekintése
+
+### Adatbázis :
+ * Users
+   * név
+   * jelszó
+   * role
+   * skills
+ * Groups
+   * leader
+   * name
+   * members
+ * Task
+   * required skill
+   * assignee
+   * prerequisites
+   * complete
+   * project_id
+ * Project
+   * group
+   * tasks (json)
+   * deadline
+   * name
+ * Skills
+   * name
+   * code
+
+### Endpointok
+ * member/new
+   * regisztrációs felület
+ * member/edit
+   * adatok módosítása
+   * skillek felvétele
+ * member/tasks
+   * feladatok megtekintése
+   * feladatok logolása
+ * leader/group/create
+   * csoport létrehozása
+ * leader/group/members
+   * csoport tagjainak szerkesztése
+ * leader/projects/new
+ * leader/projects/work
+ * admin/
  
- ### Adatbázis :
-  * Users
-    * név
-    * jelszó
-    * role
-    * skills
-  * Groups
-    * leader
-    * name
-    * members
-  * Task
-    * required skill
-    * assignee
-    * prerequisites
-    * complete
-    * project_id
-  * Project
-    * group
-    * tasks (json)
-    * deadline
-    * name
-  * Skills
-    * name
-    * code
- 
- ### Endpointok
-  * member/new
-    * regisztrációs felület
-  * member/edit
-    * adatok módosítása
-    * skillek felvétele
-  * member/tasks
-    * feladatok megtekintése
-    * feladatok logolása
-  * leader/group/create
-    * csoport létrehozása
-  * leader/group/members
-    * csoport tagjainak szerkesztése
-  * leader/projects/new
-  * leader/projects/work
-  * admin/
-  
