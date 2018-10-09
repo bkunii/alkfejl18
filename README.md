@@ -79,30 +79,30 @@ Group Member :
      * *createMember(String name,String password,String role,List<Integer> skills) --a skillek id szerint vannak tárolva*
  * user/edit
    * adatok módosítása
-     *modifyUser(String newName, String newPassword)*
+     * *modifyUser(String newName, String newPassword)*
    * skillek felvétele
-     *addSkills(List<Integer> skills) --a skillek id szerint vannak tárolva*
+     * *addSkills(List<Integer> skills) --a skillek id szerint vannak tárolva*
  * member/tasks
    * feladatok megtekintése
-     *getTasks(User user)*
+     * *getTasks(User user)*
    * feladatok logolása
-     *completeTask()*
+     * *completeTask()*
  * leader/group/create
    * csoport létrehozása
-     *createGroup(String groupName,List<User> members)*
+     * *createGroup(String groupName,List<User> members)*
  * leader/group/members
    * csoport tagjainak szerkesztése
-     *addGroupMember(Group group,User member)*
-     *removeGroupMember(Group group, User member)*
+     * *addGroupMember(Group group,User member)*
+     * *removeGroupMember(Group group, User member)*
  * leader/projects/new
-     *createProject(Group group,String name)*
-     *createProject(Group group,String name,DateTime deadline)*
+     * *createProject(Group group,String name)*
+     * *createProject(Group group,String name,DateTime deadline)*
  * leader/projects/work
-     *createTask(Project projectId, List<Integer> requiredSkills,List<Integer> prerequisites) --az előfeltételek id szerint vannak tárolva*
-     *assignTask(Task task,User assignee)*
-     *calcOptimalAssignees(Project project)*
-     *createSkill(String name, Integer code)*
-     *getProjectStatus(Project project)*
+     * *createTask(Project projectId, List<Integer> requiredSkills,List<Integer> prerequisites) --az előfeltételek id szerint vannak tárolva*
+     * *assignTask(Task task,User assignee)*
+     * *calcOptimalAssignees(Project project)*
+     * *createSkill(String name, Integer code)*
+     * *getProjectStatus(Project project)*
  * admin/editusers
-   *editUser(String name, String password, String role, List<Integer> skills)*
+   * *editUser(String name, String password, String role, List<Integer> skills)*
  
