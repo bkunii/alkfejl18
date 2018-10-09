@@ -75,34 +75,38 @@ Group Member :
 
 ### Endpointok
  * user/new
-   * regisztrációs felület
-     * *createMember(String name,String password,String role,List<Integer> skills) --a skillek id szerint vannak tárolva*
+   * *createMember(String name,String password,String role,List<Integer> skills) --a skillek id szerint vannak tárolva*
  * user/edit
-   * adatok módosítása
-     * *modifyUser(String newName, String newPassword)*
-   * skillek felvétele
-     * *addSkills(List<Integer> skills) --a skillek id szerint vannak tárolva*
- * member/tasks
-   * feladatok megtekintése
-     * *getTasks(User user)*
-   * feladatok logolása
-     * *completeTask()*
+   * *modifyUser(String newName, String newPassword)*
+ * user/addskills
+   * *addSkills(List<Integer> skills) --a skillek id szerint vannak tárolva*
+ * member/project/tasks
+   * *getTasks(User user)*
+ * member/project/completeTask
+   * *completeTask(Integer duration)*
+ * member/project/getStatus
+    * *getProjectStatus(Project project)*
  * leader/group/create
-   * csoport létrehozása
-     * *createGroup(String groupName,List<User> members)*
- * leader/group/members
-   * csoport tagjainak szerkesztése
-     * *addGroupMember(Group group,User member)*
-     * *removeGroupMember(Group group, User member)*
- * leader/projects/new
-     * *createProject(Group group,String name)*
-     * *createProject(Group group,String name,DateTime deadline)*
- * leader/projects/work
-     * *createTask(Project projectId, List<Integer> requiredSkills,List<Integer> prerequisites) --az előfeltételek id szerint vannak tárolva*
-     * *assignTask(Task task,User assignee)*
-     * *calcOptimalAssignees(Project project)*
-     * *createSkill(String name, Integer code)*
-     * *getProjectStatus(Project project)*
+   * *createGroup(String groupName,List<User> members)*
+ * leader/group/members/add
+   * *addGroupMember(Group group,User member)*
+ * leader/group/members/remove
+   * *removeGroupMember(Group group, User member)*
+ * leader/project/new
+   * *createProject(Group group,String name)*
+   * *createProject(Group group,String name,DateTime deadline)*
+ * leader/project/createTask
+   * *createTask(Project projectId, List<Integer> requiredSkills,List<Integer> prerequisites) --az előfeltételek id szerint vannak tárolva*
+  * leader/project/assigntask
+    * *assignTask(Task task,User assignee)*
+  * leader/project/calculateoptimal
+    * *calcOptimalAssignees(Project project)*
+  * leader/project/createSkill
+    * *createSkill(String name, Integer code)*
+  * leader/project/getStatus
+    * *getProjectStatus(Project project)*
  * admin/editusers
    * *editUser(String name, String password, String role, List<Integer> skills)*
+ * admin/switchtouserprofile
+  * *fogalmam nincs ezt pontosan még hogy fogjuk implementálni*
  
