@@ -76,7 +76,7 @@ Group Member :
 ### Endpointok
  * user/new
    * regisztrációs felület
-     *createMember(String name,String password,String role,List<Integer> skills) --a skillek id szerint vannak tárolva*
+     * *createMember(String name,String password,String role,List<Integer> skills) --a skillek id szerint vannak tárolva*
  * user/edit
    * adatok módosítása
      *modifyUser(String newName, String newPassword)*
