@@ -18,23 +18,13 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @EqualsAndHashCode
-public class User implements Serializable {
-    @Id
+public class Skill implements Serializable{
+
+	@Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-    
-    @Column(unique = true)
-    @NotNull
-    private String username;
-    
-    @Column
-    @NotNull
-    private String password;
-    
-    @Column
-    private String firstName;
-    
-    @Column
-    private String lastName;
-  
+	
+	@Column(unique = true)
+	@NotNull
+	private String name;
 }
