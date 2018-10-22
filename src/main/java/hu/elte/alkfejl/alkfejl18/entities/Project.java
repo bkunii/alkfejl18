@@ -11,12 +11,16 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -32,15 +36,21 @@ public class Project implements Serializable{
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 	
-	@Column
+	@JoinColumn
 	@NotNull
-	//@ManyToOne
-	private Group group;
+	@ManyToOne
+	private User leader;
 	
 	@Column
 	@NotNull
-	@ElementCollection(targetClass=Task.class)
-	@OneToMany(mappedBy = "id")
+	@ElementCollection
+	@ManyToMany
+	private List<User> members;
+	
+	@Column
+	@JsonIgnore
+	@ElementCollection
+	@OneToMany(mappedBy = "project")
 	private List<Task> tasks;
 	
 	@Column

@@ -10,6 +10,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.validation.constraints.NotNull;
@@ -26,28 +28,30 @@ import lombok.NoArgsConstructor;
 public class Task implements Serializable{
 	@Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-	@ManyToOne
     private Integer id;
 	
 	@Column
 	@NotNull
 	@ElementCollection
-	private List<Integer> requiredSkils; // ids
+	@ManyToMany(mappedBy = "requiredBy")
+	private List<Skill> requiredSkils; 
 	
-	@Column
+	@JoinColumn
 	@NotNull
-	private Integer assignee; //id
+	@ManyToOne
+	private User assignee;
 	
 	@Column
 	@NotNull
 	@ElementCollection
-	private List<Integer> prerequisites; //ids
+	private List<Task> prerequisites; 
 	
 	@Column
 	@NotNull
 	private Boolean complete;
 	
-	@Column(unique=true)
+	@JoinColumn(unique=true)
 	@NotNull
-	private Integer Project; //id
+	@ManyToOne
+	private Project project; 
 }
