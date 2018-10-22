@@ -15,6 +15,9 @@ import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.validation.constraints.NotNull;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -38,13 +41,19 @@ public class Task implements Serializable{
 	
 	@JoinColumn
 	@NotNull
-	@ManyToOne
-	private User assignee;
+	@ManyToMany
+	private List<User> assignees;
 	
 	@Column
-	@NotNull
+	@JsonIgnore
 	@ElementCollection
-	private List<Task> prerequisites; 
+	@ManyToMany(mappedBy = "requiredBy")
+	private List<Task> prerequisites;
+	
+	@Column
+	@ElementCollection
+	@ManyToMany
+	private List<Task> requiredBy;
 	
 	@Column
 	@NotNull

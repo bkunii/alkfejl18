@@ -66,7 +66,7 @@ public class User implements Serializable {
     @Column
     @JsonIgnore
     @ElementCollection
-    @OneToMany(mappedBy = "assignee")
+    @ManyToMany(mappedBy = "assignee")
     private List<Task> assignedTasks;
     
   
