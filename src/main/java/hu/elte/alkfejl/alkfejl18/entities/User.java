@@ -39,7 +39,6 @@ public class User implements Serializable {
     private String password;
     
     @Column
-    @NotNull
     private String firstName;
     
     @Column
