@@ -7,5 +7,51 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/project")
 public class SkillController {
     
+    @GetMapping("")
+    public ResponseEntity<Iterable<Project>> getAll() {
+        Iterable<Project> projects = projectRepository.findAll();
+        return ResponseEntity.ok(projects);
+    }
+     
+    @PostMapping("/new")
+    public ResponseEntity<Project> post(@RequestBody Project project) {
+        Optional<Project> project = projectRepository.findById(project.getId());
+        if (project.isPresent()) {
+            return ResponseEntity.badRequest().build();
+        }
+        project.setId(null);
+        return ResponseEntity.ok(projectRepository.save(project));
+    }
+        
+    @GetMapping("/{id}")
+    public ResponseEntity<Project> get(@PathVariable Integer id) {
+        Optional<Project> project = projectRepository.findById(id);
+        if (!project.isPresent()) {
+            return ResponseEntity.notFound().build();   
+        }
+        
+        return ResponseEntity.ok(project.get());
+    }
     
+    @DeleteMapping("/{id}")
+    public ResponseEntity delete(@PathVariable Integer id) {
+        Optional<Project> project = projectRepository.findById(id);
+        if (!project.isPresent()) {
+            return ResponseEntity.notFound().build();   
+        }
+            
+        projectRepository.delete(project.get());
+        return ResponseEntity.ok().build();
+    }
+     
+    @PutMapping("/edit/{id}")
+    public ResponseEntity<Project> put(@PathVariable Integer id, @RequestBody Project user) {
+        Optional<Project> project = projectRepository.findById(id);
+        if (!project.isPresent()) {
+            return ResponseEntity.notFound().build();
+        }
+        
+        project.setId(id);
+        return ResponseEntity.ok(projectRepository.save(project));
+    }
 }
