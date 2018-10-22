@@ -52,12 +52,11 @@ Group Member :
  * Users
    * név
    * jelszó
-   * role
    * skills
  * Groups
-   * leader
    * name
-   * members
+   * Project (by id)
+   * members:roles
  * Task
    * required skill
    * assignee
