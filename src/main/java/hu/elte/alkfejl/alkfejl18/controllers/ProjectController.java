@@ -6,6 +6,8 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/project")
 public class SkillController {
+    @Autowired
+    private UserRepository projectRepository;
     
     @GetMapping("")
     public ResponseEntity<Iterable<Project>> getAll() {
@@ -15,10 +17,6 @@ public class SkillController {
      
     @PostMapping("/new")
     public ResponseEntity<Project> post(@RequestBody Project project) {
-        Optional<Project> project = projectRepository.findById(project.getId());
-        if (project.isPresent()) {
-            return ResponseEntity.badRequest().build();
-        }
         project.setId(null);
         return ResponseEntity.ok(projectRepository.save(project));
     }
