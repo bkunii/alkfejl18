@@ -17,10 +17,14 @@ import hu.elte.alkfejl.alkfejl18.repositories.*;
 
 
 @RestController
-@RequestMapping("/project")
+@RequestMapping("/projects")
 public class ProjectController {
     @Autowired
     private ProjectRepository projectRepository;
+    @Autowired
+    private UserRepository userRepository;
+    @Autowired
+    private TaskRepository taskRepository;
     
     @GetMapping("")
     public ResponseEntity<Iterable<Project>> getAll() {
@@ -29,13 +33,21 @@ public class ProjectController {
     }
      
     @PostMapping("/new")
-    public ResponseEntity<Project> post(@RequestBody Project project) {
-        project.setId(null);
+    public ResponseEntity<Project> createProject(@RequestBody Project project) {
+        Optional<User> oLeader = userRepository.findById(project.getLeader().getId());
+    	if (!oLeader.isPresent() || project.getMembers() != null || project.getTasks() != null) {
+    		return ResponseEntity.badRequest().build();
+    	}
+    	
+    	project.setId(null);
+    	project.getMembers().add(oLeader.get());
+    	oLeader.get().getOwnedProjects().add(project);
+    	userRepository.save(oLeader.get());
         return ResponseEntity.ok(projectRepository.save(project));
     }
         
     @GetMapping("/{id}")
-    public ResponseEntity<Project> get(@PathVariable Integer id) {
+    public ResponseEntity<Project> getProject(@PathVariable Integer id) {
         Optional<Project> project = projectRepository.findById(id);
         if (!project.isPresent()) {
             return ResponseEntity.notFound().build();   
@@ -44,19 +56,35 @@ public class ProjectController {
         return ResponseEntity.ok(project.get());
     }
     
-    @DeleteMapping("/{id}")
-    public ResponseEntity<Project> delete(@PathVariable Integer id) {
-        Optional<Project> project = projectRepository.findById(id);
-        if (!project.isPresent()) {
+    @DeleteMapping("/{id}")//TODO : only by admin or leader
+    public ResponseEntity<Project> deleteProject(@PathVariable Integer id) {
+        Optional<Project> oProject = projectRepository.findById(id);
+        if (!oProject.isPresent()) {
             return ResponseEntity.notFound().build();   
         }
-            
-        projectRepository.delete(project.get());
+        Project project = oProject.get();
+        for(Task t : project.getTasks()) {
+        	for(User u : t.getAssignees()) {
+        		u.getAssignedTasks().remove(t);
+        	}
+        	taskRepository.delete(t);
+        }
+        for(User u : project.getMembers()) {
+        	u.getProjects().remove(project);
+        	userRepository.delete(u);
+        }
+        Optional<User> leader = userRepository.findById(project.getLeader().getId());
+        leader.get().getOwnedProjects().remove(project);
+        userRepository.save(leader.get());
+        projectRepository.delete(project);
         return ResponseEntity.ok().build();
     }
      
     @PutMapping("/edit/{id}")
-    public ResponseEntity<Project> put(@PathVariable Integer id, @RequestBody Project project) {
+    public ResponseEntity<Project> editProject(@PathVariable Integer id, @RequestBody Project project) {
+    	if(project.getLeader() != null || project.getMembers() != null || project.getTasks() != null) {
+    		return ResponseEntity.badRequest().build();
+    	}
         Optional<Project> oProject = projectRepository.findById(id);
         if (!oProject.isPresent()) {
             return ResponseEntity.notFound().build();
@@ -64,5 +92,43 @@ public class ProjectController {
         
         project.setId(id);
         return ResponseEntity.ok(projectRepository.save(project));
+    }
+    
+    @GetMapping("/{id}/members")
+    public ResponseEntity<Iterable<User>> getMembers(@PathVariable Integer id){
+    	  Optional<Project> project = projectRepository.findById(id);
+          if (!project.isPresent()) {
+              return ResponseEntity.notFound().build();   
+          }
+          return ResponseEntity.ok(project.get().getMembers());
+    }
+    
+    @PostMapping("/{id}/addMember")
+    public ResponseEntity<Iterable<User>> addMember(@PathVariable Integer id,@RequestBody User member){
+    	Optional<Project> oProject = projectRepository.findById(id);
+    	Optional<User> oMember = userRepository.findById(member.getId());
+    	if(!oProject.isPresent() || !oMember.isPresent()) {
+    		return ResponseEntity.notFound().build();
+    	}
+    	Project project = oProject.get();
+    	if(project.getMembers().contains(oMember.get())) {
+    		return ResponseEntity.badRequest().build();
+    	}
+    	oMember.get().getProjects().add(project);
+    	project.getMembers().add(oMember.get());
+    	userRepository.save(oMember.get());
+    	projectRepository.save(project);
+    	return ResponseEntity.ok(project.getMembers());
+    }
+    
+    @PostMapping("/{id}/removeMember/{userId}")
+    public ResponseEntity<Iterable<User>> removeMember(@PathVariable Integer id, @PathVariable Integer userId, @RequestBody User member){
+    	Optional<Project> oProject = projectRepository.findById(id);
+    	Optional<User> oMember = userRepository.findById(userId);
+    	if(!oProject.isPresent() || !oMember.isPresent() || !oProject.get().getMembers().contains(oMember.get())) {
+    		return ResponseEntity.notFound().build();
+    	}
+    	
+    	return ResponseEntity.ok().build();
     }
 }

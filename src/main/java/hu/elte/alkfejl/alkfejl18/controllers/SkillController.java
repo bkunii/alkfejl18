@@ -29,8 +29,8 @@ public class SkillController {
 	}
 	
 	@PostMapping("/new")
-	public ResponseEntity<Skill> post(@RequestBody Skill skill){
-		Optional<Skill> oSkill = skillRepository.findSkilByName(skill.getName());
+	public ResponseEntity<Skill> createSkill(@RequestBody Skill skill){
+		Optional<Skill> oSkill = skillRepository.findByName(skill.getName());
 		if(oSkill.isPresent()){
 			return ResponseEntity.badRequest().build();
 		}
@@ -39,7 +39,7 @@ public class SkillController {
 	}
 	
 	@GetMapping("/{id}")
-    public ResponseEntity<Skill> get(@PathVariable Integer id) {
+    public ResponseEntity<Skill> getSkill(@PathVariable Integer id) {
         Optional<Skill> oSkill = skillRepository.findById(id);
         if (!oSkill.isPresent()) {
             return ResponseEntity.notFound().build();   
@@ -49,7 +49,7 @@ public class SkillController {
     }
     
     @DeleteMapping("/{id}")
-    public ResponseEntity delete(@PathVariable Integer id) {
+    public ResponseEntity deleteSkill(@PathVariable Integer id) {
         Optional<Skill> oSkill = skillRepository.findById(id);
         if (!oSkill.isPresent()) {
             return ResponseEntity.notFound().build();   
@@ -60,8 +60,7 @@ public class SkillController {
     }
     
     @PutMapping("/{id}")
-    public ResponseEntity<Skill> put(@PathVariable Integer id,
-                                              @RequestBody Skill skill) {
+    public ResponseEntity<Skill> put(@PathVariable Integer id, @RequestBody Skill skill) {
         Optional<Skill> oSkill = skillRepository.findById(id);
         if (!oSkill.isPresent()) {
             return ResponseEntity.notFound().build();
