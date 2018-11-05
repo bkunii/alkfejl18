@@ -59,7 +59,7 @@ public class SkillController {
         return ResponseEntity.ok().build();
     }
     
-    @PutMapping("/{id}")
+    @PutMapping("/{id}/edit")
     public ResponseEntity<Skill> put(@PathVariable Integer id, @RequestBody Skill skill) {
         Optional<Skill> oSkill = skillRepository.findById(id);
         if (!oSkill.isPresent()) {

@@ -1,5 +1,6 @@
 package hu.elte.alkfejl.alkfejl18.controllers;
 
+import java.util.ArrayList;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,14 +33,16 @@ public class ProjectController {
         return ResponseEntity.ok(projects);
     }
      
-    @PostMapping("/new")
-    public ResponseEntity<Project> createProject(@RequestBody Project project) {
-        Optional<User> oLeader = userRepository.findById(project.getLeader().getId());
+    @PostMapping("/new/{leaderId}")
+    public ResponseEntity<Project> createProject(@RequestBody Project project,@PathVariable Integer leaderId) {
+        Optional<User> oLeader = userRepository.findById(leaderId);
     	if (!oLeader.isPresent() || project.getMembers() != null || project.getTasks() != null) {
     		return ResponseEntity.badRequest().build();
     	}
     	
     	project.setId(null);
+    	project.setMembers(new ArrayList<User>()); //TODO make custom constructors with nullable field inits
+    	project.setTasks(new ArrayList<Task>());
     	project.getMembers().add(oLeader.get());
     	oLeader.get().getOwnedProjects().add(project);
     	userRepository.save(oLeader.get());

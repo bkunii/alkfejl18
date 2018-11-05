@@ -1,9 +1,5 @@
 package hu.elte.alkfejl.alkfejl18.controllers;
 
-import java.sql.Date;
-import java.sql.Time;
-import java.time.LocalTime;
-import java.util.ArrayList;
 import java.util.Optional;
 import hu.elte.alkfejl.alkfejl18.entities.*;
 import hu.elte.alkfejl.alkfejl18.repositories.*;
@@ -36,8 +32,8 @@ public class UserController {
     @PostMapping("/new")
     public ResponseEntity<User> createUser(@RequestBody User user) {
         Optional<User> oUser = userRepository.findById(user.getId());
-        if (oUser.isPresent() || user.getOwnedProjects().size() > 0 || user.getProjects().size() > 0 ||
-        		user.getAssignedTasks().size() > 0) {
+        if (oUser.isPresent() || user.getOwnedProjects() != null || user.getProjects() != null ||
+        		user.getAssignedTasks() != null) {
             return ResponseEntity.badRequest().build();
         }
         user.setId(null);
@@ -93,15 +89,34 @@ public class UserController {
          return ResponseEntity.ok(oUser.get().getSkills());
     }
     
-    @PutMapping("/{id}/skills")
+    @PutMapping("/{id}/skills/add")
     public ResponseEntity<User> addSkill(@PathVariable Integer id, @RequestBody Skill skill) {
         Optional<User> oUser = userRepository.findById(id);
         Optional<Skill> oSkill = skillRepository.findByName(skill.getName());
         if (!oUser.isPresent() || !oSkill.isPresent()) {
             return ResponseEntity.notFound().build();
         }
+        if(oUser.get().getSkills().contains(oSkill.get())) {
+        	return ResponseEntity.ok(oUser.get());
+        }
         oUser.get().getSkills().add(skill);
         skill.getOwners().add(oUser.get());
+        skillRepository.save(skill);
+        return ResponseEntity.ok(userRepository.save(oUser.get()));
+    }
+    
+    @PutMapping("/{id}/skills/remove")
+    public ResponseEntity<User> removeSkill(@PathVariable Integer id, @RequestBody Skill skill) {
+        Optional<User> oUser = userRepository.findById(id);
+        Optional<Skill> oSkill = skillRepository.findByName(skill.getName());
+        if (!oUser.isPresent() || !oSkill.isPresent()) {
+            return ResponseEntity.notFound().build();
+        }
+        if(!oUser.get().getSkills().contains(oSkill.get())) {
+        	return ResponseEntity.ok(oUser.get());
+        }
+        oUser.get().getSkills().remove(skill);
+        skill.getOwners().remove(oUser.get());
         skillRepository.save(skill);
         return ResponseEntity.ok(userRepository.save(oUser.get()));
     }
