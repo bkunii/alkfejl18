@@ -1,1 +1,16 @@
-/* You can add global styles to this file, and also import other style files */
+
+@import url('https://fonts.googleapis.com/css?family=Raleway:300,500,700|Roboto+Condensed:300,500,700');
+@import '@angular/material/prebuilt-themes/deeppurple-amber.css';
+
+* {
+  font-family: "Roboto Condensed";
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: "Raleway";
+}
+
+html {
+  background: url("assets/images/background.jpg") no-repeat center center fixed;
+  background-size: cover;
+}
