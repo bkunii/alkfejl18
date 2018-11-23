@@ -14,7 +14,6 @@ h1 {
   border-radius: 20px;
   margin: auto;
 
-
   h2 {
     font-weight: 300;
     text-align: center;
@@ -38,6 +37,20 @@ h1 {
     &:hover {
       background-color: #336699;
       color: #ffffff;
+    }
+  }
+
+  #reg-btn-wrapper {
+    margin-top: 20px;
+    text-align: center;
+
+    span {
+      font-weight: bold;
+      cursor: pointer;
+
+      &:hover {
+        color: #336699;
+      }
     }
   }
 }

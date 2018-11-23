@@ -14,9 +14,9 @@
   </mat-form-field>
 
   <button id="btn-login" mat-button>BEJELENTKEZÉS</button>
-  <div>
-    <span>vagy</span>
-    <button id="btn-reg" mat-button>Regisztráció</button>
+  <div id="reg-btn-wrapper">
+    vagy
+    <span id="btn-reg" mat-button (click)="openRegDialog()">Regisztráció</span>
   </div>
 
 </section>

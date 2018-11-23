@@ -1,0 +1,27 @@
+
+<h1 mat-dialog-title>Regisztráció</h1>
+
+<div mat-dialog-content>
+
+  <mat-form-field>
+    <input matInput placeholder="NÉV">
+  </mat-form-field>
+
+  <mat-form-field>
+    <input matInput placeholder="EMAIL">
+  </mat-form-field>
+
+  <mat-form-field>
+    <input type="password" matInput placeholder="JELSZÓ">
+  </mat-form-field>
+
+  <mat-form-field>
+    <input type="password" matInput placeholder="JELSZÓ (még1szer)">
+  </mat-form-field>
+
+</div>
+
+<div mat-dialog-actions>
+  <button id="btn-reg-register" mat-button (click)="onRegClick()" cdkFocusInitial>Regisztráció</button>
+  <button id="btn-reg-cancel" mat-button (click)="onCancelClick()">Mégsem</button>
+</div>

@@ -1,5 +1,7 @@
+import { RegistrationFormComponent } from './../registration-form/registration-form.component';
 import { AppComponent } from './../app.component';
 import { Component, OnInit } from '@angular/core';
+import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material';
 
 @Component({
   selector: 'app-login-form',
@@ -8,9 +10,14 @@ import { Component, OnInit } from '@angular/core';
 })
 export class LoginFormComponent implements OnInit {
 
-  constructor() { }
+  constructor(public dialog: MatDialog) { }
 
   ngOnInit() {
   }
 
+  private openRegDialog(): void {
+    const dialogRef = this.dialog.open(RegistrationFormComponent, {
+      width: '350px',
+    });
+  }
 }
