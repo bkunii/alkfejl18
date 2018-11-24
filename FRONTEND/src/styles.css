@@ -3,14 +3,28 @@
 @import '@angular/material/prebuilt-themes/deeppurple-amber.css';
 
 * {
-  font-family: "Roboto Condensed" !important;
+  font-family: "Roboto Condensed";
 }
 
 h1, h2, h3, h4, h5, h6 {
-  font-family: "Raleway" !important;
+  font-family: "Raleway";
+  font-weight: 300;
 }
 
 html {
   background: url("assets/images/background.jpg") no-repeat center center fixed;
   background-size: cover;
+}
+
+body {
+  margin: 0;
+}
+
+.ruler {
+  margin: auto;
+  width: 700px;
+}
+
+.spacer {
+  flex: 1 1 auto;
 }

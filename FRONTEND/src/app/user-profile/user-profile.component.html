@@ -1,0 +1,56 @@
+
+<app-navbar></app-navbar>
+
+<div class="ruler">
+
+  <div id="user-details-wrapper">
+
+    <section id="user-personal-data" class="user-data-tab">
+
+      <h2>Személyes adatok:</h2>
+
+      <mat-form-field>
+        <input matInput placeholder="Vezetéknév">
+      </mat-form-field>
+
+      <mat-form-field>
+        <input matInput placeholder="Keresztnév">
+      </mat-form-field>
+
+      <mat-form-field>
+        <input matInput placeholder="Felhasználó név">
+      </mat-form-field>
+
+      <mat-form-field>
+        <input type="password" matInput placeholder="Jelszó">
+      </mat-form-field>
+
+      <mat-form-field>
+        <input type="password" matInput placeholder="Jelszó (újra)">
+      </mat-form-field>
+
+    </section>
+
+    <section id="user-skills" class="user-data-tab">
+
+      <h2>Képességek:</h2>
+<!--
+  <mat-chip-list>
+    <mat-chip *ngFor="let skill of skills" [value]="skill">{{ skill.name }}</mat-chip>
+  </mat-chip-list>
+
+  <mat-form-field>
+    <input type="text" matInput [formControl]="myControl" [matAutocomplete]="auto">
+      </mat-form-field>
+      <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete">
+        <mat-option *ngFor="let option of filteredOptions | async" [value]="option">
+          {{option}}
+        </mat-option>
+      </mat-autocomplete>
+
+-->
+    </section>
+
+  </div>
+
+</div>

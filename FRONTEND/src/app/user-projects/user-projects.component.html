@@ -1,0 +1,63 @@
+
+<app-navbar></app-navbar>
+
+<div class="ruler">
+
+  <mat-card id="user-own-projects" class="user-data-tab">
+
+      <mat-card-header>
+        <mat-card-title>Saját projectek:</mat-card-title>
+        <mat-icon mat-button (click)="openRegDialog()">add</mat-icon>
+      </mat-card-header>
+
+      <mat-card-content>
+        <mat-card class="project-card" *ngFor="let project of ownProjects">
+
+          <mat-card-header>
+              <mat-card-title>{{project.name}}</mat-card-title>
+              <mat-icon class="mat-18">edit</mat-icon>
+          </mat-card-header>
+
+          <mat-card-content>
+          </mat-card-content>
+
+          <mat-card-actions align="start">
+          </mat-card-actions>
+
+          <mat-card-footer>
+          </mat-card-footer>
+
+        </mat-card>
+      </mat-card-content>
+
+  </mat-card>
+
+  <mat-card id="user-own-projects" class="user-data-tab">
+
+      <mat-card-header>
+        <mat-card-title>Egyéb projectek:</mat-card-title>
+      </mat-card-header>
+
+      <mat-card-content>
+        <mat-card class="project-card" *ngFor="let project of projects">
+
+          <mat-card-header>
+              <mat-card-title>{{project.name}}</mat-card-title>
+              <mat-icon class="mat-18">edit</mat-icon>
+          </mat-card-header>
+
+          <mat-card-content>
+          </mat-card-content>
+
+          <mat-card-actions align="start">
+          </mat-card-actions>
+
+          <mat-card-footer>
+          </mat-card-footer>
+
+        </mat-card>
+      </mat-card-content>
+
+  </mat-card>
+
+</div>

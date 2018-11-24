@@ -14,9 +14,7 @@ export interface RegistrationData {
 })
 export class RegistrationFormComponent implements OnInit {
 
-  constructor(
-    private dialogRef: MatDialogRef<RegistrationFormComponent>
-    ) { }
+  constructor(private dialogRef: MatDialogRef<RegistrationFormComponent>) { }
 
   ngOnInit() {
   }
