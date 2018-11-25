@@ -7,6 +7,7 @@ import { Skill } from '../classes/skill';
 import { User } from '../classes/user';
 import { UserService } from '../services/user.service';
 import { ActivatedRoute } from '@angular/router';
+import { global_vars } from '../globals';
 
 @Component({
   selector: 'app-user-profile',
@@ -15,11 +16,13 @@ import { ActivatedRoute } from '@angular/router';
 })
 export class UserProfileComponent implements OnInit {
 
-  private currentUser: User;
-  public skills: Skill[];
+  private currentUser: User = global_vars.currentUser;
 
-  public myControl = new FormControl();
-  public filteredOptions: Observable<string[]>;
+  private allSkills: Skill[];
+  private userSkills: Skill[];
+
+  private myControl = new FormControl();
+  private filteredOptions: Observable<string[]>;
 
   constructor(
     private route: ActivatedRoute,
@@ -28,10 +31,10 @@ export class UserProfileComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    // tslint:disable-next-line:radix
-    const userId: number = parseInt(this.route.snapshot.paramMap.get('id'));
-    this.userService.getUser(userId).subscribe(user => this.currentUser = user);
-    // this.skills = this.skillService.getSkillsOfUser(userId);
+    this.userService.getUser(1).subscribe(user => global_vars.currentUser = user);  // temp
+
+    this.userSkills = this.skillService.getSkillsOfUser(this.currentUser.id);
+    this.allSkills = this.skillService.getSkills();
 
     this.filteredOptions = this.myControl.valueChanges.pipe(
       startWith(''),
@@ -41,6 +44,6 @@ export class UserProfileComponent implements OnInit {
 
   private _filter(value: string): string[] {
     const filterValue = value.toLowerCase();
-    return this.skills.filter(option => option.name.toLowerCase().indexOf(filterValue) === 0).map(skill => skill.name);
+    return this.allSkills.filter(option => option.name.toLowerCase().indexOf(filterValue) === 0).map(skill => skill.name);
   }
 }

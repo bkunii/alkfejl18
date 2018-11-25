@@ -18,7 +18,7 @@ export class LoginFormComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.userService.getUser(1).subscribe(user => global_vars.currentUser = user);
+    this.userService.getUser(1).subscribe(user => global_vars.currentUser = user);  // temp
   }
 
   private openRegDialog(): void {

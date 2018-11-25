@@ -4,6 +4,11 @@ h1 {
   font-weight: 300;
   text-align: center;
   color: rgba(255,255,255,0.3);
+  margin-top: 0;
+
+  span {
+    font-size: 36px;
+  }
 }
 
 #login-form {

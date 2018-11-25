@@ -13,19 +13,19 @@ export class SkillService {
       {
         id: 11,
         name: 'Krumplipucolás',
-        owners: [],
+        owners: [2, 3],
         requiredBy: []
       } as Skill,
       {
         id: 12,
         name: 'Zabhegyezés',
-        owners: [],
+        owners: [1, 2],
         requiredBy: []
       } as Skill,
       {
         id: 13,
         name: 'Mákhintés',
-        owners: [],
+        owners: [1, 3],
         requiredBy: []
       } as Skill
     ];

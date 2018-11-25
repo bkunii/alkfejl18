@@ -18,7 +18,6 @@ import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { UserProjectsComponent } from './user-projects/user-projects.component';
 import { ProjectTasksComponent } from './project-tasks/project-tasks.component';
 import { ProjectMembersComponent } from './project-members/project-members.component';
-import { UserDetailsComponent } from './user-details/user-details.component';
 import { DialogCreateProjectComponent } from './dialog-create-project/dialog-create-project.component';
 import { DialogAddMemberComponent } from './dialog-add-member/dialog-add-member.component';
 
@@ -32,7 +31,6 @@ import { DialogAddMemberComponent } from './dialog-add-member/dialog-add-member.
     UserProjectsComponent,
     ProjectTasksComponent,
     ProjectMembersComponent,
-    UserDetailsComponent,
     DialogCreateProjectComponent,
     DialogAddMemberComponent
   ],
