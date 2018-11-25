@@ -1,0 +1,112 @@
+
+h1 {
+  padding-left: 30px;
+  font-size: 40px;
+  color: rgba(255,255,255,0.5);
+  margin-top: 40px;
+}
+
+.user-data-tab {
+  background-color: rgba(255,255,255,0.15);
+  border-radius: 20px;
+  padding: 30px;
+  box-sizing: border-box;
+  margin: 30px 0 40px;
+  overflow: hidden;
+
+  > mat-card-header {
+
+    mat-card-title {
+      font-size: 32px;
+      margin-bottom: 30px;
+    }
+
+    mat-icon {
+      position: absolute;
+      top: 0;
+      right: 0;
+      font-size: 40px;
+      background: #fff;
+      border-radius: 0 0 0 20px;
+      padding: 6px;
+      width: auto;
+      height: auto;
+      cursor: pointer;
+      box-shadow: 0px 0px 3px rgba(0,0,0,0.4);
+
+      &:hover {
+        color: #cd5555;
+      }
+    }
+  }
+
+  > mat-card-content {
+
+    mat-card {
+      cursor: pointer;
+
+      mat-card-title {
+        font-size: 24px;
+      }
+
+      mat-icon {
+        position: absolute;
+        top: 16px;
+        right: 16px;
+        cursor: pointer;
+
+        &:hover {
+          color: #cd5555;
+        }
+      }
+    }
+  }
+
+  .project-card {
+    width: 100%;
+  }
+}
+
+#member-list {
+
+  mat-card-subtitle {
+    margin: -24px 0 30px;
+    font-size: 16px;
+    opacity: 0.8;
+  }
+
+  > mat-card-content {
+
+    mat-card {
+      box-sizing: border-box;
+      width: calc(50% - 10px);
+      margin: 0 20px 20px 0;
+      float: left;
+
+      &:nth-child(2n) {
+        margin-right: 0;
+      }
+
+      &:nth-last-child(1),
+      &:nth-last-child(2) {
+        margin-bottom: 0;
+      }
+    }
+  }
+}
+
+#member-details {
+
+  > mat-card-content {
+
+    mat-card {
+      box-sizing: border-box;
+      width: 100%;
+      margin-bottom: 20px;
+
+      &:nth-last-child(1) {
+        margin-bottom: 0;
+      }
+    }
+  }
+}

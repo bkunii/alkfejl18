@@ -1,0 +1,76 @@
+
+<app-navbar project="{{project.id}}"></app-navbar>
+
+<div class="ruler">
+
+  <h1>Project: {{project.name}}</h1>
+
+  <mat-card id="member-list" class="user-data-tab">
+
+    <mat-card-header>
+      <mat-card-title>Résztvevők:</mat-card-title>
+      <mat-icon mat-button (click)="openAddMemberDialog()">add</mat-icon>
+    </mat-card-header>
+
+    <mat-card-content>
+
+      <mat-card class="project-card" *ngFor="let user of assignedUsers" (click)="selectUser(user)">
+
+        <mat-card-header>
+            <mat-card-title>{{user.firstName}} {{user.lastName}}</mat-card-title>
+        </mat-card-header>
+
+        <mat-card-content>
+        </mat-card-content>
+
+        <mat-card-actions align="start">
+        </mat-card-actions>
+
+        <mat-card-footer>
+        </mat-card-footer>
+
+      </mat-card>
+
+    </mat-card-content>
+
+  </mat-card>
+
+  <mat-card id="member-details" class="user-data-tab" *ngIf="selectedUser">
+
+    <mat-card-header>
+      <mat-card-title>{{selectedUser.firstName}} {{selectedUser.lastName}}</mat-card-title>
+      <mat-card-subtitle>[ {{selectedUser.userName}} ]</mat-card-subtitle>
+      <mat-icon mat-button (click)="removeUser()">delete</mat-icon>
+    </mat-card-header>
+
+    <mat-card-content>
+
+      <mat-card>
+        <mat-card-header>
+            <mat-card-title>Saját projectek:</mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+          <ul>
+            <li *ngFor="let project of userOwnProjects">{{project.name}}</li>
+          </ul>
+        </mat-card-content>
+      </mat-card>
+
+      <mat-card>
+        <mat-card-header>
+            <mat-card-title>Részvétel projectekben:</mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+          <ul>
+            <li *ngFor="let project of userProjects">{{project.name}}</li>
+          </ul>
+        </mat-card-content>
+      </mat-card>
+
+    </mat-card-content>
+
+  </mat-card>
+
+  <!-- <app-user-details *ngIf="selectedUser" [selectedUser]="selectedUser" [currentProject]="project"></app-user-details> -->
+
+</div>

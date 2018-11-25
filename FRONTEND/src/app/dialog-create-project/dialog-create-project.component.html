@@ -1,0 +1,9 @@
+
+<h2>Új project felvétele</h2>
+
+<mat-form-field>
+  <input matInput type="text" [(ngModel)]="_project.name" placeholder="Project neve">
+</mat-form-field>
+
+<br>
+<button mat-flat-button type="submit" color="primary" [mat-dialog-close]="_project">Mentés</button>

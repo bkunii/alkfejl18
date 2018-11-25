@@ -10,23 +10,31 @@ import { MatCardModule } from '@angular/material/card';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDialogModule } from '@angular/material/dialog';
-import { RegistrationFormComponent } from './registration-form/registration-form.component';
+import { DialogRegistrationComponent } from './dialog-registration/dialog-registration.component';
 import { UserProfileComponent } from './user-profile/user-profile.component';
 import { NavbarComponent } from './navbar/navbar.component';
-import { MatToolbarModule, MatGridListModule, MatAutocompleteModule, MatChipsModule, MatIconModule, MatDatepickerModule, MatNativeDateModule } from '@angular/material';
-import { ReactiveFormsModule } from '@angular/forms';
+import { MatToolbarModule, MatGridListModule, MatAutocompleteModule, MatChipsModule, MatIconModule, MatDatepickerModule, MatNativeDateModule, MatSelectModule } from '@angular/material';
+import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { UserProjectsComponent } from './user-projects/user-projects.component';
-import { NewProjectFormComponent } from './new-project-form/new-project-form.component';
+import { ProjectTasksComponent } from './project-tasks/project-tasks.component';
+import { ProjectMembersComponent } from './project-members/project-members.component';
+import { UserDetailsComponent } from './user-details/user-details.component';
+import { DialogCreateProjectComponent } from './dialog-create-project/dialog-create-project.component';
+import { DialogAddMemberComponent } from './dialog-add-member/dialog-add-member.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginFormComponent,
-    RegistrationFormComponent,
+    DialogRegistrationComponent,
     UserProfileComponent,
     NavbarComponent,
     UserProjectsComponent,
-    NewProjectFormComponent
+    ProjectTasksComponent,
+    ProjectMembersComponent,
+    UserDetailsComponent,
+    DialogCreateProjectComponent,
+    DialogAddMemberComponent
   ],
   imports: [
     BrowserModule,
@@ -44,10 +52,12 @@ import { NewProjectFormComponent } from './new-project-form/new-project-form.com
     MatAutocompleteModule,
     MatChipsModule,
     MatIconModule,
-    MatDatepickerModule
+    MatDatepickerModule,
+    FormsModule,
+    MatSelectModule
   ],
   providers: [],
   bootstrap: [AppComponent],
-  entryComponents: [RegistrationFormComponent, NewProjectFormComponent]
+  entryComponents: [DialogRegistrationComponent, DialogCreateProjectComponent, DialogAddMemberComponent]
 })
 export class AppModule { }

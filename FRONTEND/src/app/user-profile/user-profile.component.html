@@ -10,15 +10,15 @@
       <h2>Személyes adatok:</h2>
 
       <mat-form-field>
-        <input matInput placeholder="Vezetéknév">
+        <input matInput [(ngModel)]="currentUser.lastName" placeholder="Vezetéknév">
       </mat-form-field>
 
       <mat-form-field>
-        <input matInput placeholder="Keresztnév">
+        <input matInput [(ngModel)]="currentUser.firstName" placeholder="Keresztnév">
       </mat-form-field>
 
       <mat-form-field>
-        <input matInput placeholder="Felhasználó név">
+        <input matInput [(ngModel)]="currentUser.userName" placeholder="Felhasználó név">
       </mat-form-field>
 
       <mat-form-field>

@@ -1,0 +1,36 @@
+
+  <mat-card id="user-own-projects" class="user-data-tab">
+
+    <mat-card-header>
+      <mat-card-title>{{selectedUser.firstName}} {{selectedUser.lastName}}</mat-card-title>
+      <mat-card-subtitle>[ {{selectedUser.userName}} ]</mat-card-subtitle>
+      <mat-icon mat-button (click)="removeUser()">delete</mat-icon>
+    </mat-card-header>
+
+    <mat-card-content>
+
+      <mat-card>
+        <mat-card-header>
+            <mat-card-title>Saját projectek:</mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+          <ul *ngFor="let project of userOwnProjects" >
+            <li>{{project.name}}</li>
+          </ul>
+        </mat-card-content>
+      </mat-card>
+
+      <mat-card>
+        <mat-card-header>
+            <mat-card-title>Részvétel projectekben:</mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+          <ul *ngFor="let project of userProjects" >
+            <li>{{project.name}}</li>
+          </ul>
+        </mat-card-content>
+      </mat-card>
+
+    </mat-card-content>
+
+  </mat-card>

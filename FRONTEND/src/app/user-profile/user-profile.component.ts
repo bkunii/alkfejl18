@@ -15,7 +15,7 @@ import { ActivatedRoute } from '@angular/router';
 })
 export class UserProfileComponent implements OnInit {
 
-  private user: User;
+  private currentUser: User;
   public skills: Skill[];
 
   public myControl = new FormControl();
@@ -30,7 +30,7 @@ export class UserProfileComponent implements OnInit {
   ngOnInit() {
     // tslint:disable-next-line:radix
     const userId: number = parseInt(this.route.snapshot.paramMap.get('id'));
-    // this.user = this.userService.getUser(userId);
+    this.userService.getUser(userId).subscribe(user => this.currentUser = user);
     // this.skills = this.skillService.getSkillsOfUser(userId);
 
     this.filteredOptions = this.myControl.valueChanges.pipe(

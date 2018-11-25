@@ -1,4 +1,4 @@
-import { LoginFormComponent } from './../login-form/login-form.component';
+import { LoginFormComponent } from '../login-form/login-form.component';
 import { Component, OnInit } from '@angular/core';
 import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material';
 
@@ -8,13 +8,13 @@ export interface RegistrationData {
 }
 
 @Component({
-  selector: 'app-registration-form',
-  templateUrl: './registration-form.component.html',
-  styleUrls: ['./registration-form.component.scss']
+  selector: 'app-dialog-registration',
+  templateUrl: './dialog-registration.component.html',
+  styleUrls: ['./dialog-registration.component.scss']
 })
-export class RegistrationFormComponent implements OnInit {
+export class DialogRegistrationComponent implements OnInit {
 
-  constructor(private dialogRef: MatDialogRef<RegistrationFormComponent>) { }
+  constructor(private dialogRef: MatDialogRef<DialogRegistrationComponent>) { }
 
   ngOnInit() {
   }
