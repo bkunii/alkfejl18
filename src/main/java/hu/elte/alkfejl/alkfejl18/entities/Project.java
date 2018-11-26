@@ -1,6 +1,7 @@
 package hu.elte.alkfejl.alkfejl18.entities;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -38,7 +39,6 @@ public class Project implements Serializable{
     private Integer id;
 	
 	@JoinColumn
-	@NotNull
 	@ManyToOne
 	private User leader;
 	
@@ -62,4 +62,5 @@ public class Project implements Serializable{
 	@Column
 	@NotNull
 	private String name;
+	
 }

@@ -41,7 +41,8 @@ public class ProjectController {
     	}
     	
     	project.setId(null);
-    	project.setMembers(new ArrayList<User>()); //TODO make custom constructors with nullable field inits
+    	project.setLeader(oLeader.get());
+    	project.setMembers(new ArrayList<User>()); //TODO make custom constructors
     	project.setTasks(new ArrayList<Task>());
     	project.getMembers().add(oLeader.get());
     	oLeader.get().getOwnedProjects().add(project);
