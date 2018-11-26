@@ -1,4 +1,4 @@
-import { DialogAddMemberComponent } from './../dialog-add-member/dialog-add-member.component';
+import { DialogAddMemberComponent } from './../dialogs/dialog-add-member/dialog-add-member.component';
 import { MatDialog } from '@angular/material';
 import { ProjectService } from './../services/project.service';
 import { User } from './../classes/user';
@@ -39,10 +39,11 @@ export class ProjectMembersComponent implements OnInit {
   private openAddMemberDialog(): void {
     const dialogRef = this.dialog.open(DialogAddMemberComponent, {
       width: '350px',
-      data: { project: this.project }
+      data: this.project
     });
 
     dialogRef.afterClosed().subscribe(selectedUser => {
+      if (!selectedUser) { return; }
       this.projectService.addMemberToProject(this.project.id, selectedUser);
       this.userService.addMembershipToUser(selectedUser, this.project.id);
       this.userService.getUsersByPID(this.project.id).subscribe(users => this.assignedUsers = users);

@@ -1,0 +1,31 @@
+
+<h1 mat-dialog-title>Regisztráció</h1>
+
+<form [formGroup]="registrationForm" (ngSubmit)="onSubmit()">
+
+  <div mat-dialog-content>
+
+    <mat-form-field>
+      <input matInput type="text" formControlName="fullName" placeholder="Név">
+    </mat-form-field>
+
+    <mat-form-field>
+      <input matInput type="text" formControlName="userName" placeholder="Felhasználó név">
+    </mat-form-field>
+
+    <mat-form-field>
+      <input matInput type="password" formControlName="password" placeholder="Jelszó">
+    </mat-form-field>
+
+    <mat-form-field>
+      <input matInput type="password" formControlName="password2" placeholder="Jelszó (újra)">
+    </mat-form-field>
+
+  </div>
+
+  <mat-dialog-actions>
+    <button mat-flat-button color="primary" type="submit">Regisztráció</button>
+    <button mat-stroked-button color="primary" mat-dialog-close>Mégsem</button>
+  </mat-dialog-actions>
+
+</form>

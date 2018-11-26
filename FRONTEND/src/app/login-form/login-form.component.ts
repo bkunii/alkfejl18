@@ -1,4 +1,4 @@
-import { DialogRegistrationComponent } from './../dialog-registration/dialog-registration.component';
+import { DialogRegistrationComponent } from './../dialogs/dialog-registration/dialog-registration.component';
 import { AppComponent } from './../app.component';
 import { Component, OnInit } from '@angular/core';
 import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material';
@@ -12,18 +12,13 @@ import { UserService } from '../services/user.service';
 })
 export class LoginFormComponent implements OnInit {
 
-  constructor(
-    public dialog: MatDialog,
-    private userService: UserService
-  ) { }
+  constructor(public dialog: MatDialog) { }
 
-  ngOnInit() {
-    this.userService.getUser(1).subscribe(user => global_vars.currentUser = user);  // temp
-  }
+  ngOnInit() { }
 
   private openRegDialog(): void {
     const dialogRef = this.dialog.open(DialogRegistrationComponent, {
-      width: '350px',
+      width: '350px'
     });
   }
 }

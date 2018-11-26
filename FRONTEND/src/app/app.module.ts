@@ -10,16 +10,16 @@ import { MatCardModule } from '@angular/material/card';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDialogModule } from '@angular/material/dialog';
-import { DialogRegistrationComponent } from './dialog-registration/dialog-registration.component';
+import { DialogRegistrationComponent } from './dialogs/dialog-registration/dialog-registration.component';
 import { UserProfileComponent } from './user-profile/user-profile.component';
 import { NavbarComponent } from './navbar/navbar.component';
-import { MatToolbarModule, MatGridListModule, MatAutocompleteModule, MatChipsModule, MatIconModule, MatDatepickerModule, MatNativeDateModule, MatSelectModule } from '@angular/material';
+import { MatToolbarModule, MatGridListModule, MatAutocompleteModule, MatChipsModule, MatIconModule, MatDatepickerModule, MatNativeDateModule, MatSelectModule, MatSnackBar, MatSnackBarModule } from '@angular/material';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { UserProjectsComponent } from './user-projects/user-projects.component';
 import { ProjectTasksComponent } from './project-tasks/project-tasks.component';
 import { ProjectMembersComponent } from './project-members/project-members.component';
-import { DialogCreateProjectComponent } from './dialog-create-project/dialog-create-project.component';
-import { DialogAddMemberComponent } from './dialog-add-member/dialog-add-member.component';
+import { DialogCreateProjectComponent } from './dialogs/dialog-create-project/dialog-create-project.component';
+import { DialogAddMemberComponent } from './dialogs/dialog-add-member/dialog-add-member.component';
 
 @NgModule({
   declarations: [
@@ -38,7 +38,6 @@ import { DialogAddMemberComponent } from './dialog-add-member/dialog-add-member.
     BrowserModule,
     AppRoutingModule,
     MatNativeDateModule,
-
     ReactiveFormsModule,
     BrowserAnimationsModule,
     MatCardModule,
@@ -52,7 +51,8 @@ import { DialogAddMemberComponent } from './dialog-add-member/dialog-add-member.
     MatIconModule,
     MatDatepickerModule,
     FormsModule,
-    MatSelectModule
+    MatSelectModule,
+    MatSnackBarModule
   ],
   providers: [],
   bootstrap: [AppComponent],

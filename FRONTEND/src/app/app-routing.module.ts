@@ -8,10 +8,10 @@ import { ProjectMembersComponent } from './project-members/project-members.compo
 
 const routes: Routes = [
   { path: '', component: LoginFormComponent },
-  { path: 'users/:id/projects', component: UserProjectsComponent },
-  { path: 'users/:id/profile', component: UserProfileComponent },
-  { path: 'projects/:id/tasks', component: ProjectTasksComponent },
-  { path: 'projects/:id/members', component: ProjectMembersComponent },
+  { path: 'users/:uid/projects', component: UserProjectsComponent },
+  { path: 'users/:uid/profile', component: UserProfileComponent },
+  { path: 'projects/:pid/tasks', component: ProjectTasksComponent },
+  { path: 'projects/:pid/members', component: ProjectMembersComponent },
 ];
 
 @NgModule({

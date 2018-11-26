@@ -1,4 +1,4 @@
-import { DialogCreateProjectComponent } from './../dialog-create-project/dialog-create-project.component';
+import { DialogCreateProjectComponent } from './../dialogs/dialog-create-project/dialog-create-project.component';
 import { MatDialog } from '@angular/material';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';

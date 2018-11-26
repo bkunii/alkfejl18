@@ -1,7 +1,7 @@
-import { User } from './../classes/user';
+import { User } from './../../classes/user';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { Component, OnInit, EventEmitter, Input, Output, Inject } from '@angular/core';
-import { Project } from '../classes/projects';
+import { Project } from '../../classes/projects';
 import { FormBuilder } from '@angular/forms';
 
 @Component({
