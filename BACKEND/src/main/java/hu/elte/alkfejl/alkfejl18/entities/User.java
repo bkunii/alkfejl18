@@ -40,10 +40,7 @@ public class User implements Serializable {
     private String password;
     
     @Column
-    private String firstName;
-    
-    @Column
-    private String lastName;
+    private String name;
     
     @Column
     @JsonIgnore

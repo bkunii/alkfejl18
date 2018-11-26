@@ -69,8 +69,11 @@ public class Task implements Serializable{
 	@Column
 	private String completedBy;
 	
-	@JoinColumn
+	@Column
 	@NotNull
+	private Boolean isOpen;
+	
+	@JoinColumn
 	@ManyToOne
 	private Project project; 
 }

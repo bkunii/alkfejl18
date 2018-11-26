@@ -2,6 +2,7 @@ package hu.elte.alkfejl.alkfejl18.controllers;
 
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -43,16 +44,15 @@ public class TaskController {
 		return ResponseEntity.ok(oTask.get());
 	}
 	
-	@PostMapping("/create")
-	public ResponseEntity<Task> createTask(@RequestBody Task task){
-		if(task.getProject() == null) {
-			return ResponseEntity.badRequest().build();
-		}
-		Optional<Project> oProject = projectRepository.findById(task.getProject().getId());
+	@PostMapping("/create/{projId}")
+	public ResponseEntity<Task> createTask(@PathVariable Integer projId,@RequestBody Task task){
+		Optional<Project> oProject = projectRepository.findById(projId);
 		if(!oProject.isPresent()) {
 			return ResponseEntity.notFound().build();
 		}
-		
+		task.setId(null);
+		task.setAssignees(new ArrayList<User>());
+		task.setProject(oProject.get());
 		task.setComplete(false);
 		oProject.get().getTasks().add(task);
 		projectRepository.save(oProject.get());
@@ -105,7 +105,7 @@ public class TaskController {
             return ResponseEntity.notFound().build();
         }
 		Task task = oTask.get();
-		if(task.getComplete() || user.getAssignedTasks().contains(task)) {
+		if(task.getComplete() || !user.getAssignedTasks().contains(task)) {
 			return ResponseEntity.badRequest().build();
 		}
 		user.getAssignedTasks().remove(task);

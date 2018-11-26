@@ -48,7 +48,7 @@ public class SkillController {
         return ResponseEntity.ok(oSkill.get());
     }
     
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/delete/{id}")
     public ResponseEntity deleteSkill(@PathVariable Integer id) {
         Optional<Skill> oSkill = skillRepository.findById(id);
         if (!oSkill.isPresent()) {
@@ -59,7 +59,7 @@ public class SkillController {
         return ResponseEntity.ok().build();
     }
     
-    @PutMapping("/{id}/edit")
+    @PutMapping("/edit/{id}")
     public ResponseEntity<Skill> put(@PathVariable Integer id, @RequestBody Skill skill) {
         Optional<Skill> oSkill = skillRepository.findById(id);
         if (!oSkill.isPresent()) {
