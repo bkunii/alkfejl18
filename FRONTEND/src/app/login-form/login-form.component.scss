@@ -1,0 +1,61 @@
+
+h1 {
+  font-size: 60px;
+  font-weight: 300;
+  text-align: center;
+  color: rgba(255,255,255,0.3);
+  margin-top: 0;
+
+  span {
+    font-size: 36px;
+  }
+}
+
+#login-form {
+
+  background-color: rgba(255,255,255,0.15);
+  width: 300px;
+  padding: 30px;
+  border-radius: 20px;
+  margin: auto;
+
+  h2 {
+    font-weight: 300;
+    text-align: center;
+    font-size: 40px;
+    margin-top: 10px;
+  }
+
+  mat-form-field {
+    width: 100%;
+  }
+
+  #btn-login {
+    width: 100%;
+    background-color: rgba(0,0,0,0.1);
+    color: #222222;
+    font-weight: bold;
+    font-size: 20px;
+    padding: 6px;
+    margin-top: 25px;
+
+    &:hover {
+      background-color: #336699;
+      color: #ffffff;
+    }
+  }
+
+  #reg-btn-wrapper {
+    margin-top: 20px;
+    text-align: center;
+
+    span {
+      font-weight: bold;
+      cursor: pointer;
+
+      &:hover {
+        color: #336699;
+      }
+    }
+  }
+}

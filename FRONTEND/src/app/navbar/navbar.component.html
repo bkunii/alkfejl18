@@ -1,0 +1,19 @@
+
+<mat-toolbar>
+
+  <h1>Sajtoslaska v0.0.1 pre-alpha</h1>
+
+  <button id="btn-projects" mat-button *ngIf="!projectId" routerLink="/users/1/projects">Projectek</button>
+  <button id="btn-profile" mat-button *ngIf="!projectId" routerLink="/users/1/profile">Profil</button>
+
+  <button id="btn-back" mat-button *ngIf="projectId" routerLink="/users/1/projects">
+    <mat-icon class="mat-18">keyboard_backspace</mat-icon>
+  </button>
+  <button id="btn-edit" mat-button *ngIf="projectId" routerLink="/projects/{{projectId}}/tasks">Szerkesztés</button>
+  <button id="btn-members" mat-button *ngIf="projectId" routerLink="/projects/{{projectId}}/members">Felhasználók</button>
+
+  <div class="spacer"></div>
+
+  <button id="btn-logout" mat-button routerLink="">Kilépés</button>
+
+</mat-toolbar>
