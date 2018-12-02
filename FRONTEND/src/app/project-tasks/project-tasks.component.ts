@@ -19,7 +19,7 @@ export class ProjectTasksComponent implements OnInit {
 
   ngOnInit() {
     // tslint:disable-next-line:radix
-    const projectId: number = parseInt(this.route.snapshot.paramMap.get('id'));
+    const projectId: number = parseInt(this.route.snapshot.paramMap.get('pid'));
     this.projectService.getProject(projectId).subscribe(project => this.project = project);
   }
 }

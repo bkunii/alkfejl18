@@ -17,8 +17,9 @@ import { global_vars } from '../../globals';
 })
 export class DialogAddMemberComponent implements OnInit {
 
-  public users: User[];
-  public result: number;
+  private assignedUsers: User[];
+  private users: User[];
+  private selectedUserId: number;
 
   constructor(
     private route: ActivatedRoute,
@@ -28,9 +29,6 @@ export class DialogAddMemberComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    const userId: number = parseInt(this.route.snapshot.paramMap.get('pid'));
-    console.log(userId);
-    return;
     let assignedUsers: number[];
     this.projectService.getProjectMembers(this.data.id).subscribe(userIds => assignedUsers = userIds);
     this.userService.getOtherUsers(global_vars.currentUser.id).subscribe(users => this.users = users);

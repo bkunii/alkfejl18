@@ -1,5 +1,7 @@
+import { ActivatedRoute } from '@angular/router';
 import { Component, OnInit, Input } from '@angular/core';
 import { Project } from '../classes/projects';
+import { global_vars } from '../globals';
 
 @Component({
   selector: 'app-navbar',
@@ -8,11 +10,14 @@ import { Project } from '../classes/projects';
 })
 export class NavbarComponent implements OnInit {
 
-  // tslint:disable-next-line:no-input-rename
-  @Input('project') public projectId: Project;
+  private uid: number;
+  private pid: number;
+  private currentUserId: number = global_vars.currentUser.id;
 
-  constructor() { }
+  constructor(private route: ActivatedRoute) { }
 
-  ngOnInit() { }
-
+  ngOnInit() {
+    this.pid = parseInt(this.route.snapshot.paramMap.get('pid'), 10);
+    this.uid = parseInt(this.route.snapshot.paramMap.get('uid'), 10);
+  }
 }

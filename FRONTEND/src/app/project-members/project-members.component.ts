@@ -11,7 +11,10 @@ import { global_vars } from '../globals';
 @Component({
   selector: 'app-project-members',
   templateUrl: './project-members.component.html',
-  styleUrls: ['./project-members.component.scss']
+  styleUrls: [
+    '../common-styles.scss',
+    './project-members.component.scss'
+  ]
 })
 export class ProjectMembersComponent implements OnInit {
 
@@ -31,7 +34,7 @@ export class ProjectMembersComponent implements OnInit {
 
   ngOnInit() {
     // tslint:disable-next-line:radix
-    const projectId: number = parseInt(this.route.snapshot.paramMap.get('id'));
+    const projectId: number = parseInt(this.route.snapshot.paramMap.get('pid'));
     this.projectService.getProject(projectId).subscribe(project => this.project = project);
     this.userService.getUsersByPID(projectId).subscribe(users => this.assignedUsers = users);
   }

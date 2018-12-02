@@ -5,16 +5,12 @@
 
   <div id="user-details-wrapper">
 
-    <mat-card id="user-personal-data" class="user-data-tab">
+    <mat-card id="user-personal-data" class="transparent-panel">
 
       <h2>Személyes adatok:</h2>
 
       <mat-form-field>
-        <input matInput [(ngModel)]="currentUser.lastName" placeholder="Vezetéknév">
-      </mat-form-field>
-
-      <mat-form-field>
-        <input matInput [(ngModel)]="currentUser.firstName" placeholder="Keresztnév">
+        <input matInput [(ngModel)]="currentUser.fullName" placeholder="Név">
       </mat-form-field>
 
       <mat-form-field>
@@ -22,16 +18,16 @@
       </mat-form-field>
 
       <mat-form-field>
-        <input type="password" matInput placeholder="Jelszó">
+        <input matInput type="password" placeholder="Jelszó">
       </mat-form-field>
 
       <mat-form-field>
-        <input type="password" matInput placeholder="Jelszó (újra)">
+        <input matInput type="password" placeholder="Jelszó (újra)">
       </mat-form-field>
 
     </mat-card>
 
-    <mat-card id="user-skills" class="user-data-tab">
+    <mat-card id="user-skills" class="transparent-panel">
 
       <h2>Képességek:</h2>
 
@@ -40,7 +36,7 @@
       </mat-chip-list>
 
       <mat-form-field>
-        <input type="text" matInput [formControl]="myControl" [matAutocomplete]="auto" placeholder="Na mit tudsz???">
+        <input type="text" matInput (keypress)="keypress($event)" [formControl]="myControl" [matAutocomplete]="auto" placeholder="Na mit tudsz???">
       </mat-form-field>
       <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete">
         <mat-option *ngFor="let option of filteredOptions | async" [value]="option">

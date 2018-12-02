@@ -10,7 +10,10 @@ import { User } from '../classes/user';
 @Component({
   selector: 'app-user-projects',
   templateUrl: './user-projects.component.html',
-  styleUrls: ['./user-projects.component.scss']
+  styleUrls: [
+    '../common-styles.scss',
+    './user-projects.component.scss'
+  ]
 })
 export class UserProjectsComponent implements OnInit {
 
@@ -28,7 +31,7 @@ export class UserProjectsComponent implements OnInit {
 
   ngOnInit() {
     // tslint:disable-next-line:radix
-    const userId: number = parseInt(this.route.snapshot.paramMap.get('id'));
+    const userId: number = parseInt(this.route.snapshot.paramMap.get('uid'));
     this.userService.getUser(userId).subscribe(user => this.currentUser = user);
     this.projectService.getUserProjects(userId).subscribe(projects => this.projects = projects);
     this.projectService.getUserOwnProjects(userId).subscribe(projects => this.ownProjects = projects);
