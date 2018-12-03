@@ -1,28 +1,9 @@
 
-#user-details-wrapper {
-  margin-top: 40px;
+.transparent-panel {
+  display: inline-block;
+  width: calc(50% - 10px);
 
-  .user-data-tab {
-    display: inline-block;
-    background-color: rgba(255,255,255,0.15);
-    border-radius: 20px;
-    padding: 30px;
-    width: calc(50% - 10px);
-    box-sizing: border-box;
-
-    &:nth-of-type(1) {
-      margin-right: 20px;
-    }
-
-    mat-form-field {
-      width: 100%;
-    }
-  }
-}
-
-#user-skills {
-
-  mat-form-field {
-    margin-top: 16px;
+  &:nth-of-type(1) {
+    margin-right: 20px;
   }
 }

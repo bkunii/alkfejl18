@@ -1,5 +1,7 @@
+import { Observable, of } from 'rxjs';
 import { Injectable } from '@angular/core';
 import { Skill } from './../classes/skill';
+import { User } from '../classes/user';
 
 @Injectable({
   providedIn: 'root'
@@ -31,15 +33,32 @@ export class SkillService {
     ];
   }
 
-  public getSkillsOfUser(userId: number): Skill[] {
-    return this.SKILLS.filter(skill => skill.owners.includes(userId));
+  public getSkillsOfUser(userId: number): Observable<Skill[]> {
+    return of(this.SKILLS.filter(skill => skill.owners.includes(userId)));
   }
 
-  public getSkills(): Skill[] {
-    return this.SKILLS;
+  public getAllSkills(): Observable<Skill[]> {
+    return of(this.SKILLS);
   }
 
-  public addSkill(skill: Skill): void {
-    this.SKILLS.push(skill);
+  public addSkillToUser(skillName: string, user: User): Observable<Skill> {
+    let skill: Skill = this.SKILLS.find(skl => skl.name === skillName);
+
+    console.log(skill);
+
+
+    if (skill === undefined) {
+      skill = {
+        id: Math.floor(Math.random() * 100000),
+        name: skillName,
+        owners: [user.id],
+        requiredBy: []
+      } as Skill;
+      this.SKILLS.push(skill);
+    } else {
+      skill.owners.push(user.id);
+    }
+
+    return of(skill);
   }
 }

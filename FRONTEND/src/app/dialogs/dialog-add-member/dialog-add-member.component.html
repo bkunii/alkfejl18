@@ -1,0 +1,17 @@
+
+<h1 matDialogTitle>Új résztvevő felvétele</h1>
+
+<mat-dialog-content>
+
+  <mat-form-field>
+    <mat-select [(ngModel)]="selectedUserId" *ngIf="users"  placeholder="Válassz egy jobbágyot">
+        <mat-option [value]="user.id" *ngFor="let user of users">{{user.fullName}}</mat-option>
+    </mat-select>
+  </mat-form-field>
+
+</mat-dialog-content>
+
+<mat-dialog-actions>
+  <button mat-flat-button color="primary" [mat-dialog-close]="selectedUserId">Mentés</button>
+  <button mat-stroked-button color="primary" mat-dialog-close>Mégsem</button>
+</mat-dialog-actions>

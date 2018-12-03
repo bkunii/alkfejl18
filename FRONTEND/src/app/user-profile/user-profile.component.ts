@@ -1,6 +1,6 @@
 import { SkillService } from './../services/skill.service';
 import { Component, OnInit } from '@angular/core';
-import {FormControl} from '@angular/forms';
+import { FormControl, FormBuilder } from '@angular/forms';
 import {Observable} from 'rxjs';
 import {map, startWith} from 'rxjs/operators';
 import { Skill } from '../classes/skill';
@@ -12,11 +12,14 @@ import { global_vars } from '../globals';
 @Component({
   selector: 'app-user-profile',
   templateUrl: './user-profile.component.html',
-  styleUrls: ['./user-profile.component.scss']
+  styleUrls: [
+    '../common-styles.scss',
+    './user-profile.component.scss'
+  ]
 })
 export class UserProfileComponent implements OnInit {
 
-  private currentUser: User = global_vars.currentUser;
+  private currentUser: User;
 
   private allSkills: Skill[];
   private userSkills: Skill[];
@@ -27,14 +30,15 @@ export class UserProfileComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private skillService: SkillService,
-    private userService: UserService
+    private userService: UserService,
   ) { }
 
   ngOnInit() {
-    this.userService.getUser(1).subscribe(user => global_vars.currentUser = user);  // temp
+    const userId: number = parseInt(this.route.snapshot.paramMap.get('uid'), 10);
+    this.userService.getUser(userId).subscribe(user => this.currentUser = user);
 
-    this.userSkills = this.skillService.getSkillsOfUser(this.currentUser.id);
-    this.allSkills = this.skillService.getSkills();
+    this.skillService.getSkillsOfUser(this.currentUser.id).subscribe(skills => this.userSkills = skills);
+    this.skillService.getAllSkills().subscribe(skills => this.allSkills = skills);
 
     this.filteredOptions = this.myControl.valueChanges.pipe(
       startWith(''),
@@ -45,5 +49,15 @@ export class UserProfileComponent implements OnInit {
   private _filter(value: string): string[] {
     const filterValue = value.toLowerCase();
     return this.allSkills.filter(option => option.name.toLowerCase().indexOf(filterValue) === 0).map(skill => skill.name);
+  }
+
+  public keypress($event: any): void {
+    if ($event.keyCode === 13) {
+      this.skillService.addSkillToUser($event.target.value, this.currentUser).subscribe(skill => {
+        this.currentUser.skills.push(skill.id);
+        this.skillService.getSkillsOfUser(this.currentUser.id).subscribe(skills => this.userSkills = skills);
+      });
+      $event.target.value = '';
+    }
   }
 }

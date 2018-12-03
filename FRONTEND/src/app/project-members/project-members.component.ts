@@ -1,4 +1,4 @@
-import { DialogAddMemberComponent } from './../dialog-add-member/dialog-add-member.component';
+import { DialogAddMemberComponent } from './../dialogs/dialog-add-member/dialog-add-member.component';
 import { MatDialog } from '@angular/material';
 import { ProjectService } from './../services/project.service';
 import { User } from './../classes/user';
@@ -11,7 +11,10 @@ import { global_vars } from '../globals';
 @Component({
   selector: 'app-project-members',
   templateUrl: './project-members.component.html',
-  styleUrls: ['./project-members.component.scss']
+  styleUrls: [
+    '../common-styles.scss',
+    './project-members.component.scss'
+  ]
 })
 export class ProjectMembersComponent implements OnInit {
 
@@ -31,7 +34,7 @@ export class ProjectMembersComponent implements OnInit {
 
   ngOnInit() {
     // tslint:disable-next-line:radix
-    const projectId: number = parseInt(this.route.snapshot.paramMap.get('id'));
+    const projectId: number = parseInt(this.route.snapshot.paramMap.get('pid'));
     this.projectService.getProject(projectId).subscribe(project => this.project = project);
     this.userService.getUsersByPID(projectId).subscribe(users => this.assignedUsers = users);
   }
@@ -39,10 +42,11 @@ export class ProjectMembersComponent implements OnInit {
   private openAddMemberDialog(): void {
     const dialogRef = this.dialog.open(DialogAddMemberComponent, {
       width: '350px',
-      data: { project: this.project }
+      data: this.project
     });
 
     dialogRef.afterClosed().subscribe(selectedUser => {
+      if (!selectedUser) { return; }
       this.projectService.addMemberToProject(this.project.id, selectedUser);
       this.userService.addMembershipToUser(selectedUser, this.project.id);
       this.userService.getUsersByPID(this.project.id).subscribe(users => this.assignedUsers = users);
