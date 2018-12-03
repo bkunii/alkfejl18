@@ -33,21 +33,20 @@ public class ProjectController {
         return ResponseEntity.ok(projects);
     }
      
-    @PostMapping("/new/{leaderId}")
-    public ResponseEntity<Project> createProject(@RequestBody Project project,@PathVariable Integer leaderId) {
-        Optional<User> oLeader = userRepository.findById(leaderId);
-    	if (!oLeader.isPresent() || project.getMembers() != null || project.getTasks() != null) {
+    @PostMapping("/new")
+    public ResponseEntity<Project> createProject(@RequestBody MessageWrapper project) {
+    	if(!project.isProject()) {
     		return ResponseEntity.badRequest().build();
     	}
-    	
-    	project.setId(null);
-    	project.setLeader(oLeader.get());
-    	project.setMembers(new ArrayList<User>()); //TODO make custom constructors
-    	project.setTasks(new ArrayList<Task>());
-    	project.getMembers().add(oLeader.get());
-    	oLeader.get().getOwnedProjects().add(project);
+        Optional<User> oLeader = userRepository.findById(project.getLeaderId());
+    	if (!oLeader.isPresent()) {
+    		return ResponseEntity.badRequest().build();
+    	}
+    	Project newProject = new Project(null,oLeader.get(),new ArrayList<User>(),new ArrayList<Task>(), null,project.getName());
+    	newProject.getMembers().add(oLeader.get());
+    	oLeader.get().getOwnedProjects().add(newProject);
     	userRepository.save(oLeader.get());
-        return ResponseEntity.ok(projectRepository.save(project));
+        return ResponseEntity.ok(projectRepository.save(newProject));
     }
         
     @GetMapping("/{id}")

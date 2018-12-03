@@ -1,5 +1,6 @@
 package hu.elte.alkfejl.alkfejl18.controllers;
 
+import java.util.ArrayList;
 import java.util.Optional;
 import hu.elte.alkfejl.alkfejl18.entities.*;
 import hu.elte.alkfejl.alkfejl18.repositories.*;
@@ -30,14 +31,13 @@ public class UserController {
     }
      
     @PostMapping("/new")
-    public ResponseEntity<User> createUser(@RequestBody User user) {
-        Optional<User> oUser = userRepository.findById(user.getId());
-        if (oUser.isPresent() || user.getOwnedProjects() != null || user.getProjects() != null ||
-        		user.getAssignedTasks() != null) {
-            return ResponseEntity.badRequest().build();
+    public ResponseEntity<User> createUser(@RequestBody MessageWrapper user) {
+        if(!user.isUser()) {
+        	return ResponseEntity.badRequest().build();
         }
-        user.setId(null);
-        return ResponseEntity.ok(userRepository.save(user));
+        User newUser = new User(null,user.getUserName(),user.getPassword(),user.getName(),new ArrayList<Project>(),new ArrayList<Project>(),
+        		new ArrayList<Skill>(),new ArrayList<Task>());
+        return ResponseEntity.ok(userRepository.save(newUser));
     }
         
     @GetMapping("/{id}")
