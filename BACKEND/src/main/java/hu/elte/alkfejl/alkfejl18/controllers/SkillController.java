@@ -1,5 +1,6 @@
 package hu.elte.alkfejl.alkfejl18.controllers;
 
+import java.util.ArrayList;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,13 +30,13 @@ public class SkillController {
 	}
 	
 	@PostMapping("/new")
-	public ResponseEntity<Skill> createSkill(@RequestBody Skill skill){
+	public ResponseEntity<Skill> createSkill(@RequestBody MessageWrapper skill){
 		Optional<Skill> oSkill = skillRepository.findByName(skill.getName());
 		if(oSkill.isPresent()){
 			return ResponseEntity.badRequest().build();
 		}
-		skill.setId(null);
-		return ResponseEntity.ok(skillRepository.save(skill));
+		Skill newSkill = new Skill(null,skill.getName(), new ArrayList<User>(), new ArrayList<Task>());
+		return ResponseEntity.ok(skillRepository.save(newSkill));
 	}
 	
 	@GetMapping("/{id}")

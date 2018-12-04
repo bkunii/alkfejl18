@@ -1,0 +1,4 @@
+-create additional constructors with non-complete arg list, initialize list type fields!
+-throw data around in object?!
+-modify functions check modified data, work accordingly!
+-in objects work with id's and necessary data!

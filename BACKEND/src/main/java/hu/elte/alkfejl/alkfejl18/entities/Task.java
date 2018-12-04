@@ -36,6 +36,10 @@ public class Task implements Serializable{
 	
 	@Column
 	@NotNull
+	private String name;
+	
+	@Column
+	@NotNull
 	@ElementCollection
 	@ManyToMany(mappedBy = "requiredBy")
 	private List<Skill> requiredSkils; 
@@ -46,7 +50,6 @@ public class Task implements Serializable{
 	private List<User> assignees;
 	
 	@Column
-	@JsonIgnore
 	@ElementCollection
 	@ManyToMany(mappedBy = "requiredBy")
 	private List<Task> prerequisites;
@@ -54,6 +57,7 @@ public class Task implements Serializable{
 	@Column
 	@ElementCollection
 	@ManyToMany
+	@JsonIgnore
 	private List<Task> requiredBy;
 	
 	@Column
