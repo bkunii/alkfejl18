@@ -14,7 +14,7 @@ export class DialogCreateProjectComponent implements OnInit {
   // tslint:disable-next-line:no-input-rename
   // @Input('newProject') public _project: Project;
 
-  public _project = {
+  private _project = {
     id: Math.floor(Math.random() * 1000),
     name: null,
     leader: null,

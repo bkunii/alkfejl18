@@ -1,6 +1,7 @@
 
 export class Task {
   public id: number;
+  public name: string;
   public requiredSkills: number[];
   public assignees: number[];
   public prerequisites: number[];

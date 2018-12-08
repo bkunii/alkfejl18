@@ -13,26 +13,29 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { DialogRegistrationComponent } from './dialogs/dialog-registration/dialog-registration.component';
 import { UserProfileComponent } from './user-profile/user-profile.component';
 import { NavbarComponent } from './navbar/navbar.component';
-import { MatToolbarModule, MatGridListModule, MatAutocompleteModule, MatChipsModule, MatIconModule, MatDatepickerModule, MatNativeDateModule, MatSelectModule, MatSnackBar, MatSnackBarModule } from '@angular/material';
+// tslint:disable-next-line:max-line-length
+import { MatToolbarModule, MatGridListModule, MatAutocompleteModule, MatChipsModule, MatIconModule, MatDatepickerModule, MatNativeDateModule, MatSelectModule, MatSnackBar, MatSnackBarModule, MatDividerModule } from '@angular/material';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { UserProjectsComponent } from './user-projects/user-projects.component';
 import { ProjectTasksComponent } from './project-tasks/project-tasks.component';
 import { ProjectMembersComponent } from './project-members/project-members.component';
 import { DialogCreateProjectComponent } from './dialogs/dialog-create-project/dialog-create-project.component';
 import { DialogAddMemberComponent } from './dialogs/dialog-add-member/dialog-add-member.component';
+import { DialogAddTaskComponent } from './dialogs/dialog-add-task/dialog-add-task.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginFormComponent,
-    DialogRegistrationComponent,
     UserProfileComponent,
     NavbarComponent,
     UserProjectsComponent,
     ProjectTasksComponent,
     ProjectMembersComponent,
+    DialogRegistrationComponent,
     DialogCreateProjectComponent,
-    DialogAddMemberComponent
+    DialogAddMemberComponent,
+    DialogAddTaskComponent,
   ],
   imports: [
     BrowserModule,
@@ -52,10 +55,18 @@ import { DialogAddMemberComponent } from './dialogs/dialog-add-member/dialog-add
     MatDatepickerModule,
     FormsModule,
     MatSelectModule,
-    MatSnackBarModule
+    MatSnackBarModule,
+    BrowserModule,
+    FormsModule,
+    MatDividerModule
   ],
   providers: [],
   bootstrap: [AppComponent],
-  entryComponents: [DialogRegistrationComponent, DialogCreateProjectComponent, DialogAddMemberComponent]
+  entryComponents: [
+    DialogRegistrationComponent,
+    DialogCreateProjectComponent,
+    DialogAddMemberComponent,
+    DialogAddTaskComponent,
+  ]
 })
 export class AppModule { }

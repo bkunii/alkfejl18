@@ -1,7 +1,9 @@
+import { TaskService } from './task.service';
 
 import { Injectable } from '@angular/core';
 import { Project } from './../classes/projects';
 import { Observable, of } from 'rxjs';
+import { Task } from '../classes/task';
 
 @Injectable({
   providedIn: 'root'
@@ -10,14 +12,14 @@ export class ProjectService {
 
   private PROJECTS: Project[];
 
-  constructor() {
+  constructor(private taskService: TaskService) {
     this.PROJECTS = [
       {
         id: 100,
         name: 'Főzés',
         leader: 1,
         members: [2],
-        tasks: [],
+        tasks: [1000, 1001, 1002, 1003, 1004],
         deadline: new Date('2018-01-01T14:00')
       } as Project,
       {
@@ -52,9 +54,19 @@ export class ProjectService {
     return of(this.PROJECTS.find(project => project.id === projectId).members);
   }
 
+  public getTasksOfProject(projectId: number): Observable<Task[]> {
+    return of(this.taskService.getTasksByIDs(this.PROJECTS.find(project => project.id === projectId).tasks));
+  }
+
   public removeUserFromProject(userId: number, projectId: number): void {
     // tslint:disable-next-line:max-line-length
     this.PROJECTS.find(project => project.id === projectId).members = this.PROJECTS.find(project => project.id === projectId).members.filter(item => item !== userId);
+  }
+
+  public removeTaskFromProject(projectId: number, taskId: number): void {
+    const project = this.PROJECTS.find(item => item.id === projectId);
+    const idx = project.tasks.indexOf(taskId);
+    project.tasks.splice(idx, 1);
   }
 
   public addProject(project: Project): void {

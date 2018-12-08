@@ -72,6 +72,10 @@ export class UserService {
     return this.USERS;
   }
 
+  public getUsersByUIDs(userIds: number[]): Observable<User[]> {
+    return of(this.USERS.filter(user => userIds.includes(user.id)));
+  }
+
   public getUsersByPID(projectId: number): Observable<User[]> {
     return of(this.USERS.filter(user => user.projects.includes(projectId)));
   }

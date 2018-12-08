@@ -1,0 +1,21 @@
+
+<h1 matDialogTitle>Új feladat felvétele</h1>
+
+<mat-dialog-content>
+
+  <mat-form-field>
+    <input matInput type="text" [(ngModel)]="_task.name" placeholder="Feladat neve">
+  </mat-form-field>
+
+  <mat-form-field>
+    <mat-select placeholder="Előfeltételek" [(ngModel)]="_task.prerequisites" multiple>
+      <mat-option *ngFor="let task of projectTasks" [value]="task.id">{{task.name}}</mat-option>
+    </mat-select>
+  </mat-form-field>
+
+</mat-dialog-content>
+
+<mat-dialog-actions>
+  <button mat-flat-button color="primary" [mat-dialog-close]="_task">Mentés</button>
+  <button mat-stroked-button color="primary" mat-dialog-close>Mégsem</button>
+</mat-dialog-actions>

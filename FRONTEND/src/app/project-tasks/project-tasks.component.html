@@ -5,8 +5,44 @@
 
   <h1>Project: {{project.name}}</h1>
 
-  <div class="placeholder">
-    <span>PLACEHOLDER FOR TASK DEPENDENCY TREE</span>
-  </div>
+  <mat-card id="graph-wrapper" class="transparent-panel">
+
+    <mat-card-header id="legend">
+      <mat-icon mat-button (click)="addTask()">add</mat-icon>
+      <label><span>(I am)</span><br>LEGEND</label>
+      <div class="label lbl-done">BEFEJEZETT</div>
+      <div class="label lbl-in-progress">FOLYAMATBAN</div>
+      <div class="label lbl-ready">MEGKEZDHETŐ</div>
+      <div class="label lbl-blocked">BLOKKOLT</div>
+    </mat-card-header>
+
+    <svg id="graph" width="520"></svg>
+
+  </mat-card>
+
+  <mat-card id="task-form-wrapper" class="transparent-panel" *ngIf="selectedTask">
+
+    <mat-card-header>
+      <mat-card-title><span>Feladat:</span> {{selectedTask.name}}</mat-card-title>
+      <mat-icon mat-button (click)="deleteTask()" *ngIf="!selectedTask.assignees.length" >delete</mat-icon>
+    </mat-card-header>
+
+    <mat-divider></mat-divider>
+
+    <mat-card-content>
+
+      <mat-form-field>
+        <input matInput type="text" [(ngModel)]="selectedTask.name" placeholder="Feladat neve" >
+      </mat-form-field>
+
+      <mat-form-field>
+        <mat-select placeholder="Közreműködők" [(ngModel)]="selectedTask.assignees" multiple>
+          <mat-option *ngFor="let user of users" [value]="user.id">{{user.fullName}}</mat-option>
+        </mat-select>
+      </mat-form-field>
+
+    </mat-card-content>
+
+  </mat-card>
 
 </div>

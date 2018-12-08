@@ -24,6 +24,10 @@
     "@angular/router": "^6.1.0",
     "component": "^1.1.0",
     "core-js": "^2.5.4",
+    "d3": "^5.7.0",
+    "dagre": "^0.8.2",
+    "dagre-d3": "^0.6.1",
+    "jsdom": "^13.0.0",
     "rxjs": "~6.2.0",
     "tar": "^4.4.8",
     "zone.js": "~0.8.26"
@@ -33,6 +37,7 @@
     "@angular/cli": "~6.2.4",
     "@angular/compiler-cli": "^6.1.0",
     "@angular/language-service": "^6.1.0",
+    "@types/d3": "^5.0.1",
     "@types/jasmine": "~2.8.8",
     "@types/jasminewd2": "~2.0.3",
     "@types/node": "~8.9.4",
