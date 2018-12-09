@@ -109,3 +109,11 @@ Group Member :
  * admin/switchtouserprofile
   * *fogalmam nincs ezt pontosan még hogy fogjuk implementálni*
  
+TODO:
+{
+  "timestamp": "2018-12-09T12:56:50.265+0000",
+  "status": 500,
+  "error": "Internal Server Error",
+  "message": "could not execute statement; SQL [n/a]; constraint [\"UK_39TOQEWEEJPRTSITRJ2SER4RG_INDEX_8 ON PUBLIC.TASK_PREREQUISITES(PREREQUISITES_ID) VALUES (1, 1)\"; SQL statement:\ninsert into task_prerequisites (task_id, prerequisites_id) values (?, ?) [23505-197]]; nested exception is org.hibernate.exception.ConstraintViolationException: could not execute statement",
+  "path": "/tasks/new"
+}
