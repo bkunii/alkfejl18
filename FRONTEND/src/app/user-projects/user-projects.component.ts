@@ -1,11 +1,10 @@
 import { DialogCreateProjectComponent } from './../dialogs/dialog-create-project/dialog-create-project.component';
 import { MatDialog } from '@angular/material';
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
-import { UserService } from '../services/user.service';
 import { ProjectService } from './../services/project.service';
 import { Project } from './../classes/projects';
 import { User } from '../classes/user';
+import { currentUser } from '../globals';
 
 @Component({
   selector: 'app-user-projects',
@@ -23,28 +22,30 @@ export class UserProjectsComponent implements OnInit {
   public _project: Project;
 
   constructor(
-    private route: ActivatedRoute,
-    private userService: UserService,
     private projectService: ProjectService,
     private dialog: MatDialog
   ) { }
 
   ngOnInit() {
-    // tslint:disable-next-line:radix
-    const userId: number = parseInt(this.route.snapshot.paramMap.get('uid'));
-    this.userService.getUser(userId).subscribe(user => this.currentUser = user);
-    this.projectService.getUserProjects(userId).subscribe(projects => this.projects = projects);
-    this.projectService.getUserOwnProjects(userId).subscribe(projects => this.ownProjects = projects);
+    this.refreshLists();
   }
 
-  createProject(): void {
+  private refreshLists(): void {
+    this.projectService.getUserProjects(currentUser.id).subscribe(projects => this.projects = projects);
+    this.projectService.getUserOwnProjects(currentUser.id).subscribe(projects => this.ownProjects = projects);
+  }
+
+  private createProject(): void {
     const dialogRef = this.dialog.open(DialogCreateProjectComponent, {
       width: '350px'
     });
 
     dialogRef.afterClosed().subscribe(newProject => {
-      newProject.leader = this.currentUser.id;
-      this.projectService.addProject(newProject);
+      if (newProject !== undefined) {
+        newProject.leader = this.currentUser.id;
+        this.projectService.addNewProject(newProject);
+        this.refreshLists();
+      }
     });
   }
 }

@@ -10,6 +10,7 @@ import { ProjectService } from '../services/project.service';
 import * as d3 from 'd3';
 import * as dagreD3 from 'dagre-d3';
 import { UserService } from '../services/user.service';
+import { currentUser, dateToString } from '../globals';
 
 @Component({
   selector: 'app-project-tasks',
@@ -21,13 +22,16 @@ import { UserService } from '../services/user.service';
 })
 export class ProjectTasksComponent implements OnInit {
 
+  private dateToString;
+
   private render;
   private graph;
   private svg;
 
-  private project: Project;
+  public project: Project;
   private tasks: Task[];
   private selectedTask: Task;
+  private selectedTaskPrereqs: Task[];
   private users: User[];
 
   constructor(
@@ -36,23 +40,34 @@ export class ProjectTasksComponent implements OnInit {
     private taskService: TaskService,
     private userService: UserService,
     private dialog: MatDialog
-  ) { }
+  ) {
+    this.project = new Project();
+
+    this.dateToString = dateToString;
+  }
 
   ngOnInit() {
-    const projectId: number = parseInt(this.route.snapshot.paramMap.get('pid'), 10);
+    const projectID: number = parseInt(this.route.snapshot.paramMap.get('pid'), 10);
 
-    this.projectService.getProject(projectId).subscribe(project => this.project = project);
     this.users = this.userService.getUsers();
-
     this.svg = d3.select('svg');
     this.render = new dagreD3.render();
-    this.graph = new dagreD3.graphlib.Graph().setGraph({});
-    this.initGraph();
+
+    this.projectService.getProject(projectID).subscribe(project => {
+      this.project = project;
+      this.initGraph();
+    });
+
   }
 
   private initGraph(): void {
 
     this.projectService.getTasksOfProject(this.project.id).subscribe(tasks => this.tasks = tasks);
+    this.graph = new dagreD3.graphlib.Graph().setGraph({});
+
+    if (!this.tasks.length) {
+      return;
+    }
 
     this.tasks.forEach(task => {
       let fillColor = '#cd5555';
@@ -95,8 +110,7 @@ export class ProjectTasksComponent implements OnInit {
     });
 
     this.svg.selectAll('*').remove();
-    this.svg.append('g');
-    const inner = this.svg.select('g');
+    const inner = this.svg.append('g');
 
     this.render(inner, this.graph);
 
@@ -117,21 +131,16 @@ export class ProjectTasksComponent implements OnInit {
     return available;
   }
 
-  private dateToString(date: Date): string {
-    return date.toLocaleDateString('hu-HU', {year: 'numeric', month: 'long', day: 'numeric', hour: '2-digit', minute: '2-digit'});
-  }
-
   private addTask(): void {
     const dialogRef = this.dialog.open(DialogAddTaskComponent, {
       width: '350px',
       data: this.project
     });
 
-    dialogRef.afterClosed().subscribe(task => {
-      if (task !== undefined) {
-        this.taskService.addTask(task);
-        this.project.tasks.push(task.id);
-        this.tasks.push(task);
+    dialogRef.afterClosed().subscribe(newTask => {
+      if (newTask !== undefined) {
+        this.taskService.addNewTask(newTask);
+        this.projectService.addTaskToProject(newTask.project, newTask.id);
         this.initGraph();
       }
     });
@@ -143,10 +152,19 @@ export class ProjectTasksComponent implements OnInit {
     this.initGraph();
   }
 
+  private saveTask(): void {
+    this.taskService.saveTask(this.selectedTask);
+    this.initGraph();
+  }
+
   private nodeClicker(id: string): void {
     const node = this.graph.node(id);
     this.selectedTask = node.task;
+    this.selectedTaskPrereqs = this.tasks.filter(task => task.id !== this.selectedTask.id);
     this.userService.getUsersByUIDs(node.task.assignees).subscribe(users => node.task._assignees = users);
   }
 
+  private finishTask(): void {
+    this.selectedTask.finishTask(currentUser);
+  }
 }

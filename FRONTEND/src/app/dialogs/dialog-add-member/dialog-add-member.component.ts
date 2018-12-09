@@ -5,7 +5,7 @@ import { User } from './../../classes/user';
 import { Project } from './../../classes/projects';
 import { ProjectService } from './../../services/project.service';
 import { UserService } from './../../services/user.service';
-import { global_vars } from '../../globals';
+import { currentUser } from '../../globals';
 
 @Component({
   selector: 'app-dialog-add-member',
@@ -31,7 +31,7 @@ export class DialogAddMemberComponent implements OnInit {
   ngOnInit() {
     let assignedUsers: number[];
     this.projectService.getProjectMembers(this.data.id).subscribe(userIds => assignedUsers = userIds);
-    this.userService.getOtherUsers(global_vars.currentUser.id).subscribe(users => this.users = users);
+    this.userService.getOtherUsers(currentUser.id).subscribe(users => this.users = users);
     this.users = this.users.filter(user => !assignedUsers.includes(user.id));
   }
 }

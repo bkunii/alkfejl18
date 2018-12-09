@@ -10,7 +10,7 @@ export class HttpService {
   private options = {
     headers: new HttpHeaders({
       'Content-Type': 'application/json',
-      'Authorization': 'Basic YWRtaW46YWRtaW4=', // admin/password
+//      'Authorization': 'Basic YWRtaW46YWRtaW4=', // admin/password
     })
   };
   private URL = 'http://localhost:8080/';

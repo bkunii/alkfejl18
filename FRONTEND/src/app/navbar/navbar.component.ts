@@ -1,7 +1,7 @@
 import { ActivatedRoute } from '@angular/router';
 import { Component, OnInit, Input } from '@angular/core';
 import { Project } from '../classes/projects';
-import { global_vars } from '../globals';
+import { currentUser } from '../globals';
 
 @Component({
   selector: 'app-navbar',
@@ -12,7 +12,7 @@ export class NavbarComponent implements OnInit {
 
   private uid: number;
   private pid: number;
-  private currentUserId: number = global_vars.currentUser.id;
+  private currentUserId: number = currentUser.id;
 
   constructor(private route: ActivatedRoute) { }
 

@@ -26,13 +26,6 @@ h1 {
   }
 }
 
-#task-form-wrapper {
-
-  mat-card-content {
-    margin-top: 40px;
-  }
-}
-
 #legend {
   position: absolute;
   top: 0;
@@ -97,5 +90,67 @@ h1 {
     background-color: #cd5555;
     color: #fff;
     bottom: 10px;
+  }
+}
+
+#task-form-wrapper {
+
+  mat-card-header {
+
+    .btn-save {
+      right: 80px;
+    }
+  }
+
+  mat-card-content {
+
+    .custom-form-field {
+      position: relative;
+      padding: 10px 0;
+      font-size: 14px;
+      font-weight: 400;
+      color: rgba(0,0,0,0.42);
+      margin-bottom: 1.25em;
+
+      &#form-field-dates {
+
+        > span {
+          display: inline-block;
+          width: 50%;
+
+          span {
+            font-weight: bold;
+            color: #000;
+            padding-left: 6px;
+          }
+        }
+      }
+
+      #tag-state {
+
+        font-weight: bold;
+        padding: 6px 10px;
+        margin-left: 20px;
+        border-radius: 3px;
+        background-color: #cd5555;
+        color: white;
+
+        &.completed {
+          background-color: green;
+          color: white;
+        }
+
+        &.in-progress {
+          background-color: orange;
+          color: black;
+        }
+      }
+
+      button {
+        position: absolute;
+        top: 0;
+        right: 0;
+      }
+    }
   }
 }

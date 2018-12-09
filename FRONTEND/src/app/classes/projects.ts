@@ -6,4 +6,11 @@ export class Project {
   public members: number[];
   public tasks: number[];
   public deadline: Date;
+
+  constructor() {
+    this.id = Math.floor(Math.random() * 999999);
+    this.name = '';
+    this.members = [];
+    this.tasks = [];
+  }
 }

@@ -37,13 +37,12 @@ export class ProjectService {
     return of(this.PROJECTS);
   }
 
-  public getProject(projectId: number): Observable<Project> {
-    return of(this.PROJECTS.find(project => project.id === projectId));
+  public getProject(projectID: number): Observable<Project> {
+    return of(this.PROJECTS.find(project => project.id === projectID));
   }
 
-  public getUserProjects(userId: number): Observable<Project[]> {
-    // console.log(this.PROJECTS);
-    return of(this.PROJECTS.filter(project => project.members.includes(userId)));
+  public getUserProjects(userID: number): Observable<Project[]> {
+    return of(this.PROJECTS.filter(project => project.members.includes(userID)));
   }
 
   public getUserOwnProjects(userId: number): Observable<Project[]> {
@@ -69,11 +68,17 @@ export class ProjectService {
     project.tasks.splice(idx, 1);
   }
 
-  public addProject(project: Project): void {
+  public addMemberToProject(projectId: number, userId: number): void {
+    this.PROJECTS.find(project => project.id === projectId).members.push(userId);
+  }
+
+
+
+  public addNewProject(project: Project): void {
     this.PROJECTS.push(project);
   }
 
-  public addMemberToProject(projectId: number, userId: number): void {
-    this.PROJECTS.find(project => project.id === projectId).members.push(userId);
+  public addTaskToProject(projectID: number, taskID: number): void {
+    this.PROJECTS.find(item => item.id === projectID).tasks.push(taskID);
   }
 }

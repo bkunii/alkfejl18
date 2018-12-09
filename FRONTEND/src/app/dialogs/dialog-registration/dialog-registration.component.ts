@@ -29,9 +29,9 @@ export class DialogRegistrationComponent implements OnInit {
 
   constructor(
     private dialogRef: MatDialogRef<DialogRegistrationComponent>,
-    private userService: UserService,
     private fb: FormBuilder,
-    private snackBar: MatSnackBar
+    private snackBar: MatSnackBar,
+    private userService: UserService
   ) { }
 
   ngOnInit() { }
@@ -50,14 +50,7 @@ export class DialogRegistrationComponent implements OnInit {
       return;
     }
 
-    const newUser: User = {
-      fullName: fullName,
-      userName: userName,
-      projects: [],
-      ownedProjects: [],
-      assignedTasks: [],
-      skills: []
-    } as User;
+    const newUser = new User(name, userName, password);
 
     this.userService.registerUser(newUser);
     this.snackBar.open('Sikeres regisztráció.', '', { duration: 2000 });

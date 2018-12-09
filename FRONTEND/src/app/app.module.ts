@@ -22,6 +22,7 @@ import { ProjectMembersComponent } from './project-members/project-members.compo
 import { DialogCreateProjectComponent } from './dialogs/dialog-create-project/dialog-create-project.component';
 import { DialogAddMemberComponent } from './dialogs/dialog-add-member/dialog-add-member.component';
 import { DialogAddTaskComponent } from './dialogs/dialog-add-task/dialog-add-task.component';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -58,7 +59,8 @@ import { DialogAddTaskComponent } from './dialogs/dialog-add-task/dialog-add-tas
     MatSnackBarModule,
     BrowserModule,
     FormsModule,
-    MatDividerModule
+    MatDividerModule,
+    HttpClientModule
   ],
   providers: [],
   bootstrap: [AppComponent],

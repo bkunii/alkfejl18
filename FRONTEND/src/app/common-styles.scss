@@ -49,4 +49,9 @@
       }
     }
   }
+
+  > mat-divider + mat-card-content,
+  > mat-divider + mat-card-footer {
+    margin-top: 40px;
+  }
 }

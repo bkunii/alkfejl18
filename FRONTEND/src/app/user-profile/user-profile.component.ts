@@ -7,7 +7,6 @@ import { Skill } from '../classes/skill';
 import { User } from '../classes/user';
 import { UserService } from '../services/user.service';
 import { ActivatedRoute } from '@angular/router';
-import { global_vars } from '../globals';
 
 @Component({
   selector: 'app-user-profile',

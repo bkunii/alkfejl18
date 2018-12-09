@@ -24,7 +24,8 @@
 
     <mat-card-header>
       <mat-card-title><span>Feladat:</span> {{selectedTask.name}}</mat-card-title>
-      <mat-icon mat-button (click)="deleteTask()" *ngIf="!selectedTask.assignees.length" >delete</mat-icon>
+      <mat-icon mat-button class="btn-save" (click)="saveTask()" >save</mat-icon>
+      <mat-icon mat-button class="btn-delete" (click)="deleteTask()" *ngIf="!selectedTask.assignees.length" >delete</mat-icon>
     </mat-card-header>
 
     <mat-divider></mat-divider>
@@ -32,7 +33,15 @@
     <mat-card-content>
 
       <mat-form-field>
-        <input matInput type="text" [(ngModel)]="selectedTask.name" placeholder="Feladat neve" >
+        <input matInput type="text" placeholder="Feladat neve"
+               [(ngModel)]="selectedTask.name"
+               ngDisabled="selectedTask.complete">
+      </mat-form-field>
+
+      <mat-form-field>
+        <mat-select placeholder="Előfeltételek" [(ngModel)]="selectedTask.prerequisites" multiple>
+          <mat-option *ngFor="let task of selectedTaskPrereqs" [value]="task.id">{{task.name}}</mat-option>
+        </mat-select>
       </mat-form-field>
 
       <mat-form-field>
@@ -40,6 +49,25 @@
           <mat-option *ngFor="let user of users" [value]="user.id">{{user.fullName}}</mat-option>
         </mat-select>
       </mat-form-field>
+
+      <div id="form-field-done" class="custom-form-field">
+        Állapot:
+        <span id="tag-state" class="{{selectedTask.complete ? 'completed' : 'not-completed'}}">
+          {{selectedTask.complete ? "IGEN" : "NEM"}}
+        </span>
+        <button mat-stroked-button (click)="finishTask()">Befejez</button>
+      </div>
+
+      <div id="form-field-dates" class="custom-form-field">
+        <span class="date-field">
+          Feladat kezdete:
+          <span>{{dateToString(selectedTask.startTime)}}</span>
+        </span>
+        <span class="date-field">
+          Feladat befejezése:
+          <span>{{dateToString(selectedTask.endTime)}}</span>
+        </span>
+      </div>
 
     </mat-card-content>
 

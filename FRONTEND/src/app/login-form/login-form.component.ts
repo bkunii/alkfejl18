@@ -2,7 +2,6 @@ import { DialogRegistrationComponent } from './../dialogs/dialog-registration/di
 import { AppComponent } from './../app.component';
 import { Component, OnInit } from '@angular/core';
 import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material';
-import { global_vars } from '../globals';
 import { UserService } from '../services/user.service';
 
 @Component({
@@ -20,5 +19,7 @@ export class LoginFormComponent implements OnInit {
     const dialogRef = this.dialog.open(DialogRegistrationComponent, {
       width: '350px'
     });
+
+    dialogRef.afterClosed().subscribe(user => console.log(user));
   }
 }

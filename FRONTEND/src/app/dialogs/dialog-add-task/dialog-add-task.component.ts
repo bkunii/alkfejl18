@@ -24,19 +24,6 @@ export class DialogAddTaskComponent implements OnInit {
 
   ngOnInit() {
     this._task = new Task();
-    this._task = {
-      id: Math.floor(Math.random() * 999999),
-      name: '',
-      assignees: [],
-      prerequisites: [],
-      project: null,
-      requiredSkills: [],
-      startTime: null,
-      endTime: null,
-      requiredBy: null,
-      complete: false,
-      completedBy: null
-    };
     this._task.project = this.data.id;
     this.projectService.getTasksOfProject(this.data.id).subscribe(tasks => this.projectTasks = tasks);
   }

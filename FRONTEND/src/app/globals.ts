@@ -1,14 +1,12 @@
 
 import { User } from './classes/user';
 
-export const global_vars = {
-  currentUser: {
-    id: 1,
-    userName: 'johnny',
-    fullName: 'John Doe',
-    ownedProjects: [100],
-    projects: [101],
-    skills: [12, 13],
-    assignedTasks: []
-  } as User
-};
+export declare var currentUser:  User;
+
+export function dateToString(date: Date): string {
+  if (date !== null) {
+    return date.toLocaleDateString('hu-HU', {year: 'numeric', month: 'long', day: 'numeric', hour: '2-digit', minute: '2-digit'});
+  } else {
+    return '';
+  }
+}

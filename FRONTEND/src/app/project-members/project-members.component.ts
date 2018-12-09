@@ -6,7 +6,6 @@ import { UserService } from './../services/user.service';
 import { ActivatedRoute } from '@angular/router';
 import { Component, OnInit, Input } from '@angular/core';
 import { Project } from '../classes/projects';
-import { global_vars } from '../globals';
 
 @Component({
   selector: 'app-project-members',

@@ -1,6 +1,7 @@
 import { Observable, of } from 'rxjs';
 import { Injectable } from '@angular/core';
 import { User } from '../classes/user';
+import { HttpService } from './http.service';
 
 @Injectable({
   providedIn: 'root'
@@ -9,12 +10,12 @@ export class UserService {
 
   private USERS: User[];
 
-  constructor() {
+  constructor(private httpServie: HttpService) {
     this.USERS = [
       {
         id: 1,
         userName: 'johnny',
-        fullName: 'John Doe',
+        name: 'John Doe',
         ownedProjects: [100],
         projects: [101],
         skills: [12, 13],
@@ -23,7 +24,7 @@ export class UserService {
       {
         id: 2,
         userName: 'jane',
-        fullName: 'Jane Doe',
+        name: 'Jane Doe',
         ownedProjects: [101],
         projects: [100],
         skills: [11, 12],
@@ -32,7 +33,7 @@ export class UserService {
       {
         id: 3,
         userName: 'doki',
-        fullName: 'Dr. Strange',
+        name: 'Dr. Strange',
         ownedProjects: [],
         projects: [],
         skills: [11, 13],
@@ -41,7 +42,7 @@ export class UserService {
       {
         id: 4,
         userName: 'ironman',
-        fullName: 'Tony Stark',
+        name: 'Tony Stark',
         ownedProjects: [],
         projects: [],
         skills: [11, 12, 13],
@@ -50,7 +51,7 @@ export class UserService {
       {
         id: 5,
         userName: 'thunder',
-        fullName: 'Thor',
+        name: 'Thor',
         ownedProjects: [],
         projects: [],
         skills: [11, 12, 13],
@@ -60,8 +61,9 @@ export class UserService {
   }
 
   public registerUser(user: User): void {
-    user.id = Math.floor(Math.random() * 10000) + 6;
-    this.USERS.push(user);
+    console.log(JSON.stringify(user));
+
+    this.httpServie.post('users/new', JSON.stringify(user)).subscribe(result => console.log(result));
   }
 
   public getUser(id: number): Observable<User> {
