@@ -117,3 +117,6 @@ TODO:
   "message": "could not execute statement; SQL [n/a]; constraint [\"UK_39TOQEWEEJPRTSITRJ2SER4RG_INDEX_8 ON PUBLIC.TASK_PREREQUISITES(PREREQUISITES_ID) VALUES (1, 1)\"; SQL statement:\ninsert into task_prerequisites (task_id, prerequisites_id) values (?, ?) [23505-197]]; nested exception is org.hibernate.exception.ConstraintViolationException: could not execute statement",
   "path": "/tasks/new"
 }
+
+Egy skill-t hozzá tudok adni (az előző szenvedés után), viszont a másodiknál már ezt dobja:
+ERROR Error: Uncaught (in promise): HttpErrorResponse: {"headers":{"normalizedNames":{},"lazyUpdate":null},"status":500,"statusText":"OK","url":"http://localhost:8080/users/1/skills/add","ok":false,"name":"HttpErrorResponse","message":"Http failure response for http://localhost:8080/users/1/skills/add: 500 OK","error":{"timestamp":"2018-12-16T16:56:47.098+0000","status":500,"error":"Internal Server Error","message":"could not execute statement; SQL [n/a]; constraint [\"UK_CORMJY41HP853KP6MKWJEV1NV_INDEX_C ON PUBLIC.SKILL_OWNERS(OWNERS_ID) VALUES (1, 1)\"; SQL statement:\ninsert into skill_owners (skill_id, owners_id) values (?, ?) [23505-197]]; nested exception is org.hibernate.exception.ConstraintViolationException: could not execute statement","path":"/users/1/skills/add"}}
