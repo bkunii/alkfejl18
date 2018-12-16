@@ -1,4 +1,4 @@
-# Alkalmazások fejlesztése beadandó feladat
+# Alkalmazások fejlesztése beadandó feladat dokumentációja
 
 Készítette: Bagoly Kunigunda, Dorogi Benjamin, Fenyvesi Attila
 
@@ -12,7 +12,7 @@ __Ez egy olyan alkalmazás, amellyel egy munkacsoport__ (pl. egy adott cégen be
 
 Amiután egy felhasználó regisztrál az oldalra, lehetősége van új projektet létrehozni, annak részfeladatokat(task-okat) létrehozni és más felhasználókat rendelhet hozzá a részfeladatokhoz. 
 
-<TODOOO>
+*__\<TODO\>__*
 
 #### 1.1.2. Funkcionális elvárások
 
@@ -33,19 +33,50 @@ A dolgozók adatai:
  
 <del>Egy munkamenet létrehozása után a program megadja, hogy mely dolgozóknak mely részfeladatokon kell dolgozniuk a leghatékonyabb munkavégzés érdekében.</del> A programba a dolgozók a saját azonosítójukkal be tudnak lépni, és az általuk elvégzett részfeladatokat jóvá tudják hagyni, így nyomon követhető a project végrehajtásának a menete.
 
+### 1.1.3. Nem funkcionális elvárások
 
+* Felhasználóbarát, egyszerű, letisztult felület
+* Keresési eredmények gyors megjelenítése
+* Jelszavas azonosítás, jelszavak biztonságos tárolása
+* A projekten belüli feladatokhoz és részfeladatokhoz összefüggési gráf generálása
+* Privát képek biztonságos elrejtése a látogatók elől
+* A programmal szemben támasztott alapvető elvárás - a várhatóan széleskörű és változatos felhasználásból eredendően - a platformfüggetlenség. A programnak futnia kell a legnépszerűbb platformokon (Windows, Linux, OS X).
 
-
-
-
-
-### Nemfunkcionális követelmények
-
-A programmal szemben támasztott alapvető elvárás - a várhatóan széleskörű és változatos felhasználásból eredendően - a platformfüggetlenség. A programnak futnia kell a legnépszerűbb platformokon (Windows, Linux, OS X).
-
-### Szakterületi követelmények
+### 1.1.4. Szakterületi követelmények
 
 A programnak képesnek kell lennie bármely szakterület projectmenedzselési feladatainak ellátására, így az általános információk (pl. személyes adatok) rögzítésén túl az üzemeltető számára lehetővé kell tenni, hogy a szakterületre jellemző speciális adatokat (pl. dolgozók képességei vagy a részfeladatok erőforrás igényei) személyre szabhassa.
+
+### 1.2. Szakterületi fogalomjegyzék
+* __projekt / project__: adott szervezeti környezetben megtervezett és végrehajtott tevékenységsorozat, amely konkrét célokat valósít meg, és a célok eléréséhez erőforrásokat rendel. Időben és térben jól körülhatárolt összetett feladat
+* __felhasználó / user__: regisztrált és bejelentkezett látogató, aki létrehozhat új projektet, feladatokat vállalhat egy projekten belül, bejegyezheti a feladataihoz hogy elvégezte őket. Létrehozhatja saját profilját, megadhatja skill-jeit, ez alapján oszthatják be más felhasználók taskokhoz. 
+* __képesség / skill__: egy felhasználó megadhatja tulajdonságait, erősségeit, képességeit, ami segíti eligazodni a projektmenedzsereket, hogy az adott felhasználót milyen taskokhoz érdemes beosztani. (pl. C++ programozás, kávéfőzés, számítógépes grafikák készítése).
+* __tag / member__: a felhasználó egy szerepköre, más felhasználók által létrehozott projektek esetén.
+* __projektvezető / leader__: a felhasználó egy szerepköre, saját projektjei esetén.
+* __\<TODO\>__*
+ 
+### 1.3. Use-case modell
+
+#### 1.3.1. Szerepkörök
+* __user->leader__: A felhasználó szerepköre, amikor a saját projektjét kezeli. Létrehozhat feladatokat a projekthez, membereket rendelhet a feladatokhoz, törölhet feladatokat/membereket, feladatokat oszthat magának, nyomonkövetheti a projekt állapotát.
+* __user->member__: A felhasználó szerepköre, amikor mások által létrehozott projektbe meghívják. Publikus feladatokat vállalhat magára, a saját feladatának módosíthatja az állapotát, nyomonkövetheti a projekt állapotát.
+* __admin__: God mode. Minden felhasználó minden adatát módosíthatja. *__????__*
+
+#### 1.3.2. Use-case modell
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 ### Szerepkörök
 
