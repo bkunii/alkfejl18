@@ -7,6 +7,7 @@ import hu.elte.alkfejl.alkfejl18.repositories.*;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -31,9 +32,14 @@ public class UserController {
     
     
     @GetMapping("")
-    public ResponseEntity<Iterable<User>> getAll() {
+    public ResponseEntity getAll(Authentication authentication) {
+    	String userName = authentication.getName();
+    	if(userName.equals("admin")) {
         Iterable<User> users = userRepository.findAll();
         return ResponseEntity.ok(users);
+    	}else {
+    		return ResponseEntity.status(401).body("Only the admin has access to the list of all users");
+    	}
     }
      
     @PostMapping("/new")
@@ -45,7 +51,16 @@ public class UserController {
         		new ArrayList<Skill>(),new ArrayList<Task>());
         return ResponseEntity.ok(userRepository.save(newUser));
     }
-        
+    
+    @PostMapping("/login")
+    public ResponseEntity login(@RequestBody String username) {
+        Optional<User> oUser = userRepository.findByUsername(username);
+        if (!oUser.isPresent()) {
+            return ResponseEntity.status(401).body("User not found");
+        }
+        return ResponseEntity.ok(oUser.get());
+    }
+    
     @GetMapping("/{id}")
     public ResponseEntity<User> getUser(@PathVariable Integer id) {
         Optional<User> oUser = userRepository.findById(id);
@@ -57,17 +72,23 @@ public class UserController {
     }
     
     @DeleteMapping("/{id}")
-    public ResponseEntity deleteUser(@PathVariable Integer id) {
+    public ResponseEntity deleteUser(@PathVariable Integer id,Authentication authentication) {
+    	String userName = authentication.getName();
         Optional<User> oUser = userRepository.findById(id);
         if (!oUser.isPresent()) {
             return ResponseEntity.notFound().build();   
         }
-        if(oUser.get().getOwnedProjects().size() > 0 || oUser.get().getProjects().size() > 0 ||
-        		oUser.get().getAssignedTasks().size() > 0) {
-        	return ResponseEntity.badRequest().build();
+        if(userName.equals("admin") || userName.equals(oUser.get().getUsername())) {
+        	if(oUser.get().getOwnedProjects().size() > 0 || oUser.get().getProjects().size() > 0 ||
+            		oUser.get().getAssignedTasks().size() > 0) {
+            	return ResponseEntity.badRequest().build();
+            }
+            userRepository.delete(oUser.get());
+            return ResponseEntity.ok().build();
+        }else {
+        	return ResponseEntity.status(401).body("Only the admin or the owner can delete the user");
         }
-        userRepository.delete(oUser.get());
-        return ResponseEntity.ok().build();
+        
     }
     
     @PutMapping("/{id}/edit")
