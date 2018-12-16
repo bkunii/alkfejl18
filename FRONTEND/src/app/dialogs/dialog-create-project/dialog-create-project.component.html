@@ -1,15 +1,13 @@
 
-<h1 matDialogTitle>Új project felvétele</h1>
+<h2 matDialogTitle>Új project felvétele</h2>
 
 <mat-dialog-content>
-
   <mat-form-field>
-    <input matInput type="text" [(ngModel)]="_project.name" placeholder="Project neve">
+    <input matInput type="text" [(ngModel)]="projectName" placeholder="Project neve">
   </mat-form-field>
-
 </mat-dialog-content>
 
 <mat-dialog-actions>
-    <button mat-flat-button color="primary" [mat-dialog-close]="_project">Mentés</button>
-    <button mat-stroked-button color="primary" mat-dialog-close>Mégsem</button>
+  <button mat-flat-button color="primary" [mat-dialog-close]="projectName">Mentés</button>
+  <button mat-stroked-button color="primary" mat-dialog-close>Mégsem</button>
 </mat-dialog-actions>

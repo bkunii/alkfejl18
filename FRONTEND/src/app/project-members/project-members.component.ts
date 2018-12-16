@@ -32,10 +32,9 @@ export class ProjectMembersComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    // tslint:disable-next-line:radix
-    const projectId: number = parseInt(this.route.snapshot.paramMap.get('pid'));
-    this.projectService.getProject(projectId).subscribe(project => this.project = project);
-    this.userService.getUsersByPID(projectId).subscribe(users => this.assignedUsers = users);
+    // const projectId: number = parseInt(this.route.snapshot.paramMap.get('pid'), 10);
+    // this.projectService.getProject(projectId).subscribe(project => this.project = project);
+    // this.userService.getUsersByPID(projectId).subscribe(users => this.assignedUsers = users);
   }
 
   private openAddMemberDialog(): void {
@@ -46,22 +45,22 @@ export class ProjectMembersComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(selectedUser => {
       if (!selectedUser) { return; }
-      this.projectService.addMemberToProject(this.project.id, selectedUser);
-      this.userService.addMembershipToUser(selectedUser, this.project.id);
-      this.userService.getUsersByPID(this.project.id).subscribe(users => this.assignedUsers = users);
+      // this.projectService.addMemberToProject(this.project.id, selectedUser);
+      // this.userService.addMembershipToUser(selectedUser, this.project.id);
+      // this.userService.getUsersByPID(this.project.id).subscribe(users => this.assignedUsers = users);
     });
   }
 
   private selectUser(user: User): void {
-    this.selectedUser = user;
-    this.projectService.getUserProjects(user.id).subscribe(projects => this.userProjects = projects);
-    this.projectService.getUserOwnProjects(user.id).subscribe(projects => this.userOwnProjects = projects);
+    // this.selectedUser = user;
+    // this.projectService.getUserProjects(user.id).subscribe(projects => this.userProjects = projects);
+    // this.projectService.getUserOwnProjects(user.id).subscribe(projects => this.userOwnProjects = projects);
   }
 
   private removeUser(): void {
-    this.projectService.removeUserFromProject(this.selectedUser.id, this.project.id);
-    this.userService.removeUserFromProject(this.selectedUser.id, this.project.id);
-    this.userService.getUsersByPID(this.project.id).subscribe(users => this.assignedUsers = users);
-    this.selectedUser = null;
+    // this.projectService.removeUserFromProject(this.selectedUser.id, this.project.id);
+    // this.userService.removeUserFromProject(this.selectedUser.id, this.project.id);
+    // this.userService.getUsersByPID(this.project.id).subscribe(users => this.assignedUsers = users);
+    // this.selectedUser = null;
   }
 }

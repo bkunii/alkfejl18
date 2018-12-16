@@ -1,7 +1,5 @@
-import { FormBuilder, Validators } from '@angular/forms';
-import { LoginFormComponent } from '../../login-form/login-form.component';
 import { Component, OnInit } from '@angular/core';
-import {MatDialog, MatDialogRef, MAT_DIALOG_DATA, MatSnackBar} from '@angular/material';
+import { MatDialogRef, MatSnackBar } from '@angular/material';
 import { UserService } from 'src/app/services/user.service';
 import { User } from 'src/app/classes/user';
 
@@ -20,39 +18,34 @@ export interface RegistrationData {
 })
 export class DialogRegistrationComponent implements OnInit {
 
-  private registrationForm = this.fb.group({
-    fullName: ['', Validators.required],
-    userName: ['', Validators.required],
-    password: ['', Validators.required],
-    password2: ['', Validators.required]
-  });
+  private name: string;
+  private userName: string;
+  private passwd: string;
+  private passwd2: string;
 
   constructor(
     private dialogRef: MatDialogRef<DialogRegistrationComponent>,
-    private fb: FormBuilder,
     private snackBar: MatSnackBar,
     private userService: UserService
   ) { }
 
-  ngOnInit() { }
+  ngOnInit() {
+    this.name = this.userName = this.passwd = this.passwd2 = '';
+  }
 
-  private onSubmit(): void {
-    const fullName: string = this.registrationForm.get('fullName').value;
-    const userName: string = this.registrationForm.get('userName').value;
-    const password: string = this.registrationForm.get('password').value;
-    const password2: string = this.registrationForm.get('password2').value;
+  private validateRegForm(): void {
 
-    if (!this.registrationForm.valid) {
+    if (!this.name.length || !this.userName.length || !this.passwd.length) {
       this.snackBar.open('Minden adatot meg kell adni!', 'HIBA', { duration: 2000 });
       return;
-    } else if (password !== password2) {
+    } else if (this.passwd !== this.passwd2) {
       this.snackBar.open('A két jelszó nem egyezik meg!', 'HIBA', { duration: 2000 });
       return;
     }
 
-    const newUser = new User(name, userName, password);
+    const _user = new User(this.name, this.userName, this.passwd);
 
-    this.userService.registerUser(newUser);
+    this.userService.registerUser(_user);
     this.snackBar.open('Sikeres regisztráció.', '', { duration: 2000 });
     this.dialogRef.close();
   }

@@ -10,20 +10,25 @@
       <h2>Személyes adatok:</h2>
 
       <mat-form-field>
-        <input matInput [(ngModel)]="currentUser.fullName" placeholder="Név">
+        <input matInput [(ngModel)]="currentUser.name" placeholder="Név">
       </mat-form-field>
 
       <mat-form-field>
-        <input matInput [(ngModel)]="currentUser.userName" placeholder="Felhasználó név">
+        <input matInput [(ngModel)]="currentUser.username" placeholder="Felhasználó név">
       </mat-form-field>
-
+<!--
       <mat-form-field>
-        <input matInput type="password" placeholder="Jelszó">
+        <input matInput [(ngModel)]="currentUser.password" type="password" placeholder="Jelszó">
       </mat-form-field>
 
       <mat-form-field>
         <input matInput type="password" placeholder="Jelszó (újra)">
       </mat-form-field>
+ -->
+      <mat-card-actions>
+        <button mat-button (click)="saveUserData()">Mentés</button>
+        <button mat-button (click)="restoreUserData()">Mégsem</button>
+      </mat-card-actions>
 
     </mat-card>
 
@@ -31,18 +36,38 @@
 
       <h2>Képességek:</h2>
 
-      <mat-chip-list>
-        <mat-chip *ngFor="let skill of userSkills" [value]="skill">{{ skill.name }}</mat-chip>
-      </mat-chip-list>
 
       <mat-form-field>
-        <input type="text" matInput (keypress)="keypress($event)" [formControl]="myControl" [matAutocomplete]="auto" placeholder="Na mit tudsz???">
+
+        <mat-chip-list #chipList>
+          <mat-chip
+            *ngFor="let skill of userSkills"
+            value="skill"
+            [selectable]="selectable"
+            [removable]="removable"
+            (removed)="remove(skill)">
+            {{ skill.name }}
+            <mat-icon matChipRemove>cancel</mat-icon>
+          </mat-chip>
+        </mat-chip-list>
+
+        <input
+          placeholder="Na mit tudsz???"
+          #chipInput
+          [formControl]="myControl"
+          [matAutocomplete]="auto"
+          [matChipInputFor]="chipList"
+          [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+          [matChipInputAddOnBlur]="addOnBlur"
+          (matChipInputTokenEnd)="add($event)">
+
+        <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete">
+          <mat-option *ngFor="let option of filteredOptions | async" [value]="option">
+            {{option}}
+          </mat-option>
+        </mat-autocomplete>
+
       </mat-form-field>
-      <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete">
-        <mat-option *ngFor="let option of filteredOptions | async" [value]="option">
-          {{option}}
-        </mat-option>
-      </mat-autocomplete>
 
     </mat-card>
 

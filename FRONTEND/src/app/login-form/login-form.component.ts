@@ -1,8 +1,9 @@
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { DialogRegistrationComponent } from './../dialogs/dialog-registration/dialog-registration.component';
-import { AppComponent } from './../app.component';
 import { Component, OnInit } from '@angular/core';
-import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material';
-import { UserService } from '../services/user.service';
+import { MatDialog } from '@angular/material';
+import { AuthenticationService } from '../services/auth.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-login-form',
@@ -11,15 +12,39 @@ import { UserService } from '../services/user.service';
 })
 export class LoginFormComponent implements OnInit {
 
-  constructor(public dialog: MatDialog) { }
+  private loginForm: FormGroup;
+
+  constructor(
+    public dialog: MatDialog,
+    private authService: AuthenticationService,
+    private router: Router
+  ) {
+    this.loginForm = new FormGroup({
+      username: new FormControl('', [Validators.required]),
+      password: new FormControl('', [Validators.required])
+    });
+  }
 
   ngOnInit() { }
+
+  async onSubmit() {
+    const username = this.loginForm.get('username').value;
+    const password = this.loginForm.get('password').value;
+
+    await this.authService.login('', '');
+    this.router.navigate([`users/${this.authService.currentUser.id}/projects`]);
+    return;
+
+    // Autentikáció után megcsinálni
+    if (this.loginForm.valid) {
+      await this.authService.login(username, password);
+      this.router.navigate([`/users/${this.authService.currentUser.id}/projects`]);
+    }
+  }
 
   private openRegDialog(): void {
     const dialogRef = this.dialog.open(DialogRegistrationComponent, {
       width: '350px'
     });
-
-    dialogRef.afterClosed().subscribe(user => console.log(user));
   }
 }

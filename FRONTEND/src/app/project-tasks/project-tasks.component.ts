@@ -1,4 +1,6 @@
-import { User } from 'src/app/classes/user';
+import { Skill } from './../classes/skill';
+import { AuthenticationService } from './../services/auth.service';
+// import { User } from 'src/app/classes/user';
 import { DialogAddTaskComponent } from './../dialogs/dialog-add-task/dialog-add-task.component';
 import { MatDialog } from '@angular/material';
 import { Task } from './../classes/task';
@@ -10,7 +12,8 @@ import { ProjectService } from '../services/project.service';
 import * as d3 from 'd3';
 import * as dagreD3 from 'dagre-d3';
 import { UserService } from '../services/user.service';
-import { currentUser, dateToString } from '../globals';
+import { dateToString } from '../globals';
+import { User } from '../classes/user';
 
 @Component({
   selector: 'app-project-tasks',
@@ -31,7 +34,6 @@ export class ProjectTasksComponent implements OnInit {
   public project: Project;
   private tasks: Task[];
   private selectedTask: Task;
-  private selectedTaskPrereqs: Task[];
   private users: User[];
 
   constructor(
@@ -39,30 +41,37 @@ export class ProjectTasksComponent implements OnInit {
     private projectService: ProjectService,
     private taskService: TaskService,
     private userService: UserService,
+    private authService: AuthenticationService,
     private dialog: MatDialog
   ) {
-    this.project = new Project();
-
     this.dateToString = dateToString;
+    this.project = new Project('', new User('', '', ''));
   }
 
-  ngOnInit() {
-    const projectID: number = parseInt(this.route.snapshot.paramMap.get('pid'), 10);
+  async ngOnInit() {
 
-    this.users = this.userService.getUsers();
+    await this.authService.login('', ''); // Eltávolítandó
     this.svg = d3.select('svg');
     this.render = new dagreD3.render();
 
-    this.projectService.getProject(projectID).subscribe(project => {
-      this.project = project;
-      this.initGraph();
-    });
-
+    this.initGraph();
   }
 
-  private initGraph(): void {
+  private async initGraph() {
 
-    this.projectService.getTasksOfProject(this.project.id).subscribe(tasks => this.tasks = tasks);
+    const projectID: number = parseInt(this.route.snapshot.paramMap.get('pid'), 10);
+    this.project = await this.projectService.getProject(projectID);
+    if (this.project.tasks === undefined) {
+      this.project.tasks = [];
+    }
+
+    console.log('PROJECT:', this.project);
+
+    const allTasks: Task[] = await this.taskService.getTasks();
+    this.tasks = allTasks.filter(task => task.project.id === this.project.id);
+
+    console.log('PROJECT TASKS:', this.tasks);
+
     this.graph = new dagreD3.graphlib.Graph().setGraph({});
 
     if (!this.tasks.length) {
@@ -102,7 +111,7 @@ export class ProjectTasksComponent implements OnInit {
 
     this.tasks.forEach(task => {
       task.prerequisites.forEach(pre => {
-        this.graph.setEdge(pre, task.id, {
+        this.graph.setEdge(pre.id, task.id, {
           arrowhead: 'vee',
           curve: d3.curveBasis
         });
@@ -124,7 +133,7 @@ export class ProjectTasksComponent implements OnInit {
   private checkAvailability(task: Task): boolean {
     let available = true;
     task.prerequisites.forEach(pre => {
-      if (!this.tasks.find(t => t.id === pre).complete) {
+      if (!this.tasks.find(t => t.id === pre.id).complete) {
         available = false;
       }
     });
@@ -134,37 +143,43 @@ export class ProjectTasksComponent implements OnInit {
   private addTask(): void {
     const dialogRef = this.dialog.open(DialogAddTaskComponent, {
       width: '350px',
-      data: this.project
+      data: {
+        project: this.project,
+        tasks: this.tasks
+      }
     });
 
-    dialogRef.afterClosed().subscribe(newTask => {
+    dialogRef.afterClosed().subscribe(async newTask => {
       if (newTask !== undefined) {
-        this.taskService.addNewTask(newTask);
-        this.projectService.addTaskToProject(newTask.project, newTask.id);
+        console.log('NEW TASK:', newTask);
+        console.log(typeof newTask.prerequisites);
+
+        await this.taskService.addTask(newTask);
         this.initGraph();
       }
     });
   }
 
   private deleteTask(): void {
-    this.taskService.deleteTask(this.selectedTask.id);
-    this.projectService.removeTaskFromProject(this.project.id, this.selectedTask.id);
-    this.initGraph();
+    // this.taskService.deleteTask(this.selectedTask.id);
+    // this.projectService.removeTaskFromProject(this.project.id, this.selectedTask.id);
+    // this.initGraph();
   }
 
   private saveTask(): void {
-    this.taskService.saveTask(this.selectedTask);
-    this.initGraph();
+    // this.taskService.saveTask(this.selectedTask);
+    // this.initGraph();
   }
 
   private nodeClicker(id: string): void {
     const node = this.graph.node(id);
     this.selectedTask = node.task;
-    this.selectedTaskPrereqs = this.tasks.filter(task => task.id !== this.selectedTask.id);
-    this.userService.getUsersByUIDs(node.task.assignees).subscribe(users => node.task._assignees = users);
+    console.log('SELECTED TASK:', node.task);
+    // this.selectedTaskPrereqs = this.tasks.filter(task => task.id !== this.selectedTask.id);
+    // this.userService.getUsersByUIDs(node.task.assignees).subscribe(users => node.task._assignees = users);
   }
 
   private finishTask(): void {
-    this.selectedTask.finishTask(currentUser);
+    // this.selectedTask.finishTask(currentUser);
   }
 }

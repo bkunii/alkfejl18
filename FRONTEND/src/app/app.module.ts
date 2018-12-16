@@ -14,7 +14,7 @@ import { DialogRegistrationComponent } from './dialogs/dialog-registration/dialo
 import { UserProfileComponent } from './user-profile/user-profile.component';
 import { NavbarComponent } from './navbar/navbar.component';
 // tslint:disable-next-line:max-line-length
-import { MatToolbarModule, MatGridListModule, MatAutocompleteModule, MatChipsModule, MatIconModule, MatDatepickerModule, MatNativeDateModule, MatSelectModule, MatSnackBar, MatSnackBarModule, MatDividerModule } from '@angular/material';
+import { MatToolbarModule, MatGridListModule, MatAutocompleteModule, MatChipsModule, MatIconModule, MatDatepickerModule, MatNativeDateModule, MatSelectModule, MatSnackBar, MatSnackBarModule, MatDividerModule, MatCheckboxModule } from '@angular/material';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { UserProjectsComponent } from './user-projects/user-projects.component';
 import { ProjectTasksComponent } from './project-tasks/project-tasks.component';
@@ -60,7 +60,8 @@ import { HttpClientModule } from '@angular/common/http';
     BrowserModule,
     FormsModule,
     MatDividerModule,
-    HttpClientModule
+    HttpClientModule,
+    MatCheckboxModule
   ],
   providers: [],
   bootstrap: [AppComponent],

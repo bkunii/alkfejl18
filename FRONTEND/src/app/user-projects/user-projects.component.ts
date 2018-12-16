@@ -1,10 +1,11 @@
+import { AuthenticationService } from './../services/auth.service';
 import { DialogCreateProjectComponent } from './../dialogs/dialog-create-project/dialog-create-project.component';
 import { MatDialog } from '@angular/material';
 import { Component, OnInit } from '@angular/core';
 import { ProjectService } from './../services/project.service';
 import { Project } from './../classes/projects';
 import { User } from '../classes/user';
-import { currentUser } from '../globals';
+import { UserService } from '../services/user.service';
 
 @Component({
   selector: 'app-user-projects',
@@ -16,34 +17,35 @@ import { currentUser } from '../globals';
 })
 export class UserProjectsComponent implements OnInit {
 
-  private currentUser: User;
   private projects: Project[];
   private ownProjects: Project[];
   public _project: Project;
 
   constructor(
     private projectService: ProjectService,
+    private userService: UserService,
+    private authService: AuthenticationService,
     private dialog: MatDialog
   ) { }
 
-  ngOnInit() {
+  async ngOnInit() {
+    await this.authService.login('', ''); // Eltávolítandó
     this.refreshLists();
   }
 
-  private refreshLists(): void {
-    this.projectService.getUserProjects(currentUser.id).subscribe(projects => this.projects = projects);
-    this.projectService.getUserOwnProjects(currentUser.id).subscribe(projects => this.ownProjects = projects);
+  private async refreshLists() {
+    this.projects = await this.userService.getProjects(this.authService.currentUser.id);
+    this.ownProjects = await this.userService.getOwnProjects(this.authService.currentUser.id);
   }
 
   private createProject(): void {
-    const dialogRef = this.dialog.open(DialogCreateProjectComponent, {
-      width: '350px'
-    });
+    const dialogRef = this.dialog.open(DialogCreateProjectComponent, { width: '350px' });
 
-    dialogRef.afterClosed().subscribe(newProject => {
-      if (newProject !== undefined) {
-        newProject.leader = this.currentUser.id;
-        this.projectService.addNewProject(newProject);
+    dialogRef.afterClosed().subscribe(async _name => {
+      if (_name !== undefined) {
+        const newProject = new Project(_name, this.authService.currentUser);
+        console.log(newProject);
+        await this.projectService.addNewProject(newProject);
         this.refreshLists();
       }
     });
