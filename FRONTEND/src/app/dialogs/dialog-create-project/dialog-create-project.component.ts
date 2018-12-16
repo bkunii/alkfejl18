@@ -11,20 +11,9 @@ import { FormBuilder } from '@angular/forms';
 })
 export class DialogCreateProjectComponent implements OnInit {
 
-  // tslint:disable-next-line:no-input-rename
-  // @Input('newProject') public _project: Project;
-
-  private _project = {
-    id: Math.floor(Math.random() * 1000),
-    name: null,
-    leader: null,
-    members: [],
-    tasks: [],
-    deadline: null
-  };
+  private projectName: string;
 
   constructor(private dialogRef: MatDialogRef<DialogCreateProjectComponent>) { }
 
-  ngOnInit() {
-  }
+  ngOnInit() { }
 }

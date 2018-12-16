@@ -5,18 +5,22 @@
 
   <h2>Bejelentkezés</h2>
 
-  <mat-form-field>
-    <input matInput type="text" placeholder="Felhasználónév">
-  </mat-form-field>
+  <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
 
-  <mat-form-field>
-    <input matInput type="password" placeholder="Jelszó">
-  </mat-form-field>
+    <mat-form-field>
+      <input matInput formControlName="username" type="text" placeholder="Felhasználónév" required>
+    </mat-form-field>
 
-  <button id="btn-login" mat-button routerLink="users/1/projects">BEJELENTKEZÉS</button>
-  <div id="reg-btn-wrapper">
-    vagy
-    <span id="btn-reg" mat-button (click)="openRegDialog()">Regisztráció</span>
-  </div>
+    <mat-form-field>
+      <input matInput formControlName="password" type="password" placeholder="Jelszó" required>
+    </mat-form-field>
+
+    <button id="btn-login" mat-button type="submit">BEJELENTKEZÉS</button>
+    <div id="reg-btn-wrapper">
+      vagy
+      <span id="btn-reg" mat-button (click)="openRegDialog()">Regisztráció</span>
+    </div>
+
+  </form>
 
 </section>

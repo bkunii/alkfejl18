@@ -1,17 +1,24 @@
+import { Task } from 'src/app/classes/task';
+import { Skill } from './skill';
+import { Project } from 'src/app/classes/projects';
 
 export class User {
   public id: number;
   public name: string;
   public userName: string;
   public password: string;
-  public projects: number[];
-  public ownedProjects: number[];
-  public skills: number[];
-  public assignedTasks: number[];
+  public projects: Project[];
+  public ownedProjects: Project[];
+  public skills: Skill[];
+  public assignedTasks: Task[];
 
   constructor(name: string, userName: string, password: string) {
     this.name = name;
     this.userName = userName;
     this.password = password;
+    this.projects = [];
+    this.ownedProjects = [];
+    this.skills = [];
+    this.assignedTasks = [];
   }
 }

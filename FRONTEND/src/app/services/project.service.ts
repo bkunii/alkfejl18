@@ -4,81 +4,56 @@ import { Injectable } from '@angular/core';
 import { Project } from './../classes/projects';
 import { Observable, of } from 'rxjs';
 import { Task } from '../classes/task';
+import { HttpService } from './http.service';
+import { User } from '../classes/user';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ProjectService {
 
+  private route = 'projects/';
   private PROJECTS: Project[];
 
-  constructor(private taskService: TaskService) {
-    this.PROJECTS = [
-      {
-        id: 100,
-        name: 'Főzés',
-        leader: 1,
-        members: [2],
-        tasks: [1000, 1001, 1002, 1003, 1004],
-        deadline: new Date('2018-01-01T14:00')
-      } as Project,
-      {
-        id: 101,
-        name: 'Mosogatás',
-        leader: 2,
-        members: [1],
-        tasks: [],
-        deadline: new Date('2018-01-01T16:00')
-      } as Project
-    ];
+  constructor(private httpService: HttpService) { }
+
+  public getAllProjects(): Promise<Project[]> {
+    return this.httpService.get<Project[]>(this.route);
   }
 
-  public getProjects(): Observable<Project[]> {
-    return of(this.PROJECTS);
+  public addNewProject(project: Project): Promise<Project> {
+    const json = JSON.stringify({
+      name: project.name,
+      leaderId: project.leader.id
+    });
+    console.log(json);
+
+    return this.httpService.post<Project>(this.route + 'new', json);
   }
 
-  public getProject(projectID: number): Observable<Project> {
-    return of(this.PROJECTS.find(project => project.id === projectID));
+  public getProject(projectID: number): Promise<Project> {
+    return this.httpService.get<Project>(this.route + projectID);
   }
 
-  public getUserProjects(userID: number): Observable<Project[]> {
-    return of(this.PROJECTS.filter(project => project.members.includes(userID)));
+  public deleteProject(projectID: number): Promise<Project> {
+    return this.httpService.delete(this.route + projectID);
   }
 
-  public getUserOwnProjects(userId: number): Observable<Project[]> {
-    return of(this.PROJECTS.filter(project => project.leader === userId));
+  public editProject(project: Project): Promise<Project> {
+    const json = JSON.stringify(project);
+    return this.httpService.put<Project>(this.route + 'edit/' + project.id, json);
   }
 
-  public getProjectMembers(projectId: number): Observable<number[]> {
-    return of(this.PROJECTS.find(project => project.id === projectId).members);
+  getMembers(projectID: number): Promise<User[]> {
+    return this.httpService.get<User[]>(this.route + projectID + '/members');
   }
 
-  public getTasksOfProject(projectId: number): Observable<Task[]> {
-    return of(this.taskService.getTasksByIDs(this.PROJECTS.find(project => project.id === projectId).tasks));
+  addMember(projectID: number, member: User): Promise<User[]> {
+    const json = JSON.stringify(member);
+    return this.httpService.post<User[]>(this.route + projectID, json);
   }
 
-  public removeUserFromProject(userId: number, projectId: number): void {
-    // tslint:disable-next-line:max-line-length
-    this.PROJECTS.find(project => project.id === projectId).members = this.PROJECTS.find(project => project.id === projectId).members.filter(item => item !== userId);
-  }
-
-  public removeTaskFromProject(projectId: number, taskId: number): void {
-    const project = this.PROJECTS.find(item => item.id === projectId);
-    const idx = project.tasks.indexOf(taskId);
-    project.tasks.splice(idx, 1);
-  }
-
-  public addMemberToProject(projectId: number, userId: number): void {
-    this.PROJECTS.find(project => project.id === projectId).members.push(userId);
-  }
-
-
-
-  public addNewProject(project: Project): void {
-    this.PROJECTS.push(project);
-  }
-
-  public addTaskToProject(projectID: number, taskID: number): void {
-    this.PROJECTS.find(item => item.id === projectID).tasks.push(taskID);
+  removeMember(projectID: number, memberID: number): Promise<User> {
+    return this.httpService.post<User>(this.route + projectID + '/removeMember/' + memberID, '{}');
   }
 }

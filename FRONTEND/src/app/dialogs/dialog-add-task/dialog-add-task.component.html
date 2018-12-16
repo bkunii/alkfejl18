@@ -13,6 +13,40 @@
     </mat-select>
   </mat-form-field>
 
+  <mat-form-field>
+
+    <mat-chip-list #chipList>
+      <mat-chip
+        *ngFor="let skill of _skill"
+        value="skill"
+        [selectable]="selectable"
+        [removable]="removable"
+        (removed)="removeSkill(skill)">
+        {{ skill.name }}
+        <mat-icon matChipRemove>cancel</mat-icon>
+      </mat-chip>
+    </mat-chip-list>
+
+    <input
+      placeholder="Milyen képességek szükségesek hozzá???"
+      #chipInput
+      [formControl]="myControl"
+      [matAutocomplete]="auto"
+      [matChipInputFor]="chipList"
+      [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+      [matChipInputAddOnBlur]="addBlurOn"
+      (matChipInputTokenEnd)="addSkill($event)">
+
+    <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete">
+      <mat-option *ngFor="let option of filteredOptions | async" [value]="option">
+        {{option}}
+      </mat-option>
+    </mat-autocomplete>
+
+  </mat-form-field>
+
+  <mat-checkbox [(ngModel)]="_task.isOpen">Nyílt feladat?</mat-checkbox>
+
 </mat-dialog-content>
 
 <mat-dialog-actions>

@@ -1,64 +1,36 @@
-import { Observable, of } from 'rxjs';
 import { Injectable } from '@angular/core';
 import { Skill } from './../classes/skill';
-import { User } from '../classes/user';
+import { HttpService } from './http.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class SkillService {
 
+  private route = 'skills/';
   private SKILLS: Skill[];
 
-  constructor() {
-    this.SKILLS = [
-      {
-        id: 11,
-        name: 'Krumplipucolás',
-        owners: [2, 3],
-        requiredBy: []
-      } as Skill,
-      {
-        id: 12,
-        name: 'Zabhegyezés',
-        owners: [1, 2],
-        requiredBy: []
-      } as Skill,
-      {
-        id: 13,
-        name: 'Mákhintés',
-        owners: [1, 3],
-        requiredBy: []
-      } as Skill
-    ];
+  constructor(private httpService: HttpService) { }
+
+  public getAllSkills(): Promise<Skill[]> {
+    return this.httpService.get<Skill[]>(this.route);
   }
 
-  public getSkillsOfUser(userId: number): Observable<Skill[]> {
-    return of(this.SKILLS.filter(skill => skill.owners.includes(userId)));
+  public addNewSkill(skill: Skill): Promise<Skill> {
+    const json = JSON.stringify(skill);
+    return this.httpService.post<Skill>(this.route + 'new', json);
   }
 
-  public getAllSkills(): Observable<Skill[]> {
-    return of(this.SKILLS);
+  public getSkill(skillID: number): Promise<Skill> {
+    return this.httpService.get<Skill>(this.route + skillID);
   }
 
-  public addSkillToUser(skillName: string, user: User): Observable<Skill> {
-    let skill: Skill = this.SKILLS.find(skl => skl.name === skillName);
+  public deleteSkill(skillID: number): Promise<Skill> {
+    return this.httpService.delete<Skill>(this.route + 'delete/' + skillID);
+  }
 
-    console.log(skill);
-
-
-    if (skill === undefined) {
-      skill = {
-        id: Math.floor(Math.random() * 100000),
-        name: skillName,
-        owners: [user.id],
-        requiredBy: []
-      } as Skill;
-      this.SKILLS.push(skill);
-    } else {
-      skill.owners.push(user.id);
-    }
-
-    return of(skill);
+  public editSkill(skill: Skill): Promise<Skill> {
+    const json = JSON.stringify(skill);
+    return this.httpService.put<Skill>(this.route + 'edit/' + skill.id, json);
   }
 }

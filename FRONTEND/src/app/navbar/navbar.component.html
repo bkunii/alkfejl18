@@ -1,17 +1,17 @@
 
 <mat-toolbar>
 
-  <h1>Sajtoslaska v0.0.1 pre-alpha</h1>
+  <h2>Üdv {{authService.currentUser.name}}</h2>
 
   <button id="btn-projects" mat-button *ngIf="uid" routerLink="/users/{{uid}}/projects">Projectek</button>
   <button id="btn-profile" mat-button *ngIf="uid" routerLink="/users/{{uid}}/profile">Profil</button>
 
-  <mat-icon id="btn-back" mat-button *ngIf="pid" routerLink="/users/{{currentUserId}}/projects">keyboard_backspace</mat-icon>
+  <mat-icon id="btn-back" mat-button *ngIf="pid" routerLink="/users/{{authService.currentUser.id}}/projects">keyboard_backspace</mat-icon>
   <button id="btn-edit" mat-button *ngIf="pid" routerLink="/projects/{{pid}}/tasks">Szerkesztés</button>
   <button id="btn-members" mat-button *ngIf="pid" routerLink="/projects/{{pid}}/members">Felhasználók</button>
 
   <div class="spacer"></div>
 
-  <button id="btn-logout" mat-button routerLink="">Kilépés</button>
+  <button id="btn-logout" mat-button (click)="this.authService.logout()">Kilépés</button>
 
 </mat-toolbar>

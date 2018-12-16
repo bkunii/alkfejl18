@@ -1,16 +1,18 @@
+import { User } from './user';
 
 export class Project {
   public id: number;
   public name: string;
-  public leader: number;
+  public leader: User;
   public members: number[];
   public tasks: number[];
   public deadline: Date;
 
-  constructor() {
-    this.id = Math.floor(Math.random() * 999999);
-    this.name = '';
+  constructor(name: string, leader: User) {
+    this.name = name;
+    this.leader = leader;
     this.members = [];
     this.tasks = [];
+    // this.deadline = null;
   }
 }

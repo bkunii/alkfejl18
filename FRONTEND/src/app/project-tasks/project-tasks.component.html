@@ -32,32 +32,6 @@
 
     <mat-card-content>
 
-      <mat-form-field>
-        <input matInput type="text" placeholder="Feladat neve"
-               [(ngModel)]="selectedTask.name"
-               ngDisabled="selectedTask.complete">
-      </mat-form-field>
-
-      <mat-form-field>
-        <mat-select placeholder="Előfeltételek" [(ngModel)]="selectedTask.prerequisites" multiple>
-          <mat-option *ngFor="let task of selectedTaskPrereqs" [value]="task.id">{{task.name}}</mat-option>
-        </mat-select>
-      </mat-form-field>
-
-      <mat-form-field>
-        <mat-select placeholder="Közreműködők" [(ngModel)]="selectedTask.assignees" multiple>
-          <mat-option *ngFor="let user of users" [value]="user.id">{{user.fullName}}</mat-option>
-        </mat-select>
-      </mat-form-field>
-
-      <div id="form-field-done" class="custom-form-field">
-        Állapot:
-        <span id="tag-state" class="{{selectedTask.complete ? 'completed' : 'not-completed'}}">
-          {{selectedTask.complete ? "IGEN" : "NEM"}}
-        </span>
-        <button mat-stroked-button (click)="finishTask()">Befejez</button>
-      </div>
-
       <div id="form-field-dates" class="custom-form-field">
         <span class="date-field">
           Feladat kezdete:
@@ -67,6 +41,37 @@
           Feladat befejezése:
           <span>{{dateToString(selectedTask.endTime)}}</span>
         </span>
+      </div>
+<!--
+      <mat-form-field>
+        <input matInput type="text" placeholder="Feladat neve"
+               [(ngModel)]="selectedTask.name"
+               ngDisabled="selectedTask.complete">
+      </mat-form-field>
+ -->
+      <mat-form-field>
+        <mat-select placeholder="Előfeltételek" [(ngModel)]="selectedTask.prerequisites" multiple>
+          <mat-option *ngFor="let task of selectedTaskPrereqs" [value]="task.id">{{task.name}}</mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <div class="custom-form-field">
+        Közreműködők: <span *ngFor="let user of selectedTask.assignees">{{user.name}} </span>
+      </div>
+<!--
+      <mat-form-field>
+        <mat-select placeholder="Közreműködők" [(ngModel)]="selectedTask.assignees" multiple>
+          <mat-option *ngFor="let user of users" [value]="user.id">{{user.fullName}}</mat-option>
+        </mat-select>
+      </mat-form-field>
+ -->
+      <div id="form-field-done" class="custom-form-field">
+        Állapot:
+        <span id="tag-state" class="state-{{selectedTask.state}}">
+          {{selectedTask.state === 0 ? "BLOKKOLT" : (selectedTask.state === 1 ? "MEGKEZDHETŐ" : (selectedTask.state === 2 ? "FOLYAMATBAN" : "BEFEJEZETT"))}}
+        </span>
+        <button mat-stroked-button *ngIf="[1, 2].includes(selectedTask.state)"  (click)="beginTask()">Megkezd / csatlakozik</button>
+        <button mat-stroked-button *ngIf="selectedTask.state === 2"  (click)="finishTask()">Befejez</button>
       </div>
 
     </mat-card-content>
