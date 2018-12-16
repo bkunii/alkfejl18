@@ -33,6 +33,23 @@ A dolgozók adatai:
  
 <del>Egy munkamenet létrehozása után a program megadja, hogy mely dolgozóknak mely részfeladatokon kell dolgozniuk a leghatékonyabb munkavégzés érdekében.</del> A programba a dolgozók a saját azonosítójukkal be tudnak lépni, és az általuk elvégzett részfeladatokat jóvá tudják hagyni, így nyomon követhető a project végrehajtásának a menete.
 
+### 1.1.3. Nem funkcionális elvárások
+
+* Felhasználóbarát, egyszerű, letisztult felület
+* Keresési eredmények gyors megjelenítése
+* Jelszavas azonosítás, jelszavak biztonságos tárolása
+* A projekten belüli feladatokhoz és részfeladatokhoz összefüggési gráf generálása
+* Privát képek biztonságos elrejtése a látogatók elől
+
+### 1.2. Szakterületi fogalomjegyzék
+* __projekt / project__: adott szervezeti környezetben megtervezett és végrehajtott tevékenységsorozat, amely konkrét célokat valósít meg, és a célok eléréséhez erőforrásokat rendel. Időben és térben jól körülhatárolt összetett feladat
+* __felhasználó / user__: regisztrált és bejelentkezett látogató, aki létrehozhat új projektet, feladatokat vállalhat egy projekten belül, bejegyezheti a feladataihoz hogy elvégezte őket. Létrehozhatja saját profilját, megadhatja skill-jeit, ez alapján oszthatják be más felhasználók taskokhoz. 
+* __skill__: egy felhasználó megadhatja tulajdonságait, erősségeit, képességeit, ami segíti eligazodni a projektmenedzsereket, hogy az adott felhasználót milyen taskokhoz érdemes beosztani. (pl. C++ programozás, kávéfőzés, számítógépes grafikák készítése).
+* <TODOOOO>
+ 
+
+
+
 
 
 
