@@ -7,6 +7,7 @@ import hu.elte.alkfejl.alkfejl18.repositories.*;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -25,6 +26,9 @@ public class UserController {
     private UserRepository userRepository;
     @Autowired
     private SkillRepository skillRepository;
+    @Autowired
+    private BCryptPasswordEncoder passwordEncoder;
+    
     
     @GetMapping("")
     public ResponseEntity<Iterable<User>> getAll() {
@@ -37,7 +41,7 @@ public class UserController {
         if(!user.isUser()) {
         	return ResponseEntity.badRequest().build();
         }
-        User newUser = new User(null,user.getUserName(),user.getPassword(),user.getName(),new ArrayList<Project>(),new ArrayList<Project>(),
+        User newUser = new User(null,user.getUserName(),passwordEncoder.encode(user.getPassword()),user.getName(),new ArrayList<Project>(),new ArrayList<Project>(),
         		new ArrayList<Skill>(),new ArrayList<Task>());
         return ResponseEntity.ok(userRepository.save(newUser));
     }

@@ -120,7 +120,7 @@ public class TaskController {
         }
 		Task task = oTask.get();
 		if(task.getComplete() || user.getAssignedTasks().contains(task) ||
-				!user.getSkills().containsAll(task.getRequiredSkils())) {
+				!user.getSkills().containsAll(task.getRequiredSkills())) {
 			return ResponseEntity.badRequest().build();
 		}
 		user.getAssignedTasks().add(task);

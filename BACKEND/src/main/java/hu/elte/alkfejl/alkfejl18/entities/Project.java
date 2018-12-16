@@ -43,7 +43,7 @@ public class Project implements Serializable{
 	@ManyToOne
 	private User leader;
 	
-
+	
 	@NotNull
 	@ManyToMany
 	@JoinTable

@@ -64,6 +64,5 @@ public class User implements Serializable {
     @ElementCollection
     @ManyToMany(mappedBy = "assignee")
     private List<Task> assignedTasks;
-    
   
 }
