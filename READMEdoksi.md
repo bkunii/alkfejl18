@@ -12,7 +12,7 @@ __Ez egy olyan alkalmazás, amellyel egy munkacsoport__ (pl. egy adott cégen be
 
 Amiután egy felhasználó regisztrál az oldalra, lehetősége van új projektet létrehozni, annak részfeladatokat(task-okat) létrehozni és más felhasználókat rendelhet hozzá a részfeladatokhoz. 
 
-*__/<TODO/>__*
+*__\<TODO\>__*
 
 #### 1.1.2. Funkcionális elvárások
 
@@ -47,7 +47,7 @@ A dolgozók adatai:
 * __képesség / skill__: egy felhasználó megadhatja tulajdonságait, erősségeit, képességeit, ami segíti eligazodni a projektmenedzsereket, hogy az adott felhasználót milyen taskokhoz érdemes beosztani. (pl. C++ programozás, kávéfőzés, számítógépes grafikák készítése).
 * __tag / member__: a felhasználó egy szerepköre, más felhasználók által létrehozott projektek esetén.
 * __projektvezető / leader__: a felhasználó egy szerepköre, saját projektjei esetén.
-* *__/<TODO/>__*
+* __\<TODO\>__*
  
 ### 1.3. Use-case modell
 
