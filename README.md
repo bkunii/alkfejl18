@@ -50,79 +50,37 @@ Group Member :
 
 ### Adatbázis :
  * Users
-   * név
-   * jelszó
-   * skills
- * Groups
+   * username
+   * password
    * name
-   * Project (by id)
-   * members:roles
+   * ownedProjects (OneToMany kapcsolatban a project táblával)
+   * projects (ManyToMany kapcsolatban a project táblával)
+   * skills (ManyToMany kapcsolatban a skill táblával)
+   * assignedTasks (ManyToMany kapcsolatban a task táblával)
  * Task
-   * required skill
-   * assignee
-   * prerequisites
+   * name
+   * requiredSkills (ManyToMany kapcsolatban a skill táblával)
+   * assignees (ManyToMany kapcsolatban a user táblával)
+   * prerequisites (ManyToMany kapcsolatban önmagával)
+   * requiredBy (--,,--)
    * complete
-   * project_id
+   * startTime
+   * completionTime
+   * completedBy
+   * isOpen
+   * project (ManyToOne kapcsolatban a project táblával)
  * Project
-   * group
-   * tasks (json)
+   * leader (ManyToOne kapcsolatban a user táblával)
+   * members (ManyToMany kapcsolatban a user táblával)
+   * tasks (oneToMany kapcsolatban a task távlával)
    * deadline
    * name
  * Skills
    * name
-   * code
+   * owners (ManyToMany kapcsolatban a user táblával)
+   * requiredBy (ManyToMany kapcsolatban a task táblával)
 
 ### Endpointok
- * user/new
-   * *createMember(String name,String password,String role,List<Integer> skills) --a skillek id szerint vannak tárolva*
- * user/edit
-   * *modifyUser(String newName, String newPassword)*
- * user/addskills
-   * *addSkills(List<Integer> skills) --a skillek id szerint vannak tárolva*
- * member/project/tasks
-   * *getTasks(User user)*
- * member/project/completeTask
-   * *completeTask(Integer duration)*
- * member/project/getStatus
-    * *getProjectStatus(Project project)*
- * leader/group/create
-   * *createGroup(String groupName,List<User> members)*
- * leader/group/members/add
-   * *addGroupMember(Group group,User member)*
- * leader/group/members/remove
-   * *removeGroupMember(Group group, User member)*
- * leader/project/new
-   * *createProject(Group group,String name)*
-   * *createProject(Group group,String name,DateTime deadline)*
- * leader/project/createTask
-   * *createTask(Project projectId, List<Integer> requiredSkills,List<Integer> prerequisites) --az előfeltételek id szerint vannak tárolva*
-  * leader/project/assigntask
-    * *assignTask(Task task,User assignee)*
-  * leader/project/calculateoptimal
-    * *calcOptimalAssignees(Project project)*
-  * leader/project/createSkill
-    * *createSkill(String name, Integer code)*
-  * leader/project/getStatus
-    * *getProjectStatus(Project project)*
- * admin/editusers
-   * *editUser(String name, String password, String role, List<Integer> skills)*
- * admin/switchtouserprofile
-  * *fogalmam nincs ezt pontosan még hogy fogjuk implementálni*
- 
-TODO:
-{
-  "timestamp": "2018-12-09T12:56:50.265+0000",
-  "status": 500,
-  "error": "Internal Server Error",
-  "message": "could not execute statement; SQL [n/a]; constraint [\"UK_39TOQEWEEJPRTSITRJ2SER4RG_INDEX_8 ON PUBLIC.TASK_PREREQUISITES(PREREQUISITES_ID) VALUES (1, 1)\"; SQL statement:\ninsert into task_prerequisites (task_id, prerequisites_id) values (?, ?) [23505-197]]; nested exception is org.hibernate.exception.ConstraintViolationException: could not execute statement",
-  "path": "/tasks/new"
-}
+* /users
+   * / : GET : getAll(Authentication auth) : az összes user lekédezése
 
-Egy skill-t hozzá tudok adni (az előző szenvedés után), viszont a másodiknál már ezt dobja:
-ERROR Error: Uncaught (in promise): HttpErrorResponse: {"headers":{"normalizedNames":{},"lazyUpdate":null},"status":500,"statusText":"OK","url":"http://localhost:8080/users/1/skills/add","ok":false,"name":"HttpErrorResponse","message":"Http failure response for http://localhost:8080/users/1/skills/add: 500 OK","error":{"timestamp":"2018-12-16T16:56:47.098+0000","status":500,"error":"Internal Server Error","message":"could not execute statement; SQL [n/a]; constraint [\"UK_CORMJY41HP853KP6MKWJEV1NV_INDEX_C ON PUBLIC.SKILL_OWNERS(OWNERS_ID) VALUES (1, 1)\"; SQL statement:\ninsert into skill_owners (skill_id, owners_id) values (?, ?) [23505-197]]; nested exception is org.hibernate.exception.ConstraintViolationException: could not execute statement","path":"/users/1/skills/add"}}
-
-Ugyanez a második project hozzáadásánál. Az elsőre még működik, a másodikra már elszáll:
-ERROR Error: Uncaught (in promise): HttpErrorResponse: {"headers":{"normalizedNames":{},"lazyUpdate":null},"status":500,"statusText":"OK","url":"http://localhost:8080/projects/new","ok":false,"name":"HttpErrorResponse","message":"Http failure response for http://localhost:8080/projects/new: 500 OK","error":{"timestamp":"2018-12-16T17:00:44.501+0000","status":500,"error":"Internal Server Error","message":"could not execute statement; SQL [n/a]; constraint [\"UK_1BY5203W62CBX752R457K8IQQ_INDEX_E ON PUBLIC.PROJECT_MEMBERS(MEMBERS_ID) VALUES (1, 1)\"; SQL statement:\ninsert into project_members (project_id, members_id) values (?, ?) [23505-197]]; nested exception is org.hibernate.exception.ConstraintViolationException: could not execute statement","path":"/projects/new"}}
-
-Ha egy tasknak csak 0 vagy 1 előfeltételt adok meg egy 0 vagy 1 elemű tömbben, akkor a létrehozás működik rendesen. Ha viszont már kettő előfeltételt adok hozzá (pl. [2,5]), akkor elhasal.
-ERROR Error: Uncaught (in promise): HttpErrorResponse: {"headers":{"normalizedNames":{},"lazyUpdate":null},"status":500,"statusText":"OK","url":"http://localhost:8080/tasks/new","ok":false,"name":"HttpErrorResponse","message":"Http failure response for http://localhost:8080/tasks/new: 500 OK","error":{"timestamp":"2018-12-16T18:18:28.626+0000","status":500,"error":"Internal Server Error","message":"could not execute statement; SQL [n/a]; constraint [\"UK_39TOQEWEEJPRTSITRJ2SER4RG_INDEX_8 ON PUBLIC.TASK_PREREQUISITES(PREREQUISITES_ID) VALUES (6, 5)\"; SQL statement:\ninsert into task_prerequisites (task_id, prerequisites_id) values (?, ?) [23505-197]]; nested exception is org.hibernate.exception.ConstraintViolationException: could not execute statement","path":"/tasks/new"}}
