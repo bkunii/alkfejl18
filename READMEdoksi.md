@@ -59,8 +59,7 @@ A programnak képesnek kell lennie bármely szakterület projectmenedzselési fe
 #### 1.3.1. Szerepkörök
 * __user->leader__: A felhasználó szerepköre, amikor a saját projektjét kezeli. Létrehozhat feladatokat a projekthez, membereket rendelhet a feladatokhoz, törölhet feladatokat/membereket, feladatokat oszthat magának, nyomonkövetheti a projekt állapotát.
 * __user->member__: A felhasználó szerepköre, amikor mások által létrehozott projektbe meghívják. Publikus feladatokat vállalhat magára, a saját feladatának módosíthatja az állapotát, nyomonkövetheti a projekt állapotát.
-<del>
-* __admin__: God mode. Minden felhasználó minden adatát módosíthatja.</del>
+* <del>__admin__: God mode. Minden felhasználó minden adatát módosíthatja.</del>
 
 #### 1.3.2. Use-case modell
 
