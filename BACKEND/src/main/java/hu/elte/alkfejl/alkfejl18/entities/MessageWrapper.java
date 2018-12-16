@@ -1,5 +1,6 @@
 package hu.elte.alkfejl.alkfejl18.entities;
 
+import java.sql.Date;
 import java.util.ArrayList;
 
 import javax.persistence.Entity;
@@ -20,6 +21,7 @@ public class MessageWrapper {
 	private Integer projectId;
 	private String userName;
 	private String password;
+	private Date deadline;
 	
 	public Boolean isProject() {
 		return this.name != null && this.leaderId != null;

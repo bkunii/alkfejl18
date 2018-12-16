@@ -5,6 +5,7 @@ import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -60,13 +61,17 @@ public class ProjectController {
         return ResponseEntity.ok(project.get());
     }
     
-    @DeleteMapping("/{id}")//TODO : only by admin or leader
-    public ResponseEntity<Project> deleteProject(@PathVariable Integer id) {
+    @DeleteMapping("/{id}")
+    public ResponseEntity deleteProject(@PathVariable Integer id,Authentication auth) {
+    	String userName = auth.getName();
         Optional<Project> oProject = projectRepository.findById(id);
         if (!oProject.isPresent()) {
             return ResponseEntity.notFound().build();   
         }
         Project project = oProject.get();
+        if(!userName.equals("admin") || !userName.equals(project.getLeader().getUsername())) {
+        	return ResponseEntity.status(401).body("Only the leader can delete the project");
+        }
         for(Task t : project.getTasks()) {
         	for(User u : t.getAssignees()) {
         		u.getAssignedTasks().remove(t);
@@ -85,36 +90,53 @@ public class ProjectController {
     }
      
     @PutMapping("/edit/{id}")
-    public ResponseEntity<Project> editProject(@PathVariable Integer id, @RequestBody Project project) {
-    	if(project.getLeader() != null || project.getMembers() != null || project.getTasks() != null) {
+    public ResponseEntity editProject(@PathVariable Integer id, @RequestBody MessageWrapper project,Authentication auth) {
+    	String userName = auth.getName();
+    	if(!project.isProject()) {
     		return ResponseEntity.badRequest().build();
     	}
         Optional<Project> oProject = projectRepository.findById(id);
         if (!oProject.isPresent()) {
             return ResponseEntity.notFound().build();
         }
-        
-        project.setId(id);
-        return ResponseEntity.ok(projectRepository.save(project));
+        Project editedProject = oProject.get();
+        if(!userName.equals("admin") || !userName.equals(editedProject.getLeader().getUsername())) {
+        	return ResponseEntity.status(401).body("Only the project leader can edit it");
+        }
+        if(project.getName() != null) {
+        	editedProject.setName(project.getName());
+        }
+        if(project.getDeadline() != null) {
+        	editedProject.setDeadline(project.getDeadline());
+        }
+        return ResponseEntity.ok(projectRepository.save(editedProject));
     }
     
     @GetMapping("/{id}/members")
-    public ResponseEntity<Iterable<User>> getMembers(@PathVariable Integer id){
-    	  Optional<Project> project = projectRepository.findById(id);
-          if (!project.isPresent()) {
-              return ResponseEntity.notFound().build();   
-          }
-          return ResponseEntity.ok(project.get().getMembers());
+    public ResponseEntity getMembers(@PathVariable Integer id,Authentication auth){
+    	String userName = auth.getName();
+    	Optional<Project> project = projectRepository.findById(id);
+        if (!project.isPresent()) {
+            return ResponseEntity.notFound().build();   
+        }
+        if(!userName.equals("admin")&&!project.get().getMembers().contains(userRepository.findByUsername(userName).get())) {
+        	return ResponseEntity.status(401).body("Only members of the project can see the list of members");
+        }
+        return ResponseEntity.ok(project.get().getMembers());
     }
     
     @PostMapping("/{id}/addMember")
-    public ResponseEntity<Iterable<User>> addMember(@PathVariable Integer id,@RequestBody User member){
+    public ResponseEntity addMember(@PathVariable Integer id,@RequestBody MessageWrapper member,Authentication auth){
+    	String userName = auth.getName();
     	Optional<Project> oProject = projectRepository.findById(id);
-    	Optional<User> oMember = userRepository.findById(member.getId());
+    	Optional<User> oMember = userRepository.findByUsername(member.getUserName());
     	if(!oProject.isPresent() || !oMember.isPresent()) {
     		return ResponseEntity.notFound().build();
     	}
     	Project project = oProject.get();
+    	if(!userName.equals("admin") && !userName.equals(project.getLeader().getUsername())) {
+    		return ResponseEntity.status(401).body("Only the project leader can add members");
+    	}
     	if(project.getMembers().contains(oMember.get())) {
     		return ResponseEntity.badRequest().build();
     	}
@@ -126,13 +148,16 @@ public class ProjectController {
     }
     
     @PostMapping("/{id}/removeMember/{userId}")
-    public ResponseEntity<Iterable<User>> removeMember(@PathVariable Integer id, @PathVariable Integer userId, @RequestBody User member){
+    public ResponseEntity removeMember(@PathVariable Integer id, @RequestBody MessageWrapper member,Authentication auth){
+    	String userName = auth.getName();
     	Optional<Project> oProject = projectRepository.findById(id);
-    	Optional<User> oMember = userRepository.findById(userId);
+    	Optional<User> oMember = userRepository.findByUsername(member.getUserName());
     	if(!oProject.isPresent() || !oMember.isPresent() || !oProject.get().getMembers().contains(oMember.get())) {
     		return ResponseEntity.notFound().build();
     	}
-    	
+    	if(!userName.equals("admin") && !userName.equals(oProject.get().getLeader().getUsername())){
+    		return ResponseEntity.status(401).body("Only the project leader can remove members");
+    	}
     	return ResponseEntity.ok().build();
     }
 }
