@@ -57,7 +57,9 @@ public class SkillController {
         if (!oSkill.isPresent()) {
             return ResponseEntity.notFound().build();   
         }
-            
+        if(!oSkill.get().getOwners().isEmpty()){
+        	return ResponseEntity.badRequest().body("Skill can't be deleted since it is added to a user");
+        }
         skillRepository.delete(oSkill.get());
         return ResponseEntity.ok().build();
     }

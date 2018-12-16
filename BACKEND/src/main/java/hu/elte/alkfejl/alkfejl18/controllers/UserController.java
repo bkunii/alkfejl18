@@ -32,8 +32,8 @@ public class UserController {
     
     
     @GetMapping("")
-    public ResponseEntity getAll(Authentication authentication) {
-    	String userName = authentication.getName();
+    public ResponseEntity getAll(Authentication auth) {
+    	String userName = auth.getName();
     	if(userName.equals("admin")) {
         Iterable<User> users = userRepository.findAll();
         return ResponseEntity.ok(users);
@@ -72,8 +72,8 @@ public class UserController {
     }
     
     @DeleteMapping("/{id}")
-    public ResponseEntity deleteUser(@PathVariable Integer id,Authentication authentication) {
-    	String userName = authentication.getName();
+    public ResponseEntity deleteUser(@PathVariable Integer id,Authentication auth) {
+    	String userName = auth.getName();
         Optional<User> oUser = userRepository.findById(id);
         if (!oUser.isPresent()) {
             return ResponseEntity.notFound().build();   
@@ -81,29 +81,42 @@ public class UserController {
         if(userName.equals("admin") || userName.equals(oUser.get().getUsername())) {
         	if(oUser.get().getOwnedProjects().size() > 0 || oUser.get().getProjects().size() > 0 ||
             		oUser.get().getAssignedTasks().size() > 0) {
-            	return ResponseEntity.badRequest().build();
+            	return ResponseEntity.badRequest().body("User can't be deleted, since it is in a project");
             }
             userRepository.delete(oUser.get());
             return ResponseEntity.ok().build();
         }else {
-        	return ResponseEntity.status(401).body("Only the admin or the owner can delete the user");
+        	return ResponseEntity.status(401).body("Only the owner can delete the user");
         }
         
     }
     
     @PutMapping("/{id}/edit")
-    public ResponseEntity<User> editUser(@PathVariable Integer id,@RequestBody User user){
-    	if(user.getAssignedTasks() != null || user.getSkills() != null ||
-    				user.getOwnedProjects() != null || user.getProjects() != null) {
+    public ResponseEntity editUser(@PathVariable Integer id,@RequestBody MessageWrapper user, Authentication auth){
+    	String userName = auth.getName();
+    	if(!user.isUser()) {
     		return ResponseEntity.badRequest().build();
     	}
     	Optional<User> oUser = userRepository.findById(id);
         if (!oUser.isPresent()) {
             return ResponseEntity.notFound().build();   
         }
+        User editedUser = oUser.get(); 
+        if(userName.equals("admin") || userName.equals(editedUser.getUsername())) {
+        	if(user.getName() != null) {
+        		editedUser.setName(user.getName());
+        	}
+        	if(user.getUserName() != null) {
+        		editedUser.setUsername(user.getUserName());
+        	}
+        	if(user.getPassword() != null) {
+        		editedUser.setPassword(passwordEncoder.encode(user.getPassword()));
+        	}
+        	return ResponseEntity.ok(userRepository.save(editedUser));
+        }else {
+        	return ResponseEntity.status(401).body("Only the owner can edit the user");
+        }
         
-        user.setId(id);
-        return ResponseEntity.ok(userRepository.save(user));
     }
     
     @GetMapping("/{id}/skills")
@@ -117,37 +130,47 @@ public class UserController {
     }
     
     @PutMapping("/{id}/skills/add")
-    public ResponseEntity<User> addSkill(@PathVariable Integer id, @RequestBody MessageWrapper skill) {
-        Optional<User> oUser = userRepository.findById(id);
+    public ResponseEntity addSkill(@PathVariable Integer id, @RequestBody MessageWrapper skill,Authentication auth) {
+        String userName = auth.getName();
+    	Optional<User> oUser = userRepository.findById(id);
         Optional<Skill> oSkill = skillRepository.findByName(skill.getName());
         if (!oUser.isPresent() || !oSkill.isPresent()) {
             return ResponseEntity.notFound().build();
         }
-        if(oUser.get().getSkills().contains(oSkill.get())) {
-        	return ResponseEntity.ok(oUser.get());
+        if(userName.equals("admin") || userName.equals(oUser.get().getUsername())) {
+	        if(oUser.get().getSkills().contains(oSkill.get())) {
+	        	return ResponseEntity.ok(oUser.get());
+	        }
+	        Skill addedSkill = oSkill.get();
+	        User user = oUser.get();
+	        user.getSkills().add(addedSkill);
+	        addedSkill.getOwners().add(user);
+	        skillRepository.save(addedSkill);
+	        return ResponseEntity.ok(userRepository.save(user));
+        }else {
+        	return ResponseEntity.status(401).body("Only the owner can add skills to a user");
         }
-        Skill addedSkill = oSkill.get();
-        User user = oUser.get();
-        user.getSkills().add(addedSkill);
-        addedSkill.getOwners().add(user);
-        skillRepository.save(addedSkill);
-        return ResponseEntity.ok(userRepository.save(user));
     }
     
     @PutMapping("/{id}/skills/remove")
-    public ResponseEntity<User> removeSkill(@PathVariable Integer id, @RequestBody Skill skill) {
-        Optional<User> oUser = userRepository.findById(id);
+    public ResponseEntity removeSkill(@PathVariable Integer id, @RequestBody MessageWrapper skill,Authentication auth) {
+    	String userName = auth.getName();
+    	Optional<User> oUser = userRepository.findById(id);
         Optional<Skill> oSkill = skillRepository.findByName(skill.getName());
         if (!oUser.isPresent() || !oSkill.isPresent()) {
             return ResponseEntity.notFound().build();
         }
-        if(!oUser.get().getSkills().contains(oSkill.get())) {
-        	return ResponseEntity.ok(oUser.get());
+        if(userName.equals("admin") || userName.equals(oUser.get().getUsername())) {
+	        if(!oUser.get().getSkills().contains(oSkill.get())) {
+	        	return ResponseEntity.ok(oUser.get());
+	        }
+	        oUser.get().getSkills().remove(oSkill.get());
+	        oSkill.get().getOwners().remove(oUser.get());
+	        skillRepository.save(oSkill.get());
+	        return ResponseEntity.ok(userRepository.save(oUser.get()));
+        }else {
+        	return ResponseEntity.status(401).body("Only the owner can add skills to a user");
         }
-        oUser.get().getSkills().remove(skill);
-        skill.getOwners().remove(oUser.get());
-        skillRepository.save(skill);
-        return ResponseEntity.ok(userRepository.save(oUser.get()));
     }
     
     @GetMapping("/{id}/ownedProjects")
