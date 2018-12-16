@@ -1,4 +1,4 @@
-# Alkalmazások fejlesztése beadandó feladat
+# Alkalmazások fejlesztése beadandó feladat dokumentációja
 
 Készítette: Bagoly Kunigunda, Dorogi Benjamin, Fenyvesi Attila
 
