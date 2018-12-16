@@ -40,6 +40,11 @@ A dolgozók adatai:
 * Jelszavas azonosítás, jelszavak biztonságos tárolása
 * A projekten belüli feladatokhoz és részfeladatokhoz összefüggési gráf generálása
 * Privát képek biztonságos elrejtése a látogatók elől
+* A programmal szemben támasztott alapvető elvárás - a várhatóan széleskörű és változatos felhasználásból eredendően - a platformfüggetlenség. A programnak futnia kell a legnépszerűbb platformokon (Windows, Linux, OS X).
+
+### 1.1.4. Szakterületi követelmények
+
+A programnak képesnek kell lennie bármely szakterület projectmenedzselési feladatainak ellátására, így az általános információk (pl. személyes adatok) rögzítésén túl az üzemeltető számára lehetővé kell tenni, hogy a szakterületre jellemző speciális adatokat (pl. dolgozók képességei vagy a részfeladatok erőforrás igényei) személyre szabhassa.
 
 ### 1.2. Szakterületi fogalomjegyzék
 * __projekt / project__: adott szervezeti környezetben megtervezett és végrehajtott tevékenységsorozat, amely konkrét célokat valósít meg, és a célok eléréséhez erőforrásokat rendel. Időben és térben jól körülhatárolt összetett feladat
@@ -54,7 +59,9 @@ A dolgozók adatai:
 #### 1.3.1. Szerepkörök
 * __user->leader__: A felhasználó szerepköre, amikor a saját projektjét kezeli. Létrehozhat feladatokat a projekthez, membereket rendelhet a feladatokhoz, törölhet feladatokat/membereket, feladatokat oszthat magának, nyomonkövetheti a projekt állapotát.
 * __user->member__: A felhasználó szerepköre, amikor mások által létrehozott projektbe meghívják. Publikus feladatokat vállalhat magára, a saját feladatának módosíthatja az állapotát, nyomonkövetheti a projekt állapotát.
-* __admin__: God mode. Minden felhasználó minden adatát módosíthatja. @????
+* __admin__: God mode. Minden felhasználó minden adatát módosíthatja. *__????__*
+
+#### 1.3.2. Use-case modell
 
 
 
@@ -64,13 +71,12 @@ A dolgozók adatai:
 
 
 
-### Nemfunkcionális követelmények
 
-A programmal szemben támasztott alapvető elvárás - a várhatóan széleskörű és változatos felhasználásból eredendően - a platformfüggetlenség. A programnak futnia kell a legnépszerűbb platformokon (Windows, Linux, OS X).
 
-### Szakterületi követelmények
 
-A programnak képesnek kell lennie bármely szakterület projectmenedzselési feladatainak ellátására, így az általános információk (pl. személyes adatok) rögzítésén túl az üzemeltető számára lehetővé kell tenni, hogy a szakterületre jellemző speciális adatokat (pl. dolgozók képességei vagy a részfeladatok erőforrás igényei) személyre szabhassa.
+
+
+
 
 ### Szerepkörök
 
