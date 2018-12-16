@@ -12,7 +12,7 @@ __Ez egy olyan alkalmazás, amellyel egy munkacsoport__ (pl. egy adott cégen be
 
 Amiután egy felhasználó regisztrál az oldalra, lehetősége van új projektet létrehozni, annak részfeladatokat(task-okat) létrehozni és más felhasználókat rendelhet hozzá a részfeladatokhoz. 
 
-<TODOOO>
+TO DO TO DO TO DO
 
 #### 1.1.2. Funkcionális elvárások
 
@@ -44,9 +44,17 @@ A dolgozók adatai:
 ### 1.2. Szakterületi fogalomjegyzék
 * __projekt / project__: adott szervezeti környezetben megtervezett és végrehajtott tevékenységsorozat, amely konkrét célokat valósít meg, és a célok eléréséhez erőforrásokat rendel. Időben és térben jól körülhatárolt összetett feladat
 * __felhasználó / user__: regisztrált és bejelentkezett látogató, aki létrehozhat új projektet, feladatokat vállalhat egy projekten belül, bejegyezheti a feladataihoz hogy elvégezte őket. Létrehozhatja saját profilját, megadhatja skill-jeit, ez alapján oszthatják be más felhasználók taskokhoz. 
-* __skill__: egy felhasználó megadhatja tulajdonságait, erősségeit, képességeit, ami segíti eligazodni a projektmenedzsereket, hogy az adott felhasználót milyen taskokhoz érdemes beosztani. (pl. C++ programozás, kávéfőzés, számítógépes grafikák készítése).
-* <TODOOOO>
+* __képesség / skill__: egy felhasználó megadhatja tulajdonságait, erősségeit, képességeit, ami segíti eligazodni a projektmenedzsereket, hogy az adott felhasználót milyen taskokhoz érdemes beosztani. (pl. C++ programozás, kávéfőzés, számítógépes grafikák készítése).
+* __tag / member__: a felhasználó egy szerepköre, más felhasználók által létrehozott projektek esetén.
+* __projektvezető / leader__: a felhasználó egy szerepköre, saját projektjei esetén.
+* @TODO
  
+### 1.3. Use-case modell
+
+#### 1.3.1. Szerepkörök
+* __user->leader__: A felhasználó szerepköre, amikor a saját projektjét kezeli. Létrehozhat feladatokat a projekthez, membereket rendelhet a feladatokhoz, törölhet feladatokat/membereket, feladatokat oszthat magának, nyomonkövetheti a projekt állapotát.
+* __user->member__: A felhasználó szerepköre, amikor mások által létrehozott projektbe meghívják. Publikus feladatokat vállalhat magára, a saját feladatának módosíthatja az állapotát, nyomonkövetheti a projekt állapotát.
+* __admin__: God mode. Minden felhasználó minden adatát módosíthatja. @????
 
 
 
