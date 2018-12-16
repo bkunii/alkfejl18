@@ -9,6 +9,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.validation.constraints.NotNull;
@@ -42,22 +43,20 @@ public class User implements Serializable {
     @Column
     private String name;
     
-    @Column
+
     @JsonIgnore
-    @ElementCollection
     @OneToMany(mappedBy= "leader")
     private List<Project> ownedProjects; //where user is leader
     
-    @Column
+
     @JsonIgnore
-    @ElementCollection
     @ManyToMany(mappedBy= "members")
     private List<Project> projects; //where user is member
     
-    @Column
-    @JsonIgnore
-    @ElementCollection
-    @ManyToMany(mappedBy = "owners")
+
+
+    @JoinTable
+    @ManyToMany
     private List<Skill> skills;
     
     @Column

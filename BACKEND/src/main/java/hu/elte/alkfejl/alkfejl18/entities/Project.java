@@ -12,6 +12,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
@@ -42,16 +43,14 @@ public class Project implements Serializable{
 	@ManyToOne
 	private User leader;
 	
-	@Column
-	@JsonIgnore
+
 	@NotNull
-	@ElementCollection
 	@ManyToMany
+	@JoinTable
 	private List<User> members;
 	
-	@Column
+
 	@JsonIgnore
-	@ElementCollection
 	@OneToMany(mappedBy = "project")
 	private List<Task> tasks;
 	

@@ -37,14 +37,11 @@ public class Skill implements Serializable{
 	@NotNull
 	private String name;
 	
-	@Column
-	@ElementCollection
-	@ManyToMany
+	@JsonIgnore
+	@ManyToMany(mappedBy = "skills")
 	private List<User> owners;
 	
-	@Column
-	@ElementCollection
-	@ManyToMany
+	@ManyToMany(mappedBy = "requiredSkills")
 	@JsonIgnore
 	private List<Task> requiredBy;
 }

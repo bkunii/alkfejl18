@@ -12,6 +12,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.validation.constraints.NotNull;
@@ -38,25 +39,23 @@ public class Task implements Serializable{
 	@NotNull
 	private String name;
 	
-	@Column
-	@NotNull
-	@ElementCollection
-	@ManyToMany(mappedBy = "requiredBy")
-	private List<Skill> requiredSkils; 
+
+	@ManyToMany
+	@JoinTable
+	private List<Skill> requiredSkills; 
 	
 	@JoinColumn
 	@NotNull
 	@ManyToMany
 	private List<User> assignees;
 	
-	@Column
-	@ElementCollection
-	@ManyToMany(mappedBy = "requiredBy")
+
+	@ManyToMany
+	@JoinTable
 	private List<Task> prerequisites;
 	
-	@Column
-	@ElementCollection
-	@ManyToMany
+
+	@ManyToMany(mappedBy = "prerequisites")
 	@JsonIgnore
 	private List<Task> requiredBy;
 	

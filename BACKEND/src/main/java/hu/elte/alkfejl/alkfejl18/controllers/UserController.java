@@ -7,6 +7,7 @@ import hu.elte.alkfejl.alkfejl18.repositories.*;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+@CrossOrigin
 @RestController
 @RequestMapping("/users")
 public class UserController {
@@ -90,7 +92,7 @@ public class UserController {
     }
     
     @PutMapping("/{id}/skills/add")
-    public ResponseEntity<User> addSkill(@PathVariable Integer id, @RequestBody Skill skill) {
+    public ResponseEntity<User> addSkill(@PathVariable Integer id, @RequestBody MessageWrapper skill) {
         Optional<User> oUser = userRepository.findById(id);
         Optional<Skill> oSkill = skillRepository.findByName(skill.getName());
         if (!oUser.isPresent() || !oSkill.isPresent()) {
@@ -99,10 +101,12 @@ public class UserController {
         if(oUser.get().getSkills().contains(oSkill.get())) {
         	return ResponseEntity.ok(oUser.get());
         }
-        oUser.get().getSkills().add(skill);
-        skill.getOwners().add(oUser.get());
-        skillRepository.save(skill);
-        return ResponseEntity.ok(userRepository.save(oUser.get()));
+        Skill addedSkill = oSkill.get();
+        User user = oUser.get();
+        user.getSkills().add(addedSkill);
+        addedSkill.getOwners().add(user);
+        skillRepository.save(addedSkill);
+        return ResponseEntity.ok(userRepository.save(user));
     }
     
     @PutMapping("/{id}/skills/remove")
