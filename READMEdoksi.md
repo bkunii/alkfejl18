@@ -128,56 +128,42 @@ A programnak képesnek kell lennie bármely szakterület projectmenedzselési fe
  * admin/switchtouserprofile
   * *fogalmam nincs ezt pontosan még hogy fogjuk implementálni*
   
+### 2.3. Design
 
+### 2.4. Adatbázis
 
-
-
-
-
-
-
-
-
-
-
-
-### Szerepkörök
-
-Admin:
- * Mindenhez (is) hozzáfér
-
-Group Leader :
- * Project létrehozás
- * Memberek csoportba vétele
- * Skillek felvétele
- * Feladatok memberekhez rendelése
- * Folyamatok ellenőrzése
-
-Group Member :
- * Saját skillek megadása
- * Feladat elvégzése (log : idő, kész vagy sem)
- * Folyamat megtekintése
-
-### Adatbázis :
- * Users
-   * név
-   * jelszó
-   * skills
- * Groups
+Az adatbázis táblái és azok attribútumai:
+* Users
+   * username
+   * password
    * name
-   * Project (by id)
-   * members:roles
+   * ownedProjects (OneToMany kapcsolatban a project táblával)
+   * projects (ManyToMany kapcsolatban a project táblával)
+   * skills (ManyToMany kapcsolatban a skill táblával)
+   * assignedTasks (ManyToMany kapcsolatban a task táblával)
  * Task
-   * required skill
-   * assignee
-   * prerequisites
+   * name
+   * requiredSkills (ManyToMany kapcsolatban a skill táblával)
+   * assignees (ManyToMany kapcsolatban a user táblával)
+   * prerequisites (ManyToMany kapcsolatban önmagával)
+   * requiredBy (--,,--)
    * complete
-   * project_id
+   * startTime
+   * completionTime
+   * completedBy
+   * isOpen
+   * project (ManyToOne kapcsolatban a project táblával)
  * Project
-   * group
-   * tasks (json)
+   * leader (ManyToOne kapcsolatban a user táblával)
+   * members (ManyToMany kapcsolatban a user táblával)
+   * tasks (oneToMany kapcsolatban a task távlával)
    * deadline
    * name
  * Skills
    * name
-   * code
+   * owners (ManyToMany kapcsolatban a user táblával)
+   * requiredBy (ManyToMany kapcsolatban a task táblával)
+   
+ #### 2.4.1. Adatbmodell
+
+![Database diagram](/images/database.png)
