@@ -99,4 +99,22 @@ Group Member :
   * /{id} (GET) : getSkill(Integer id) : skill lekérdezése
   * /delete/{id} (DELETE): deleteSkill(Integer id) skill törlése
   * /edit/{id} (PUT):  put(Integer id,Skill skill)
+* /tasks
+  * "" (GET) : getAll() : az összes task lekérdezése
+  * /{id} (GET) : getSkill(Integer id) : task lekérése id alapján
+  * /new (POST): createTask( MessageWrapper task,Authentication auth) : task létrehozása
+  * /{id}/delete (DELETE): deleteTask(Integer id, Authentication auth) : task törlése
+  * /{id}/assign (PUT) : assignTask(Integer id, Authentication auth, MessageWrapper muser) : task hozzárendelése userhez
+  * /{id}/unassign (PUT) : unassignTask #nemműködik, de ki tudnánk javítani fél perc alatt
+  * /{id}/complete (PUT) : completeTask(integer id, Authentication auth) : task lezárása (befejezése)
+  * /{id}/start (PUT) : startTask(Integer id, Authentication auth) : task elkezdése
+* /projects
+  * "" (GET) : getAll() : az összes project lekérdezése
+  * /new (POST) : createProject(MessageWrapper project) : project létrehozása
+  * /{id} (GET) : getProject(Integer id) : project lekérése id alapján
+  * /{id} (DELETE) : deleteProject(Integer id, Authentication auth) : project törlése
+  * /edit/{id} (PUT) : editProject(Integer id, MessageWrapper project, Authentication auth) : project szerkesztése
+  * /{id}/addMember : addMember(Integer id,MessageWrapper user, Authentication auth) : tag hozzáadása a projecthez
+  * /{id}/members : getMembers(Integer id, Authentication auth) : project tagjainak lekérése
+  * /{id}/removeMember : removeMember(Integer id, MessageWrapper member,Authentication auth) : tag törlése a projectből
    
