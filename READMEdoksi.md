@@ -63,8 +63,22 @@ A programnak képesnek kell lennie bármely szakterület projectmenedzselési fe
 
 #### 1.3.2. Use-case modell
 
+## TERVEZÉS
 
-
+### 2.1. Oldaltérkép
+* Főoldal
+  * Bejelentkezés
+  * Regisztráció
+* Projektek megtekintése
+  * Saját projektek megtekintése
+    * Projekt szerkesztése
+  * Egyéb projektek megtekintése
+* Profil
+  * Profil megtekintése
+  * Profil szerkesztése
+  * Skillek felvétele
+* Kijelentkezés
+  
 
 
 
