@@ -29,7 +29,8 @@ A feladatok részei:
  
 A dolgozók adatai:
 * személyes adatok (név, cím, beosztás, fizetés, stb.)
-* képességek egy 5-ös skálán (pl.: PHP: 5/5; Java: 3/5; stb.)
+* képességek 
+* <del>képességek egy 5-ös skálán (pl.: PHP: 5/5; Java: 3/5; stb.)</del>
  
 <del>Egy munkamenet létrehozása után a program megadja, hogy mely dolgozóknak mely részfeladatokon kell dolgozniuk a leghatékonyabb munkavégzés érdekében.</del> A programba a dolgozók a saját azonosítójukkal be tudnak lépni, és az általuk elvégzett részfeladatokat jóvá tudják hagyni, így nyomon követhető a project végrehajtásának a menete.
 
