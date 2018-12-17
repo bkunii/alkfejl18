@@ -12,8 +12,6 @@ __Ez egy olyan alkalmazás, amellyel egy munkacsoport__ (pl. egy adott cégen be
 
 Amiután egy felhasználó regisztrál az oldalra, lehetősége van új projektet létrehozni, annak részfeladatokat(task-okat) létrehozni és más felhasználókat rendelhet hozzá a részfeladatokhoz. 
 
-*__\<TODO\>__*
-
 #### 1.1.2. Funkcionális elvárások
 
 A programba kétféle adattípust lehet rögzíteni:
@@ -53,7 +51,6 @@ A programnak képesnek kell lennie bármely szakterület projectmenedzselési fe
 * __képesség / skill__: egy felhasználó megadhatja tulajdonságait, erősségeit, képességeit, ami segíti eligazodni a projektmenedzsereket, hogy az adott felhasználót milyen taskokhoz érdemes beosztani. (pl. C++ programozás, kávéfőzés, számítógépes grafikák készítése).
 * __tag / member__: a felhasználó egy szerepköre, más felhasználók által létrehozott projektek esetén.
 * __projektvezető / leader__: a felhasználó egy szerepköre, saját projektjei esetén.
-* __\<TODO\>__*
  
 ### 1.3. Use-case modell
 
@@ -128,9 +125,7 @@ A programnak képesnek kell lennie bármely szakterület projectmenedzselési fe
    * *editUser(String name, String password, String role, List<Integer> skills)*
  * admin/switchtouserprofile
   * *fogalmam nincs ezt pontosan még hogy fogjuk implementálni*
-  
-### 2.3. Design
-
+ 
 ### 2.4. Adatbázis
 
 Az adatbázis táblái és azok attribútumai:
@@ -168,3 +163,31 @@ Az adatbázis táblái és azok attribútumai:
  #### 2.4.1. Adatbmodell
 
 ![Database diagram](/images/database.png)
+
+### 3.1. Fejlesztőkörnyezet
+
+#### 3.1.1. Felhasznált eszközök
+
+* [Git](https://git-scm.com/) verziókezelő
+* [Node.js](https://nodejs.org/en/) Javascript környezet
+* [dagre-d3](https://github.com/dagrejs/dagre-d3) JavaScript library a gráfok kirajzolásához
+* [GitHub](http://github.com) a projekt közzétételéhez
+
+### 4.1. Felhasználói dokumentáció
+
+#### 4.1.1. Regisztráció, bejelentkezés
+
+__Az oldal bárminemű használata csak regisztráció után lehetséges.__
+
+__Regisztrálni__ a főoldalon található "Regisztráció" gomb segítségével lehetséges, ezután egy felugró ablakban űrlap segítségével lehet megadni a felhasználó adatait. Ezután a program automatikusan belépteti a felhasználót a regisztrált adataival.
+
+__Bejelentkezni__ szintén a főoldalon lehetséges, felhasználónév (username) és jelszó (password) megadásával. Ekkor a felhasználót autentikálja az applikáció, majd megjeleníti a "Projektek" oldalt.
+
+
+
+[Registration](images/registr.png)
+
+
+
+
+
