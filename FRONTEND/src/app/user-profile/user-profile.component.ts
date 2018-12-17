@@ -56,7 +56,7 @@ export class UserProfileComponent implements OnInit {
   async ngOnInit() {
     this.currentUser = new User('', '', '');
     await this.authService.login('', ''); // Eltávolítandó
-    this.currentUser = this.authService.currentUser;
+    this.currentUser = JSON.parse(JSON.stringify(this.authService.currentUser));
     this.allSkills = await this.skillService.getAllSkills();
     this.userSkills = await this.userService.getSkillsOfUser(this.currentUser.id);
   }
@@ -85,7 +85,10 @@ export class UserProfileComponent implements OnInit {
   }
 
   private async saveUserData() {
-    await this.userService.editUser(this.currentUser);
+    this.authService.currentUser = this.currentUser;
+    const _user = this.currentUser;
+    _user.skills = null;
+    await this.userService.editUser(_user);
   }
 
   private async restoreUserData() {

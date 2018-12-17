@@ -1,6 +1,6 @@
 import { User } from 'src/app/classes/user';
 import { HttpService } from './http.service';
-import { Injectable, OnInit } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 
 @Injectable({
@@ -8,28 +8,23 @@ import { Router } from '@angular/router';
 })
 export class AuthenticationService {
 
-  public currentUser: User = new User('', '', '');
+  public currentUser: User = null;
 
   constructor(
     private httpService: HttpService,
     private router: Router
   ) { }
 
-  public isUserLoggedIn(): boolean {
-    return this.currentUser !== null;
-  }
-
   public async login(username: string, password: string): Promise<User> {
     try {
       const token = btoa(`${username}:${password}`);
       window.localStorage.setItem('token', token);
-
-      // const user = await this.httpService.post<User>('login', {}) as User;
-      this.currentUser = await this.httpService.get<User>('users/1');
-
+      this.currentUser = await this.httpService.post<User>('users/login', username);
+      console.log('TOKEN:', window.localStorage.getItem('token'));
+      console.log('LOGIN (current user):', this.currentUser);
       return Promise.resolve(this.currentUser);
     } catch (e) {
-      console.log(e);
+      console.log('LOGIN ERROR:', e);
       this.currentUser = null;
       window.localStorage.setItem('token', '');
       return Promise.reject();

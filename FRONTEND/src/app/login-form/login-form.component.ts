@@ -1,7 +1,7 @@
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { DialogRegistrationComponent } from './../dialogs/dialog-registration/dialog-registration.component';
 import { Component, OnInit } from '@angular/core';
-import { MatDialog } from '@angular/material';
+import { MatDialog, MatSnackBar } from '@angular/material';
 import { AuthenticationService } from '../services/auth.service';
 import { Router } from '@angular/router';
 
@@ -17,7 +17,8 @@ export class LoginFormComponent implements OnInit {
   constructor(
     public dialog: MatDialog,
     private authService: AuthenticationService,
-    private router: Router
+    private router: Router,
+    private snackBar: MatSnackBar
   ) {
     this.loginForm = new FormGroup({
       username: new FormControl('', [Validators.required]),
@@ -28,17 +29,16 @@ export class LoginFormComponent implements OnInit {
   ngOnInit() { }
 
   async onSubmit() {
-    const username = this.loginForm.get('username').value;
-    const password = this.loginForm.get('password').value;
-
-    await this.authService.login('', '');
-    this.router.navigate([`users/${this.authService.currentUser.id}/projects`]);
-    return;
-
-    // Autentikáció után megcsinálni
     if (this.loginForm.valid) {
-      await this.authService.login(username, password);
-      this.router.navigate([`/users/${this.authService.currentUser.id}/projects`]);
+      const username = this.loginForm.get('username').value;
+      const password = this.loginForm.get('password').value;
+
+      try {
+        await this.authService.login(username, password);
+//        this.router.navigate([`/users/${this.authService.currentUser.id}/projects`]);
+      } catch {
+        this.snackBar.open('SIKERTELEN BEJELENTKEZÉS!', 'HIBA', { duration: 2000 });
+      }
     }
   }
 

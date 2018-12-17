@@ -33,7 +33,7 @@ export class DialogRegistrationComponent implements OnInit {
     this.name = this.userName = this.passwd = this.passwd2 = '';
   }
 
-  private validateRegForm(): void {
+  private async validateRegForm(): void {
 
     if (!this.name.length || !this.userName.length || !this.passwd.length) {
       this.snackBar.open('Minden adatot meg kell adni!', 'HIBA', { duration: 2000 });
@@ -45,8 +45,12 @@ export class DialogRegistrationComponent implements OnInit {
 
     const _user = new User(this.name, this.userName, this.passwd);
 
-    this.userService.registerUser(_user);
-    this.snackBar.open('Sikeres regisztráció.', '', { duration: 2000 });
-    this.dialogRef.close();
+    try {
+      await this.userService.registerUser(_user);
+      this.snackBar.open('Sikeres regisztráció.', '', { duration: 2000 });
+      this.dialogRef.close();
+    } catch {
+      this.snackBar.open('Sikertelen regisztráció!', 'HIBA', { duration: 2000 });
+    }
   }
 }

@@ -22,12 +22,7 @@ export class ProjectService {
   }
 
   public addNewProject(project: Project): Promise<Project> {
-    const json = JSON.stringify({
-      name: project.name,
-      leaderId: project.leader.id
-    });
-    console.log(json);
-
+    const json = JSON.stringify(project);
     return this.httpService.post<Project>(this.route + 'new', json);
   }
 
@@ -44,16 +39,16 @@ export class ProjectService {
     return this.httpService.put<Project>(this.route + 'edit/' + project.id, json);
   }
 
-  getMembers(projectID: number): Promise<User[]> {
+  public getMembers(projectID: number): Promise<User[]> {
     return this.httpService.get<User[]>(this.route + projectID + '/members');
   }
 
-  addMember(projectID: number, member: User): Promise<User[]> {
+  public addMember(projectID: number, member: User): Promise<User[]> {
     const json = JSON.stringify(member);
     return this.httpService.post<User[]>(this.route + projectID, json);
   }
 
-  removeMember(projectID: number, memberID: number): Promise<User> {
+  public removeMember(projectID: number, memberID: number): Promise<User> {
     return this.httpService.post<User>(this.route + projectID + '/removeMember/' + memberID, '{}');
   }
 }

@@ -43,8 +43,8 @@ export class UserProjectsComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(async _name => {
       if (_name !== undefined) {
-        const newProject = new Project(_name, this.authService.currentUser);
-        console.log(newProject);
+        const newProject = new Project(_name, this.authService.currentUser.id);
+        console.log('NEW PROJECT:', newProject);
         await this.projectService.addNewProject(newProject);
         this.refreshLists();
       }
