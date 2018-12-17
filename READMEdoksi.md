@@ -63,6 +63,8 @@ A programnak képesnek kell lennie bármely szakterület projectmenedzselési fe
 
 #### 1.3.2. Use-case modell
 
+![Use-case diagramm](/images/usecase.png)
+
 ## TERVEZÉS
 
 ### 2.1. Oldaltérkép
