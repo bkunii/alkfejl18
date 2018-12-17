@@ -191,17 +191,17 @@ __Bejelentkezni__ szintén a főoldalon lehetséges, felhasználónév (username
 
 A "Projektek" oldalon a felhasználó megtekintheti az eddigi projektjeit, kiválaszthat egy projektet megtekintésre mások által vezetett projektekből ("__Egyéb projectek__"), szerkesztheti a saját projektjeit vagy a "__Saját projektek__" cím mellett a __+__ ikon segítségével létrehozhat egy új saját projektet.
 
-[Projects](images/projects.png)
+![Projects](/images/projects.png)
 
 #### 4.1.3. Menüsáv, felhasználó profilja
 
 A felső __menüsáv__ belépés után mindig látható. 
 
-[Menu](images/menu.png)
+![Menu](/images/menu.png)
 
 A "Projectek" menüpont segítségével a felhasználó visszajuthat a főoldalra úgymond, ahol az összes projektje van felsorolva. A "Profil" menüponttal megnyithatja személyes profilját, ahol megváltoztathatja az adatait és felvehet új skilleket.
 
-[Profile](images/profile.png)
+![Profile](/images/profile.png)
 
 A menüsávban "Kilépés" menüpontra kattintás után a program értelemszerűen kilépteti a felhasználót és visszadobja a kezdeti Regisztráció/Bejelentkezés oldalra.
 
