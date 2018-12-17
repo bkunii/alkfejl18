@@ -181,11 +181,11 @@ __Az oldal bárminemű használata csak regisztráció után lehetséges.__
 
 __Regisztrálni__ a főoldalon található "Regisztráció" gomb segítségével lehetséges, ezután egy felugró ablakban űrlap segítségével lehet megadni a felhasználó adatait. Ezután a program automatikusan belépteti a felhasználót a regisztrált adataival.
 
-[Registration](images/registr.png)
+![Registration](/images/registr.png)
 
 __Bejelentkezni__ szintén a főoldalon lehetséges, felhasználónév (username) és jelszó (password) megadásával. Ekkor a felhasználót autentikálja az applikáció, majd megjeleníti a "Projektek" oldalt.
 
-[Login](images/index.png)
+![Login](/images/index.png)
 
 #### 4.1.2. Projektek kezelése
 
@@ -205,5 +205,8 @@ A "Projectek" menüpont segítségével a felhasználó visszajuthat a főoldalr
 
 A menüsávban "Kilépés" menüpontra kattintás után a program értelemszerűen kilépteti a felhasználót és visszadobja a kezdeti Regisztráció/Bejelentkezés oldalra.
 
+#### 4.1.4. Projekt szerkesztése
 
+A felhasználónak lehetősége van __szerkeszteni a projekteket__, a "Projektek" oldalon kell kiválasztania, hogy melyiket. A program ezutántól legenerálja a projekt-részfeladatok-gráfját, ahol ábrázolva van, hogy melyik task milyen másik tasknak az előfeltétele. Amennyiben a felhasználó __kattint egy gráf csúcspontra, avagy taskra__, akkor megtekintheti a task jellemzőit (kik dolgoznak rajta, milyen állapotban van), avagy szerkesztheti a taskot. A "__Megkezd/csatlakozik__" gombbal megkezdheti a taskot, amennyiben az nincs megkezdve, illetve csatlakozhat hozzá, ha már igen. Lehetősége van __törölni a taskot__ a projektből, ha annak nincs ráépülője (semelyik másik tasknak nem előfeltétele) és senki nem kezdte már el. __Új taskot hozzáadni a projekthez__ a leadernek van joga (az a user, aki létrehozta a projektet), ezt a gráf mellett található fehér __+__ gombbal teheti meg.
 
+![ProjectEdit](/images/project.png)
