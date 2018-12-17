@@ -189,7 +189,7 @@ __Bejelentkezni__ szintén a főoldalon lehetséges, felhasználónév (username
 
 #### 4.1.2. Projektek kezelése
 
-A "Projektek" oldalon a felhasználó megtekintheti az eddigi projektjeit, kiválaszthat egy projektet megtekintésre mások által vezetett projektekből ("__Egyéb projectek__"), szerkesztheti a saját projektjeit vagy a "__Saját projektek__" cím mellett a __+__ ikon segítségével létrehozhat egy új saját projektet.
+A "Projektek" oldalon a felhasználó megtekintheti az eddigi projektjeit, kiválaszthat egy projektet megtekintésre mások által vezetett projektekből ("__Egyéb projectek__"), szerkesztheti a saját projektjeit vagy a "__Saját projektek__" cím mellett a __+__ ikon segítségével létrehozhat egy új saját projektet. Új projekt létrehozása esetén a felhasználónak meg kell adni a projekt nevét egy felugró ablakban. A további adatait a projektnek (taskok, előfeltételek, felhasználók akik dolgozhatnak a projekten) később tudja hozzáadni, a "Projekt szerkesztése" oldalon.
 
 ![Projects](/images/projects.png)
 
