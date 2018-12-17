@@ -4,15 +4,13 @@ export class Project {
   public id: number;
   public name: string;
   public leader: User;
+  public leaderId: number;
   public members: number[];
   public tasks: number[];
   public deadline: Date;
 
-  constructor(name: string, leader: User) {
+  constructor(name: string, leaderId: number) {
     this.name = name;
-    this.leader = leader;
-    this.members = [];
-    this.tasks = [];
-    // this.deadline = null;
+    this.leaderId = leaderId;
   }
 }
