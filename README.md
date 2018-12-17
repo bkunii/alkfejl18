@@ -82,5 +82,21 @@ Group Member :
 
 ### Endpointok
 * /users
-   * / : GET : getAll(Authentication auth) : az összes user lekédezése
-
+   * "" (GET) : getAll(Authentication auth) : az összes felhasználó lekérdezése
+   * "/new" (POST) :  createUser(MessageWrapper user) : új felhasználó felvétele
+   * "/login" (POST) : login(String username) User objektum visszaadása username szerint
+   * "/{id}" (GET): getUser(Integer id) : user lekérése id alapján
+   * "/{id}" (DELETE): deleteUser(Integer id, Authentication auth) : User törlése
+   * "/{id}/edit" (PUT) : editUser(Integer id, MessageWrapper user, Authentication auth) user adatainak módosítása
+   * "/{id}/skills" (GET) : getSkillLiset(Integer id) : user skilljeinek lekérése
+   * "/{id}/skills/add" (PUT) : addSkill(Integer id, MessageWrapper user, Authentication auth) skill hozzárendelése felhasználóhoz
+   * "/{id}/skills/remove" (PUT) : removeSkill(Integer id, MessageWrapper user, Authentication auth) skill elvétele felhasználótól
+   * "/{id}/ownedProjects" (GET) : getOwnedProjectList(Integer id) : azon projektek lekérése, ahol a user leader
+   * "/{id}/projects" (GET) : getProjectList(Integer id) : azon projektek lekérése, ahol a user member
+* /skills
+  * "" (GET) : getAll() : az összes skill lekérdezése
+  * "/new" (POST) :createSkill(MessageWrapper skill) : skill létrehozása
+  * /{id} (GET) : getSkill(Integer id) : skill lekérdezése
+  * /delete/{id} (DELETE): deleteSkill(Integer id) skill törlése
+  * /edit/{id} (PUT):  put(Integer id,Skill skill)
+   
