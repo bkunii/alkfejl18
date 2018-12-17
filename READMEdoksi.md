@@ -72,12 +72,59 @@ A programnak képesnek kell lennie bármely szakterület projectmenedzselési fe
 * Projektek megtekintése
   * Saját projektek megtekintése
     * Projekt szerkesztése
+    * Feladat elkezdése
+    * Feladat befejezése
+    * Feladat törlése
   * Egyéb projektek megtekintése
+    * Feladat elkezdése
+    * Feladat befejezése
+    * Feladat törlése
+* Felhasználók
+  * Felhasználók megtekintése
+  * Felhasználók szerkesztése
+  * Új felhasználó felvétele a projekthez
 * Profil
   * Profil megtekintése
   * Profil szerkesztése
   * Skillek felvétele
 * Kijelentkezés
+
+### 2.2. Végpontok
+ * user/new
+   * *createMember(String name,String password,String role,List<Integer> skills) --a skillek id szerint vannak tárolva*
+ * user/edit
+   * *modifyUser(String newName, String newPassword)*
+ * user/addskills
+   * *addSkills(List<Integer> skills) --a skillek id szerint vannak tárolva*
+ * member/project/tasks
+   * *getTasks(User user)*
+ * member/project/completeTask
+   * *completeTask(Integer duration)*
+ * member/project/getStatus
+    * *getProjectStatus(Project project)*
+ * leader/group/create
+   * *createGroup(String groupName,List<User> members)*
+ * leader/group/members/add
+   * *addGroupMember(Group group,User member)*
+ * leader/group/members/remove
+   * *removeGroupMember(Group group, User member)*
+ * leader/project/new
+   * *createProject(Group group,String name)*
+   * *createProject(Group group,String name,DateTime deadline)*
+ * leader/project/createTask
+   * *createTask(Project projectId, List<Integer> requiredSkills,List<Integer> prerequisites) --az előfeltételek id szerint vannak tárolva*
+  * leader/project/assigntask
+    * *assignTask(Task task,User assignee)*
+  * leader/project/calculateoptimal
+    * *calcOptimalAssignees(Project project)*
+  * leader/project/createSkill
+    * *createSkill(String name, Integer code)*
+  * leader/project/getStatus
+    * *getProjectStatus(Project project)*
+ * admin/editusers
+   * *editUser(String name, String password, String role, List<Integer> skills)*
+ * admin/switchtouserprofile
+  * *fogalmam nincs ezt pontosan még hogy fogjuk implementálni*
   
 
 
@@ -132,40 +179,3 @@ Group Member :
  * Skills
    * name
    * code
-
-### Endpointok
- * user/new
-   * *createMember(String name,String password,String role,List<Integer> skills) --a skillek id szerint vannak tárolva*
- * user/edit
-   * *modifyUser(String newName, String newPassword)*
- * user/addskills
-   * *addSkills(List<Integer> skills) --a skillek id szerint vannak tárolva*
- * member/project/tasks
-   * *getTasks(User user)*
- * member/project/completeTask
-   * *completeTask(Integer duration)*
- * member/project/getStatus
-    * *getProjectStatus(Project project)*
- * leader/group/create
-   * *createGroup(String groupName,List<User> members)*
- * leader/group/members/add
-   * *addGroupMember(Group group,User member)*
- * leader/group/members/remove
-   * *removeGroupMember(Group group, User member)*
- * leader/project/new
-   * *createProject(Group group,String name)*
-   * *createProject(Group group,String name,DateTime deadline)*
- * leader/project/createTask
-   * *createTask(Project projectId, List<Integer> requiredSkills,List<Integer> prerequisites) --az előfeltételek id szerint vannak tárolva*
-  * leader/project/assigntask
-    * *assignTask(Task task,User assignee)*
-  * leader/project/calculateoptimal
-    * *calcOptimalAssignees(Project project)*
-  * leader/project/createSkill
-    * *createSkill(String name, Integer code)*
-  * leader/project/getStatus
-    * *getProjectStatus(Project project)*
- * admin/editusers
-   * *editUser(String name, String password, String role, List<Integer> skills)*
- * admin/switchtouserprofile
-  * *fogalmam nincs ezt pontosan még hogy fogjuk implementálni*
